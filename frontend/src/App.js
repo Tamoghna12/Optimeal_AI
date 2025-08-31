@@ -513,7 +513,7 @@ const EnhancedShoppingItem = ({ ingredient, index, onOptimizeItem }) => {
           />
           <div className="flex-1">
             <div className="flex items-center">
-              <span className="font-medium text-gray-900 ingredient-name">
+              <span className="font-semibold text-gray-900 text-base">
                 {ingredient.name}
               </span>
               
@@ -533,15 +533,15 @@ const EnhancedShoppingItem = ({ ingredient, index, onOptimizeItem }) => {
               )}
             </div>
             
-            <div className="text-sm text-gray-600 quantity-text">
-              <span className="ingredient-quantity">{ingredient.totalQuantity}</span>
+            <div className="text-sm text-gray-700 mt-1">
+              <span className="font-medium text-gray-800">{ingredient.totalQuantity}</span>
               {ingredient.recipes.length > 1 && (
-                <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">
+                <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">
                   Used in {ingredient.recipes.length} recipes
                 </span>
               )}
               {ingredient.swapReason && (
-                <div className="text-xs text-green-600 mt-1 font-medium">
+                <div className="text-xs text-green-700 mt-1 font-medium">
                   💡 {ingredient.swapReason}
                 </div>
               )}
