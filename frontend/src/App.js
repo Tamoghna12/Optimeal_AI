@@ -1699,9 +1699,9 @@ const RecipeDetailView = () => {
               {/* Health Changes Alert */}
               {healthierVersion && (
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                  <h3 className="font-semibold text-green-800 mb-2">✨ AI Optimization Applied:</h3>
+                  <h3 className="font-semibold text-green-800 mb-2">✨ Here's how I made this healthier for you:</h3>
                   <div className="text-sm text-green-700 space-y-1">
-                    <p><strong>Optimization Strategy:</strong> Advanced Health Hierarchy Algorithm</p>
+                    <p><strong>My approach:</strong> Smart ingredient swaps that keep the authentic taste!</p>
                     <ul className="list-disc list-inside mt-2 space-y-1">
                       <li>Cooking method optimization (reduce oil, enhance nutrients)</li>
                       <li>Smart fat source swaps (saturated → unsaturated)</li>
