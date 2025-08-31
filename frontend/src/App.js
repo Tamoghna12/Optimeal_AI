@@ -924,7 +924,7 @@ const EnhancedRecipeCard = ({ recipe, onViewRecipe }) => {
       
       <div className="p-4">
         <h3 className="font-lora text-lg font-semibold text-gray-900 mb-2">{recipe.name}</h3>
-        <p className="text-gray-700 text-sm mb-3 line-clamp-2">{recipe.description}</p>
+        <p className="text-gray-800 text-sm mb-3 line-clamp-2">{recipe.description}</p>
         
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-4 text-xs text-gray-600">
