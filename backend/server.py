@@ -74,7 +74,7 @@ class FoodEntry(BaseModel):
     analysis_confidence: float
     image_base64: Optional[str] = None
     meal_type: str  # "breakfast", "lunch", "dinner", "snack"
-    date_consumed: date
+    date_consumed: str
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class WorkoutEntry(BaseModel):
