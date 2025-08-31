@@ -533,15 +533,15 @@ const EnhancedShoppingItem = ({ ingredient, index, onOptimizeItem }) => {
               )}
             </div>
             
-            <div className="text-sm text-gray-700 mt-1">
-              <span className="font-medium text-gray-800">{ingredient.totalQuantity}</span>
+            <div className="text-sm text-gray-800 mt-1">
+              <span className="font-medium text-gray-900">{ingredient.totalQuantity}</span>
               {ingredient.recipes.length > 1 && (
-                <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">
+                <span className="ml-2 text-xs bg-blue-100 text-blue-900 px-2 py-1 rounded-full font-medium">
                   Used in {ingredient.recipes.length} recipes
                 </span>
               )}
               {ingredient.swapReason && (
-                <div className="text-xs text-green-700 mt-1 font-medium">
+                <div className="text-xs text-green-800 mt-1 font-medium">
                   💡 {ingredient.swapReason}
                 </div>
               )}
