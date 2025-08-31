@@ -1160,7 +1160,7 @@ const AddRecipeModal = ({ isOpen, onClose, onSave }) => {
               type="submit"
               className="flex-1 bg-primary hover:bg-primary-dark text-white py-3 px-6 rounded-lg font-medium transition-colors"
             >
-              Save Recipe
+              Let's Cook!
             </button>
           </div>
         </form>
