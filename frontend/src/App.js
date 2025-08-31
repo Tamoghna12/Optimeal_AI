@@ -2034,8 +2034,8 @@ const ShoppingListView = () => {
                   <div className="mt-4 text-center">
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4 inline-block">
                       <span className="text-green-800 font-medium">
-                        💚 Optimized! You'll save £{shoppingList.totalSavings.toFixed(2)} 
-                        (was £{shoppingList.originalCost.toFixed(2)})
+                        🎉 Here's what I found for your budget! You'll save £{shoppingList.totalSavings.toFixed(2)} 
+                        (was going to be £{shoppingList.originalCost.toFixed(2)})
                       </span>
                     </div>
                   </div>
