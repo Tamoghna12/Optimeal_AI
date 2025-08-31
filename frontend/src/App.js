@@ -2050,7 +2050,7 @@ const ShoppingListView = () => {
 
               {/* Selected Recipes */}
               <div className="bg-white rounded-xl p-6 shadow-sm mb-8 border border-gray-200">
-                <h3 className="font-semibold mb-4 font-lora text-gray-900">Recipes in Your Weekly Plan</h3>
+                <h3 className="font-semibold mb-4 font-lora text-gray-900">Here's what we're cooking this week!</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {shoppingList.recipes.map(recipe => (
                     <div key={recipe.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
