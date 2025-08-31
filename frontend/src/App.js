@@ -1616,7 +1616,7 @@ const RecipeDetailView = () => {
             onClick={() => navigate('/')}
             className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors"
           >
-            Back to Home
+            Let's go back
           </button>
         </div>
       </div>
