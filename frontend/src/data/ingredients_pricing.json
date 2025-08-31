@@ -92,7 +92,17 @@
   "Bay Leaves": { "price": 1.20, "unit": "10g pack" },
   "Cinnamon Stick": { "price": 1.80, "unit": "25g pack" },
   "Green Cardamom": { "price": 4.20, "unit": "50g pack" },
-  "Ghee": { "price": 4.50, "unit": "500g jar", "budget_alternative": "Butter", "savings": 2.90 },
+  "Ghee": { 
+    "price": 4.50, 
+    "unit": "500g jar", 
+    "budget_alternative": "Butter", 
+    "savings": 2.90,
+    "health_alternative": "Olive Oil",
+    "health_savings": 1.50,
+    "category": "HEALTH_FAT_SWAP",
+    "reason": "Heart-Healthy Option",
+    "insight_hint": "🌿"
+  },
   "Toor Dal (Pigeon Peas)": { "price": 3.20, "unit": "500g bag" },
   "Black Urad Dal": { "price": 3.80, "unit": "500g bag" },
   "Tamarind Paste": { "price": 2.80, "unit": "200g jar" },
