@@ -84,7 +84,7 @@ class WorkoutEntry(BaseModel):
     duration_minutes: int
     calories_burned: float
     intensity: str  # "low", "moderate", "high"
-    date_logged: date
+    date_logged: str
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class DailyStats(BaseModel):
