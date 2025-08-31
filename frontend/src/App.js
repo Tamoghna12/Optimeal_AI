@@ -274,8 +274,8 @@ const applyBudgetOptimization = (shoppingList) => {
     optimizedList.categories[category] = ingredients.map(ingredient => {
       const pricing = ingredientsPricing[ingredient.name];
       
-      // 1. Protein Swap (Highest Impact)
-      if (ingredient.name === 'Chicken Breast' && pricing.budget_alternative) {
+      // Enhanced optimization with co-pilot intelligence
+      if (pricing && pricing.budget_alternative && pricing.savings > 0) {
         totalSavings += pricing.savings;
         return {
           ...ingredient,
@@ -283,64 +283,9 @@ const applyBudgetOptimization = (shoppingList) => {
           originalName: ingredient.name,
           isSwapped: true,
           savings: pricing.savings,
-          price: ingredientsPricing[pricing.budget_alternative].price,
-          swapReason: 'Protein Optimization: Chicken thighs are more flavorful and budget-friendly'
-        };
-      }
-
-      // 2. Dairy Optimization
-      if (ingredient.name === 'Double Cream' && pricing.budget_alternative) {
-        totalSavings += pricing.savings;
-        return {
-          ...ingredient,
-          name: pricing.budget_alternative,
-          originalName: ingredient.name,
-          isSwapped: true,
-          savings: pricing.savings,
-          price: ingredientsPricing[pricing.budget_alternative].price,
-          swapReason: 'Smart Swap: Single cream works perfectly for most recipes'
-        };
-      }
-
-      // 3. Grain/Staple Optimization
-      if (ingredient.name === 'Basmati Rice' && pricing.budget_alternative) {
-        totalSavings += pricing.savings;
-        return {
-          ...ingredient,
-          name: pricing.budget_alternative,
-          originalName: ingredient.name,
-          isSwapped: true,
-          savings: pricing.savings,
-          price: ingredientsPricing[pricing.budget_alternative].price,
-          swapReason: 'Store Brand: Same quality, better price'
-        };
-      }
-
-      // 4. Oil/Fat Optimization
-      if (ingredient.name === 'Vegetable Oil' && pricing.budget_alternative) {
-        totalSavings += pricing.savings;
-        return {
-          ...ingredient,
-          name: pricing.budget_alternative,
-          originalName: ingredient.name,
-          isSwapped: true,
-          savings: pricing.savings,
-          price: ingredientsPricing[pricing.budget_alternative].price,
-          swapReason: 'Budget Win: Sunflower oil is cheaper and works equally well'
-        };
-      }
-
-      // 5. Premium Ingredient Swaps
-      if (ingredient.name === 'Paneer' && pricing.budget_alternative) {
-        totalSavings += pricing.savings;
-        return {
-          ...ingredient,
-          name: pricing.budget_alternative,
-          originalName: ingredient.name,
-          isSwapped: true,
-          savings: pricing.savings,
-          price: ingredientsPricing[pricing.budget_alternative].price,
-          swapReason: 'Protein Alternative: Extra firm tofu is budget-friendly and absorbs flavors well'
+          price: ingredientsPricing[pricing.budget_alternative]?.price || (ingredient.price - pricing.savings),
+          swapReason: pricing.reason || 'Budget optimization',
+          category: pricing.category || 'BUDGET_OPTIMIZATION'
         };
       }
 
