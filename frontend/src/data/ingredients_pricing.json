@@ -1,10 +1,36 @@
 {
-  "Chicken Breast": { "price": 6.50, "unit": "per kg", "budget_alternative": "Chicken Thighs", "savings": 2.00 },
+  "Chicken Breast": { 
+    "price": 6.50, 
+    "unit": "per kg", 
+    "budget_alternative": "Chicken Thighs", 
+    "savings": 2.00,
+    "category": "BUDGET_PROTEIN",
+    "reason": "Cheaper Protein Cut",
+    "insight_hint": "🐷"
+  },
   "Chicken Thighs": { "price": 4.50, "unit": "per kg" },
-  "Greek Yogurt": { "price": 2.40, "unit": "500g pot", "budget_alternative": "Natural Yogurt", "savings": 0.60 },
+  "Greek Yogurt": { 
+    "price": 2.40, 
+    "unit": "500g pot", 
+    "budget_alternative": "Natural Yogurt", 
+    "savings": 0.60,
+    "category": "BUDGET_DAIRY",
+    "reason": "Similar Quality, Lower Cost",
+    "insight_hint": "🐷"
+  },
   "Natural Yogurt": { "price": 1.80, "unit": "500g pot" },
   "Tomato Passata": { "price": 0.85, "unit": "400g carton" },
-  "Double Cream": { "price": 1.80, "unit": "300ml pot", "budget_alternative": "Single Cream", "savings": 0.60 },
+  "Double Cream": { 
+    "price": 1.80, 
+    "unit": "300ml pot", 
+    "budget_alternative": "Single Cream", 
+    "savings": 0.60,
+    "health_alternative": "Greek Yogurt",
+    "health_savings": 0.60,
+    "category": "HEALTH_FAT_SWAP",
+    "reason": "Better for Heart Health",
+    "insight_hint": "🌿"
+  },
   "Single Cream": { "price": 1.20, "unit": "300ml pot" },
   "Onion": { "price": 0.90, "unit": "per kg" },
   "Garlic": { "price": 0.40, "unit": "per bulb" },
