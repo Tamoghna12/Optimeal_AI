@@ -562,7 +562,7 @@ const EnhancedShoppingItem = ({ ingredient, index, onOptimizeItem }) => {
               onClick={() => setShowCoPilotDialog(true)}
               className="text-xs text-primary hover:text-primary-dark mt-1 font-medium"
             >
-              💡 Optimize
+              💡 Save money!
             </button>
           )}
         </div>
