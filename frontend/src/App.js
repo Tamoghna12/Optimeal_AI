@@ -1318,6 +1318,24 @@ const Dashboard = ({ profile, onSignOut }) => {
                       </p>
                     </div>
                   )}
+
+                  {/* Save Recipe Button */}
+                  <div className="pt-4 border-t border-border-light">
+                    <button
+                      onClick={() => {
+                        const recipeName = `${analysisResult.food_entry.meal_name} Recipe`;
+                        const recipeDescription = `Recreate this delicious ${analysisResult.food_entry.meal_name} at home`;
+                        const ingredients = analysisResult.food_entry.ingredients.join(', ');
+                        const traditionalRecipe = `Ingredients: ${ingredients}\n\nThis is a traditional ${analysisResult.cultural_context || 'South Asian'} dish. ${analysisResult.quick_recipe_tips || 'Cook with love and traditional spices for authentic flavors.'}`;
+                        
+                        // You could open a save recipe modal here or add to recipe book directly
+                        alert(`Recipe saving feature: Would save "${recipeName}" to your personal recipe collection with AI conversion to quick version!`);
+                      }}
+                      className="btn-secondary w-full py-3"
+                    >
+                      📖 Save to My Recipe Book
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
