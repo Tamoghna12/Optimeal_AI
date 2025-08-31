@@ -174,6 +174,99 @@ def calculate_daily_calories(bmr: float, activity_level: str, goal: str) -> floa
     else:
         return maintenance_calories
 
+async def convert_recipe_with_ai(recipe_text: str, cuisine_type: str = "South Asian") -> Dict[str, Any]:
+    """Convert traditional recipe to quick version using LLM"""
+    try:
+        # Get API key from environment
+        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not api_key:
+            raise HTTPException(status_code=500, detail="LLM API key not configured")
+        
+        # Create LLM chat instance
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"recipe-conversion-{uuid.uuid4()}",
+            system_message=f"""You are a culinary expert specializing in {cuisine_type} cuisine with deep knowledge of both traditional cooking methods and modern time-saving techniques. Your expertise includes ingredient substitutions available in Western grocery stores and quick cooking methods suitable for busy students and working professionals.
+
+Convert traditional recipes into practical, time-efficient versions while maintaining authentic flavors. Focus on:
+1. Reducing cooking time through modern techniques
+2. Simplifying preparation steps
+3. Suggesting readily available ingredient substitutions
+4. Maintaining cultural authenticity and taste
+5. Making recipes student/busy-professional friendly
+
+Return your response as a JSON object with this exact structure:
+{{
+    "quick_version": "Detailed quick recipe instructions",
+    "prep_time_minutes": 15,
+    "cook_time_minutes": 20,
+    "total_time_minutes": 35,
+    "time_saved_minutes": 45,
+    "difficulty_level": "easy",
+    "ingredients": ["ingredient1", "ingredient2"],
+    "instructions": ["Step 1", "Step 2", "Step 3"],
+    "quick_instructions": ["Quick Step 1", "Quick Step 2"],
+    "western_substitutions": [
+        {{
+            "original": "traditional ingredient",
+            "substitute": "western alternative",
+            "notes": "where to find and how to use"
+        }}
+    ],
+    "nutritional_info": {{
+        "calories": 350.0,
+        "protein": 15.0,
+        "carbs": 45.0,
+        "fat": 12.0
+    }},
+    "cultural_notes": "Background about the dish and cultural significance",
+    "tags": ["vegetarian", "quick", "student-friendly"],
+    "tips": "Additional cooking tips and variations"
+}}
+"""
+        ).with_model("openai", "gpt-4o")
+        
+        # Create message for recipe conversion
+        user_message = UserMessage(
+            text=f"Convert this traditional {cuisine_type} recipe into a quick, student-friendly version while maintaining authentic flavors:\n\n{recipe_text}\n\nFocus on time-saving techniques, ingredient substitutions available in Western grocery stores, and simplifying the cooking process."
+        )
+        
+        # Send message and get response
+        response = await chat.send_message(user_message)
+        
+        # Parse JSON response
+        try:
+            response_text = str(response).strip()
+            if response_text.startswith('```json'):
+                response_text = response_text[7:-3].strip()
+            elif response_text.startswith('```'):
+                response_text = response_text[3:-3].strip()
+            
+            conversion_data = json.loads(response_text)
+            return conversion_data
+        except json.JSONDecodeError:
+            # If JSON parsing fails, return basic conversion
+            return {
+                "quick_version": "Quick version conversion failed, but recipe can still be saved",
+                "prep_time_minutes": 20,
+                "cook_time_minutes": 30,
+                "total_time_minutes": 50,
+                "time_saved_minutes": 30,
+                "difficulty_level": "medium",
+                "ingredients": ["Unable to parse ingredients"],
+                "instructions": ["Conversion failed - please try again"],
+                "quick_instructions": ["Please retry recipe conversion"],
+                "western_substitutions": [],
+                "nutritional_info": {"calories": 300.0, "protein": 10.0, "carbs": 40.0, "fat": 8.0},
+                "cultural_notes": "Recipe conversion temporarily unavailable",
+                "tags": ["needs-retry"],
+                "tips": "Please try converting this recipe again"
+            }
+            
+    except Exception as e:
+        logging.error(f"Error converting recipe: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to convert recipe: {str(e)}")
+
 async def analyze_food_image(image_base64: str) -> Dict[str, Any]:
     """Analyze food image using LLM"""
     try:
