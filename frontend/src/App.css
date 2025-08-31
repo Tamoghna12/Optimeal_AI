@@ -21,14 +21,29 @@
   --color-bg: #F7F7F7;
   --color-bg-white: #FFFFFF;
   
-  /* Text Colors */
-  --color-text-heading: #2D2D2D;
-  --color-text-body: #555555;
-  --color-text-muted: #888888;
+  /* Text Colors - Enhanced Contrast */
+  --color-text-heading: #1A1A1A;
+  --color-text-body: #2D2D2D;
+  --color-text-secondary: #4A4A4A;
+  --color-text-muted: #666666;
   
   /* Border Colors */
   --color-border: #E0E0E0;
   --color-border-light: #F0F0F0;
+  --color-border-strong: #CCCCCC;
+  
+  /* Status Colors - High Contrast */
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #3B82F6;
+  
+  /* Recipe Card Colors */
+  --color-recipe-tag-bg: #F3F4F6;
+  --color-recipe-tag-text: #374151;
+  --color-difficulty-easy: #10B981;
+  --color-difficulty-medium: #F59E0B;
+  --color-difficulty-hard: #EF4444;
 }
 
 /* Base Styles */
