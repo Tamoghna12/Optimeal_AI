@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Comprehensive backend API testing for FitSpice app including profile creation, food analysis, data retrieval, database operations, and error handling"
+user_problem_statement: "UI contrast improvements for Homeland Meals MVP v1.1 - fixing ingredient text readability issues in recipe detail and shopping list views, and validating Co-Pilot Intelligence features"
 
 backend:
   - task: "Profile Creation API"
