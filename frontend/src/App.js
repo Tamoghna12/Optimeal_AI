@@ -2007,7 +2007,7 @@ const ShoppingListView = () => {
                     {isOptimized && shoppingList.totalSavings > 0 ? (
                       <>
                         <div className="text-2xl font-bold text-green-600">£{shoppingList.totalSavings.toFixed(2)}</div>
-                        <div className="text-sm text-gray-600">Total Savings</div>
+                        <div className="text-sm text-gray-600">Money saved!</div>
                       </>
                     ) : (
                       <>
