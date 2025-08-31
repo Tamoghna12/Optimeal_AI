@@ -1179,67 +1179,7 @@ const PersonalCookbookView = () => {
 };
 
 const RecipeCard = ({ recipe, onViewRecipe }) => {
-  const { selectedRecipes } = useMealTray();
-  const isSelected = selectedRecipes.includes(recipe.id);
-
-  return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer">
-      <div 
-        className="relative h-48 bg-gradient-to-br from-orange-100 to-orange-200"
-        onClick={() => onViewRecipe(recipe.id)}
-      >
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-6xl opacity-20">🍛</div>
-        </div>
-        <div className="absolute top-3 right-3">
-          {isSelected && (
-            <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
-              ✓
-            </div>
-          )}
-        </div>
-        <div className="absolute top-3 left-3">
-          <span className="bg-white/90 text-xs px-2 py-1 rounded-full text-gray-700">
-            {recipe.cookingTime}
-          </span>
-        </div>
-      </div>
-      
-      <div className="p-4">
-        <h3 className="font-lora text-lg font-semibold text-gray-800 mb-2">{recipe.name}</h3>
-        <p className="text-gray-600 text-sm mb-3 line-clamp-2">{recipe.description}</p>
-        
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center space-x-4 text-xs text-gray-500">
-            <span>👥 {recipe.servings}</span>
-            <span>📍 {recipe.cuisine}</span>
-            <span className={`px-2 py-1 rounded-full ${
-              recipe.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
-              recipe.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
-              'bg-red-100 text-red-700'
-            }`}>
-              {recipe.difficulty}
-            </span>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap gap-1 mb-4">
-          {recipe.tags.slice(0, 2).map((tag, index) => (
-            <span key={index} className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <button 
-          onClick={() => onViewRecipe(recipe.id)}
-          className="w-full bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg transition-colors duration-200 font-medium"
-        >
-          View Recipe
-        </button>
-      </div>
-    </div>
-  );
+  return <EnhancedRecipeCard recipe={recipe} onViewRecipe={onViewRecipe} />;
 };
 
 const WeeklyMealTray = () => {
