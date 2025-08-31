@@ -1048,7 +1048,9 @@ const RecipeDetailView = () => {
   const [isHealthifying, setIsHealthifying] = useState(false);
   const [showSubstitutes, setShowSubstitutes] = useState(false);
   
-  const recipe = recipesData.find(r => r.id === parseInt(recipeId));
+  // Get recipe from both curated and user recipes
+  const allRecipes = [...recipesData, ...loadUserCookbook()];
+  const recipe = allRecipes.find(r => r.id === parseInt(recipeId));
   const isInTray = selectedRecipes.includes(parseInt(recipeId));
 
   if (!recipe) {
@@ -1070,31 +1072,10 @@ const RecipeDetailView = () => {
   const handleMakeHealthier = async () => {
     setIsHealthifying(true);
     
-    // Simulate AI processing
+    // Simulate AI processing with actual optimization logic
     setTimeout(() => {
-      const healthierIngredients = recipe.ingredients.map(ingredient => {
-        const pricing = ingredientsPricing[ingredient.name];
-        if (pricing && pricing.budget_alternative) {
-          return {
-            ...ingredient,
-            name: pricing.budget_alternative,
-            isSwapped: true,
-            originalName: ingredient.name
-          };
-        }
-        return ingredient;
-      });
-
-      setHealthierVersion({
-        ...recipe,
-        name: `Healthy ${recipe.name}`,
-        ingredients: healthierIngredients,
-        description: `${recipe.description} - Made healthier with smart ingredient swaps!`,
-        healthChanges: healthierIngredients
-          .filter(ing => ing.isSwapped)
-          .map(ing => `${ing.originalName} → ${ing.name}`)
-      });
-      
+      const optimization = applyHealthOptimization(recipe);
+      setHealthierVersion(optimization.healthierRecipe);
       setIsHealthifying(false);
     }, 2000);
   };
