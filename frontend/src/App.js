@@ -1211,10 +1211,10 @@ const PersonalCookbookView = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4 font-lora">My Personal Cookbook</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-4 font-lora">Your family recipes live here</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Preserve your family's treasured recipes and never lose those precious culinary memories. 
-            Add them to your meal plans and generate smart shopping lists.
+            Keep those precious recipes from home safe forever. I'll help you cook them and even create shopping lists! 
+            Your nani's dal recipe deserves a special place. 💕
           </p>
         </div>
 
