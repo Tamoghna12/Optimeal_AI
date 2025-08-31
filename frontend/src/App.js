@@ -37,9 +37,12 @@ const MealTrayProvider = ({ children }) => {
     let totalCost = 0;
     const ingredientTotals = {};
 
+    // Get all recipes including user-generated ones
+    const allRecipes = [...recipesData, ...loadUserCookbook()];
+
     // Consolidate ingredients from all selected recipes
     recipes.forEach(recipeId => {
-      const recipe = recipesData.find(r => r.id === recipeId);
+      const recipe = allRecipes.find(r => r.id === recipeId);
       if (recipe) {
         recipe.ingredients.forEach(ingredient => {
           const key = ingredient.name;
@@ -68,6 +71,11 @@ const MealTrayProvider = ({ children }) => {
   const clearTray = () => {
     setSelectedRecipes([]);
     setEstimatedCost(0);
+  };
+
+  const getSelectedRecipesData = () => {
+    const allRecipes = [...recipesData, ...loadUserCookbook()];
+    return selectedRecipes.map(id => allRecipes.find(r => r.id === id)).filter(Boolean);
   };
 
   return (
