@@ -2000,7 +2000,7 @@ const ShoppingListView = () => {
                       £{shoppingList.totalCost.toFixed(2)}
                     </div>
                     <div className="text-sm text-gray-600">
-                      {isOptimized ? 'Optimized Total' : 'Estimated Total'}
+                      {isOptimized ? 'Your smart total' : 'Estimated cost'}
                     </div>
                   </div>
                   <div>
