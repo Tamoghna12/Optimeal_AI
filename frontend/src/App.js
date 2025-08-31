@@ -355,6 +355,392 @@ const applyBudgetOptimization = (shoppingList) => {
   return optimizedList;
 };
 
+// Enhanced User Experience Features
+const CookingTimer = ({ recipe, currentStep, onStepComplete }) => {
+  const [timeRemaining, setTimeRemaining] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [stepTimers, setStepTimers] = useState({});
+
+  useEffect(() => {
+    let interval = null;
+    if (isActive && timeRemaining > 0) {
+      interval = setInterval(() => {
+        setTimeRemaining(time => time - 1);
+      }, 1000);
+    } else if (timeRemaining === 0 && isActive) {
+      setIsActive(false);
+      onStepComplete && onStepComplete(currentStep);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, timeRemaining, currentStep, onStepComplete]);
+
+  const startTimer = (minutes) => {
+    setTimeRemaining(minutes * 60);
+    setIsActive(true);
+  };
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  return (
+    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+      <h4 className="font-semibold text-blue-800 mb-2">⏱️ Cooking Timer</h4>
+      {isActive ? (
+        <div className="text-center">
+          <div className="text-3xl font-bold text-blue-600 mb-2">{formatTime(timeRemaining)}</div>
+          <button 
+            onClick={() => setIsActive(false)}
+            className="bg-red-500 text-white px-4 py-2 rounded-lg text-sm"
+          >
+            Stop Timer
+          </button>
+        </div>
+      ) : (
+        <div className="flex flex-wrap gap-2">
+          <button onClick={() => startTimer(5)} className="bg-blue-500 text-white px-3 py-1 rounded text-sm">5 min</button>
+          <button onClick={() => startTimer(10)} className="bg-blue-500 text-white px-3 py-1 rounded text-sm">10 min</button>
+          <button onClick={() => startTimer(15)} className="bg-blue-500 text-white px-3 py-1 rounded text-sm">15 min</button>
+          <button onClick={() => startTimer(20)} className="bg-blue-500 text-white px-3 py-1 rounded text-sm">20 min</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const RecipeRating = ({ recipeId, currentRating, onRatingChange }) => {
+  const [userRating, setUserRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
+
+  const handleRating = (rating) => {
+    setUserRating(rating);
+    onRatingChange && onRatingChange(recipeId, rating);
+    // Save to localStorage
+    const ratings = JSON.parse(localStorage.getItem('homeland_recipe_ratings') || '{}');
+    ratings[recipeId] = rating;
+    localStorage.setItem('homeland_recipe_ratings', JSON.stringify(ratings));
+  };
+
+  useEffect(() => {
+    // Load saved rating
+    const ratings = JSON.parse(localStorage.getItem('homeland_recipe_ratings') || '{}');
+    if (ratings[recipeId]) {
+      setUserRating(ratings[recipeId]);
+    }
+  }, [recipeId]);
+
+  return (
+    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+      <h4 className="font-semibold text-yellow-800 mb-2">⭐ Rate This Recipe</h4>
+      <div className="flex items-center space-x-1">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <button
+            key={star}
+            onClick={() => handleRating(star)}
+            onMouseEnter={() => setHoverRating(star)}
+            onMouseLeave={() => setHoverRating(0)}
+            className={`text-2xl transition-colors ${
+              star <= (hoverRating || userRating) ? 'text-yellow-500' : 'text-gray-300'
+            }`}
+          >
+            ⭐
+          </button>
+        ))}
+        <span className="ml-2 text-sm text-yellow-700">
+          {userRating > 0 ? `You rated: ${userRating}/5` : 'Tap to rate'}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const SmartShoppingIntegration = ({ shoppingList, onOrderOnline }) => {
+  const [selectedStore, setSelectedStore] = useState('tesco');
+  const [deliverySlot, setDeliverySlot] = useState('');
+
+  const stores = {
+    tesco: { name: 'Tesco', deliveryFee: 4.50, minOrder: 25 },
+    asda: { name: 'ASDA', deliveryFee: 3.50, minOrder: 35 },
+    sainsburys: { name: "Sainsbury's", deliveryFee: 5.00, minOrder: 30 }
+  };
+
+  const calculateDeliveryTime = () => {
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' });
+  };
+
+  return (
+    <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
+      <h3 className="text-lg font-semibold text-green-800 mb-4">🛒 Smart Shopping Integration</h3>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        {Object.entries(stores).map(([key, store]) => (
+          <button
+            key={key}
+            onClick={() => setSelectedStore(key)}
+            className={`p-4 rounded-lg border-2 transition-all ${
+              selectedStore === key 
+                ? 'border-green-500 bg-green-100' 
+                : 'border-gray-200 bg-white hover:border-green-300'
+            }`}
+          >
+            <div className="font-semibold">{store.name}</div>
+            <div className="text-sm text-gray-600">Delivery: £{store.deliveryFee}</div>
+            <div className="text-sm text-gray-600">Min order: £{store.minOrder}</div>
+          </button>
+        ))}
+      </div>
+
+      <div className="bg-white rounded-lg p-4 mb-4">
+        <h4 className="font-medium mb-2">📦 Delivery Options</h4>
+        <select 
+          value={deliverySlot}
+          onChange={(e) => setDeliverySlot(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-lg"
+        >
+          <option value="">Select delivery slot</option>
+          <option value="next-day">Next Day Delivery - {calculateDeliveryTime()}</option>
+          <option value="2-3-days">2-3 Working Days</option>
+          <option value="weekly">Weekly Recurring Order</option>
+        </select>
+      </div>
+
+      <div className="flex items-center justify-between bg-white rounded-lg p-4">
+        <div>
+          <div className="font-semibold">Total: £{shoppingList?.totalCost?.toFixed(2) || '0.00'}</div>
+          <div className="text-sm text-gray-600">+ £{stores[selectedStore].deliveryFee} delivery</div>
+        </div>
+        <button
+          onClick={() => onOrderOnline && onOrderOnline(selectedStore, deliverySlot)}
+          disabled={!deliverySlot}
+          className="bg-green-500 hover:bg-green-600 disabled:bg-gray-300 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+        >
+          Order from {stores[selectedStore].name}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const GamificationDashboard = ({ userId }) => {
+  const [userStats, setUserStats] = useState({
+    cookingStreak: 0,
+    recipesCooked: 0,
+    badges: [],
+    heritagePoints: 0,
+    level: 1
+  });
+
+  const [showBadgeModal, setShowBadgeModal] = useState(false);
+  const [newBadge, setNewBadge] = useState(null);
+
+  useEffect(() => {
+    loadUserStats();
+  }, [userId]);
+
+  const loadUserStats = () => {
+    const stats = JSON.parse(localStorage.getItem(`homeland_user_stats_${userId}`) || '{}');
+    setUserStats({
+      cookingStreak: stats.cookingStreak || 0,
+      recipesCooked: stats.recipesCooked || 0,
+      badges: stats.badges || [],
+      heritagePoints: stats.heritagePoints || 0,
+      level: Math.floor((stats.heritagePoints || 0) / 100) + 1
+    });
+  };
+
+  const awardBadge = (badgeType) => {
+    const badges = {
+      'first_recipe': { name: 'First Recipe', icon: '👨‍🍳', description: 'Cooked your first recipe!' },
+      'north_indian_explorer': { name: 'North Indian Explorer', icon: '🍛', description: 'Tried 5 North Indian recipes' },
+      'south_indian_master': { name: 'South Indian Master', icon: '🥞', description: 'Mastered dosa and sambar!' },
+      'heritage_keeper': { name: 'Heritage Keeper', icon: '📜', description: 'Added 3 family recipes' },
+      'budget_wizard': { name: 'Budget Wizard', icon: '💰', description: 'Saved £50 with smart shopping' },
+      'streak_champion': { name: 'Streak Champion', icon: '🔥', description: '7-day cooking streak!' }
+    };
+
+    const badge = badges[badgeType];
+    if (badge && !userStats.badges.includes(badgeType)) {
+      const newStats = {
+        ...userStats,
+        badges: [...userStats.badges, badgeType],
+        heritagePoints: userStats.heritagePoints + 50
+      };
+      setUserStats(newStats);
+      localStorage.setItem(`homeland_user_stats_${userId}`, JSON.stringify(newStats));
+      setNewBadge(badge);
+      setShowBadgeModal(true);
+    }
+  };
+
+  const availableBadges = [
+    { id: 'first_recipe', name: 'First Recipe', icon: '👨‍🍳', earned: userStats.badges.includes('first_recipe') },
+    { id: 'north_indian_explorer', name: 'North Indian Explorer', icon: '🍛', earned: userStats.badges.includes('north_indian_explorer') },
+    { id: 'south_indian_master', name: 'South Indian Master', icon: '🥞', earned: userStats.badges.includes('south_indian_master') },
+    { id: 'heritage_keeper', name: 'Heritage Keeper', icon: '📜', earned: userStats.badges.includes('heritage_keeper') },
+    { id: 'budget_wizard', name: 'Budget Wizard', icon: '💰', earned: userStats.badges.includes('budget_wizard') },
+    { id: 'streak_champion', name: 'Streak Champion', icon: '🔥', earned: userStats.badges.includes('streak_champion') }
+  ];
+
+  return (
+    <>
+      <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 mb-6">
+        <h3 className="text-lg font-semibold text-purple-800 mb-4">🏆 Your Culinary Journey</h3>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div className="text-center bg-white rounded-lg p-4">
+            <div className="text-2xl font-bold text-orange-600">{userStats.cookingStreak}</div>
+            <div className="text-sm text-gray-600">Day Streak</div>
+          </div>
+          <div className="text-center bg-white rounded-lg p-4">
+            <div className="text-2xl font-bold text-blue-600">{userStats.recipesCooked}</div>
+            <div className="text-sm text-gray-600">Recipes Cooked</div>
+          </div>
+          <div className="text-center bg-white rounded-lg p-4">
+            <div className="text-2xl font-bold text-purple-600">{userStats.heritagePoints}</div>
+            <div className="text-sm text-gray-600">Heritage Points</div>
+          </div>
+          <div className="text-center bg-white rounded-lg p-4">
+            <div className="text-2xl font-bold text-green-600">Level {userStats.level}</div>
+            <div className="text-sm text-gray-600">Culinary Level</div>
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <h4 className="font-semibold text-purple-800 mb-3">🏅 Badges Earned ({userStats.badges.length}/6)</h4>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+            {availableBadges.map((badge) => (
+              <div 
+                key={badge.id}
+                className={`text-center p-3 rounded-lg border-2 ${
+                  badge.earned 
+                    ? 'border-yellow-400 bg-yellow-50' 
+                    : 'border-gray-200 bg-gray-50 opacity-50'
+                }`}
+              >
+                <div className="text-2xl mb-1">{badge.icon}</div>
+                <div className="text-xs font-medium">{badge.name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Test Badge Button - Remove in production */}
+        <div className="text-center">
+          <button
+            onClick={() => awardBadge('first_recipe')}
+            className="bg-purple-500 text-white px-4 py-2 rounded-lg text-sm"
+          >
+            🎯 Test Badge Award
+          </button>
+        </div>
+      </div>
+
+      {/* Badge Award Modal */}
+      {showBadgeModal && newBadge && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl p-8 max-w-sm w-full text-center">
+            <div className="text-6xl mb-4">{newBadge.icon}</div>
+            <h3 className="text-xl font-bold mb-2">Badge Unlocked!</h3>
+            <h4 className="text-lg font-semibold text-purple-600 mb-2">{newBadge.name}</h4>
+            <p className="text-gray-600 mb-4">{newBadge.description}</p>
+            <div className="text-sm text-green-600 mb-6">+50 Heritage Points!</div>
+            <button
+              onClick={() => setShowBadgeModal(false)}
+              className="bg-purple-500 text-white px-6 py-3 rounded-lg font-medium"
+            >
+              Awesome! 🎉
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+// Enhanced Recipe Components with Better Contrast
+const EnhancedRecipeCard = ({ recipe, onViewRecipe }) => {
+  const { selectedRecipes } = useMealTray();
+  const isSelected = selectedRecipes.includes(recipe.id);
+
+  const getDifficultyColor = (difficulty) => {
+    switch(difficulty.toLowerCase()) {
+      case 'easy': return 'text-green-700 bg-green-100';
+      case 'medium': return 'text-yellow-700 bg-yellow-100';
+      case 'hard': return 'text-red-700 bg-red-100';
+      default: return 'text-gray-700 bg-gray-100';
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer border border-gray-200">
+      <div 
+        className="relative h-48 bg-gradient-to-br from-orange-100 to-orange-200"
+        onClick={() => onViewRecipe(recipe.id)}
+      >
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-6xl opacity-20">🍛</div>
+        </div>
+        <div className="absolute top-3 right-3">
+          {isSelected && (
+            <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+              ✓
+            </div>
+          )}
+        </div>
+        <div className="absolute top-3 left-3">
+          <span className="bg-white/95 text-gray-800 text-xs px-2 py-1 rounded-full font-medium">
+            {recipe.cookingTime}
+          </span>
+        </div>
+      </div>
+      
+      <div className="p-4">
+        <h3 className="font-lora text-lg font-semibold text-gray-900 mb-2">{recipe.name}</h3>
+        <p className="text-gray-700 text-sm mb-3 line-clamp-2">{recipe.description}</p>
+        
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center space-x-4 text-xs text-gray-600">
+            <span className="flex items-center">
+              <span className="mr-1">👥</span>
+              {recipe.servings}
+            </span>
+            <span className="flex items-center">
+              <span className="mr-1">📍</span>
+              {recipe.cuisine}
+            </span>
+            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(recipe.difficulty)}`}>
+              {recipe.difficulty}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-1 mb-4">
+          {recipe.tags.slice(0, 2).map((tag, index) => (
+            <span
+              key={index}
+              className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full font-medium"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <button 
+          onClick={() => onViewRecipe(recipe.id)}
+          className="w-full bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg transition-colors duration-200 font-medium"
+        >
+          View Recipe
+        </button>
+      </div>
+    </div>
+  );
+};
+
 // Components
 const AddRecipeModal = ({ isOpen, onClose, onSave }) => {
   const [formData, setFormData] = useState({
