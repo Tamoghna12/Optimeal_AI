@@ -2127,7 +2127,7 @@ const ShoppingListView = () => {
                   onClick={clearTray}
                   className="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-3 px-6 rounded-lg font-medium transition-colors"
                 >
-                  🗑️ Clear Meal Tray
+                  🗑️ Start fresh
                 </button>
                 
                 <button
