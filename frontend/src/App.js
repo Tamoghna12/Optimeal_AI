@@ -1949,7 +1949,7 @@ const ShoppingListView = () => {
             onClick={() => navigate('/')}
             className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors"
           >
-            Browse Recipes
+            Show me the recipes!
           </button>
         </div>
       </div>
