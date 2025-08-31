@@ -1752,7 +1752,7 @@ const RecipeDetailView = () => {
                       : 'bg-primary hover:bg-primary-dark text-white'
                   }`}
                 >
-                  {isInTray ? '✕ Remove from Week' : '+ Add to Week'}
+                  {isInTray ? '✕ Never mind, skip this one' : '🍽️ Let\'s cook this this week!'}
                 </button>
               </div>
             </div>
