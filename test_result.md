@@ -294,9 +294,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "All frontend components tested and working"
+    - "UI Contrast Improvements"
+    - "Recipe Detail View Text Contrast"
+    - "Shopping List Item Text Contrast"
+    - "Co-Pilot Intelligence Validation"
   stuck_tasks: []
-  test_all: true
+  test_all: false
   test_priority: "high_first"
 
 agent_communication:
