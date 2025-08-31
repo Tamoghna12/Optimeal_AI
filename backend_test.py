@@ -52,7 +52,7 @@ class FitSpiceAPITester:
             # Add some visual elements to make it look more like food
             from PIL import ImageDraw
             draw = ImageDraw.Draw(img)
-            draw.ellipse([50, 50, 350, 250], fill='brown', outline='darkbrown', width=3)
+            draw.ellipse([50, 50, 350, 250], fill='brown', outline='black', width=3)
             draw.ellipse([100, 100, 200, 150], fill='yellow')
             draw.ellipse([250, 120, 320, 180], fill='red')
             
