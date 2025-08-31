@@ -1367,43 +1367,10 @@ const ShoppingListView = () => {
   const optimizeForBudget = () => {
     setIsOptimizing(true);
     
-    // Simulate AI optimization
+    // Apply sophisticated budget optimization algorithm
     setTimeout(() => {
-      const optimizedCategories = {};
-      let newTotalCost = 0;
-      let totalSavings = 0;
-
-      Object.entries(shoppingList.categories).forEach(([category, ingredients]) => {
-        optimizedCategories[category] = ingredients.map(ingredient => {
-          const pricing = ingredientsPricing[ingredient.name];
-          if (pricing && pricing.budget_alternative) {
-            const savings = pricing.savings || 0;
-            totalSavings += savings;
-            newTotalCost += (pricing.price - savings);
-            
-            return {
-              ...ingredient,
-              name: pricing.budget_alternative,
-              originalName: ingredient.name,
-              isSwapped: true,
-              savings: savings,
-              price: pricing.price - savings
-            };
-          } else {
-            newTotalCost += ingredient.price;
-            return ingredient;
-          }
-        });
-      });
-
-      setShoppingList({
-        ...shoppingList,
-        categories: optimizedCategories,
-        totalCost: newTotalCost,
-        originalCost: shoppingList.totalCost,
-        totalSavings
-      });
-      
+      const optimizedList = applyBudgetOptimization(shoppingList);
+      setShoppingList(optimizedList);
       setIsOptimized(true);
       setIsOptimizing(false);
     }, 2000);
