@@ -53,7 +53,17 @@
     "insight_hint": "🐷"
   },
   "Sunflower Oil": { "price": 1.70, "unit": "1L bottle" },
-  "Basmati Rice": { "price": 4.20, "unit": "2kg bag", "budget_alternative": "Long Grain Rice", "savings": 1.50 },
+  "Basmati Rice": { 
+    "price": 4.20, 
+    "unit": "2kg bag", 
+    "budget_alternative": "Long Grain Rice", 
+    "savings": 1.50,
+    "health_alternative": "Brown Basmati Rice",
+    "health_savings": -0.80,
+    "category": "BUDGET_STAPLE",
+    "reason": "Store Brand Option",
+    "insight_hint": "🐷"
+  },
   "Long Grain Rice": { "price": 2.70, "unit": "2kg bag" },
   "Fresh Spinach": { "price": 1.20, "unit": "500g bag" },
   "Paneer": { "price": 3.50, "unit": "225g pack", "budget_alternative": "Extra Firm Tofu", "savings": 1.80 },
