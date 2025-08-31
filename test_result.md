@@ -190,7 +190,7 @@ frontend:
           agent: "main"
           comment: "Improved ingredient text contrast in recipe detail view by changing text-gray-700 to text-gray-800/900, text-green-600 to text-green-700 for better readability. Enhanced shopping list item contrast by upgrading text colors from light gray to darker variants. Screenshot testing confirms better readability of ingredient text, quantities, and swapped item indicators."
 
-  - task: "Dashboard Navigation"
+  - task: "Recipe Detail View Text Contrast"
     implemented: true
     working: true
     file: "/app/frontend/src/App.js"
@@ -198,12 +198,9 @@ frontend:
     priority: "high"
     needs_retesting: false
     status_history:
-        - working: "NA"
-          agent: "testing"
-          comment: "Dashboard tab switching between Scan Food, Food Diary, and Recipes needs testing"
         - working: true
-          agent: "testing"
-          comment: "Dashboard navigation working perfectly. Tab switching between Scan Food, Food Diary, and Recipes is smooth and responsive. All tabs load their respective content correctly."
+          agent: "main"
+          comment: "Fixed ingredient list text contrast in recipe detail view. Changed regular ingredients from no explicit color to text-gray-900 font-medium. Improved swapped ingredients from text-green-600 to text-green-700 for better contrast. Enhanced instructions text from text-gray-700 to text-gray-800. Screenshot testing shows significant improvement in readability."
 
   - task: "Camera Capture Functionality"
     implemented: true
