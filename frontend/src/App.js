@@ -2134,7 +2134,7 @@ const ShoppingListView = () => {
                   onClick={() => navigate('/')}
                   className="flex-1 bg-primary hover:bg-primary-dark text-white py-3 px-6 rounded-lg font-medium transition-colors"
                 >
-                  ➕ Add More Recipes
+                  🍳 Let's add more recipes!
                 </button>
               </div>
             </>
