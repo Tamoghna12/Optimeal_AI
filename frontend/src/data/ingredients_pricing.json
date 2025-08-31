@@ -66,7 +66,15 @@
   },
   "Long Grain Rice": { "price": 2.70, "unit": "2kg bag" },
   "Fresh Spinach": { "price": 1.20, "unit": "500g bag" },
-  "Paneer": { "price": 3.50, "unit": "225g pack", "budget_alternative": "Extra Firm Tofu", "savings": 1.80 },
+  "Paneer": { 
+    "price": 3.50, 
+    "unit": "225g pack", 
+    "budget_alternative": "Extra Firm Tofu", 
+    "savings": 1.80,
+    "category": "BUDGET_PROTEIN",
+    "reason": "Plant-Based Alternative",
+    "insight_hint": "🌿"
+  },
   "Extra Firm Tofu": { "price": 1.70, "unit": "280g pack" },
   "Tomato": { "price": 2.80, "unit": "per kg" },
   "Green Chilli": { "price": 2.00, "unit": "100g pack" },
