@@ -1243,7 +1243,7 @@ const PersonalCookbookView = () => {
             className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-lg font-medium transition-colors inline-flex items-center"
           >
             <span className="text-xl mr-2">➕</span>
-            Add Family Recipe
+            Share a family recipe with me!
           </button>
         </div>
 
