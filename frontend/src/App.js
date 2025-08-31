@@ -1776,7 +1776,7 @@ const RecipeDetailView = () => {
                             <span className="text-green-700 ml-2">(Save £{pricing.savings?.toFixed(2)})</span>
                           </div>
                         ) : (
-                          <span className="text-green-700 text-sm">✓ Available at Tesco/Asda</span>
+                          <span className="text-green-700 text-sm">✓ Easy to find!</span>
                         )}
                       </div>
                     );
