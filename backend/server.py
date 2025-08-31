@@ -558,6 +558,130 @@ async def get_daily_stats(user_id: str, date_str: str):
         logging.error(f"Error getting daily stats: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to get daily stats: {str(e)}")
 
+@api_router.post("/recipe", response_model=Recipe)
+async def create_recipe(recipe_data: RecipeCreate, user_id: str = Form(...)):
+    """Create a new recipe with AI-powered quick conversion"""
+    try:
+        # Convert traditional recipe to quick version using AI
+        conversion_result = await convert_recipe_with_ai(recipe_data.original_recipe, recipe_data.cuisine_type)
+        
+        # Create recipe object
+        recipe = Recipe(
+            user_id=user_id,
+            name=recipe_data.name,
+            description=recipe_data.description,
+            cuisine_type=recipe_data.cuisine_type,
+            original_recipe=recipe_data.original_recipe,
+            quick_version=conversion_result['quick_version'],
+            prep_time_minutes=conversion_result['prep_time_minutes'],
+            cook_time_minutes=conversion_result['cook_time_minutes'],
+            total_time_minutes=conversion_result['total_time_minutes'],
+            difficulty_level=conversion_result['difficulty_level'],
+            servings=recipe_data.servings,
+            ingredients=conversion_result['ingredients'],
+            instructions=conversion_result.get('instructions', []),
+            quick_instructions=conversion_result['quick_instructions'],
+            nutritional_info=conversion_result['nutritional_info'],
+            tags=recipe_data.tags + conversion_result.get('tags', []),
+            western_substitutions=conversion_result['western_substitutions'],
+            cultural_notes=conversion_result['cultural_notes'],
+            time_saved_minutes=conversion_result['time_saved_minutes']
+        )
+        
+        # Save to database
+        await db.recipes.insert_one(recipe.dict())
+        
+        return recipe
+        
+    except Exception as e:
+        logging.error(f"Error creating recipe: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to create recipe: {str(e)}")
+
+@api_router.get("/recipes/{user_id}")
+async def get_user_recipes(user_id: str, cuisine_type: Optional[str] = None, tag: Optional[str] = None):
+    """Get recipes for a user with optional filtering"""
+    try:
+        query = {"user_id": user_id}
+        
+        if cuisine_type:
+            query["cuisine_type"] = cuisine_type
+        
+        if tag:
+            query["tags"] = {"$in": [tag]}
+        
+        recipes = await db.recipes.find(query).sort("created_at", -1).to_list(100)
+        return [Recipe(**recipe) for recipe in recipes]
+        
+    except Exception as e:
+        logging.error(f"Error getting recipes: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get recipes: {str(e)}")
+
+@api_router.get("/recipe/{recipe_id}", response_model=Recipe)
+async def get_recipe(recipe_id: str):
+    """Get a specific recipe by ID"""
+    try:
+        recipe_data = await db.recipes.find_one({"id": recipe_id})
+        if not recipe_data:
+            raise HTTPException(status_code=404, detail="Recipe not found")
+        
+        return Recipe(**recipe_data)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error getting recipe: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get recipe: {str(e)}")
+
+@api_router.put("/recipe/{recipe_id}/favorite")
+async def toggle_recipe_favorite(recipe_id: str):
+    """Toggle recipe favorite status"""
+    try:
+        recipe_data = await db.recipes.find_one({"id": recipe_id})
+        if not recipe_data:
+            raise HTTPException(status_code=404, detail="Recipe not found")
+        
+        new_favorite_status = not recipe_data.get('is_favorite', False)
+        
+        await db.recipes.update_one(
+            {"id": recipe_id},
+            {"$set": {"is_favorite": new_favorite_status, "updated_at": datetime.utcnow()}}
+        )
+        
+        return {"id": recipe_id, "is_favorite": new_favorite_status}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error toggling recipe favorite: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to toggle favorite: {str(e)}")
+
+@api_router.post("/recipe/convert")
+async def convert_traditional_recipe(recipe_text: str = Form(...), cuisine_type: str = Form("South Asian")):
+    """Convert a traditional recipe to quick version without saving"""
+    try:
+        conversion_result = await convert_recipe_with_ai(recipe_text, cuisine_type)
+        return conversion_result
+        
+    except Exception as e:
+        logging.error(f"Error converting recipe: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to convert recipe: {str(e)}")
+
+@api_router.delete("/recipe/{recipe_id}")
+async def delete_recipe(recipe_id: str):
+    """Delete a recipe"""
+    try:
+        result = await db.recipes.delete_one({"id": recipe_id})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Recipe not found")
+        
+        return {"message": "Recipe deleted successfully"}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error deleting recipe: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to delete recipe: {str(e)}")
+
 @api_router.get("/ingredient-substitutions/{ingredient}")
 async def get_ingredient_substitutions(ingredient: str):
     """Get Western grocery store substitutions for South Asian ingredients"""
