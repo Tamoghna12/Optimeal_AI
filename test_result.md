@@ -295,3 +295,5 @@ test_plan:
 agent_communication:
     - agent: "testing"
       message: "Comprehensive backend testing completed successfully. All 6 major backend components tested and working correctly. Fixed 2 minor date serialization issues during testing. All APIs are functional including profile creation, food analysis with LLM integration, data retrieval, database operations, and error handling. Backend is ready for production use."
+    - agent: "testing"
+      message: "Starting comprehensive frontend testing for FitSpice app. Added 8 frontend tasks covering profile setup, dashboard navigation, camera functionality, file upload, food analysis workflow, food diary, daily stats, and mobile responsiveness. Testing will focus on user experience flow and mobile-first design."
