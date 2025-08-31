@@ -551,9 +551,9 @@ const EnhancedShoppingItem = ({ ingredient, index, onOptimizeItem }) => {
         
         <div className="text-right">
           <div className="font-medium text-gray-900">£{ingredient.price.toFixed(2)}</div>
-          <div className="text-xs text-gray-600">{ingredient.unit}</div>
+          <div className="text-xs text-gray-700">{ingredient.unit}</div>
           {ingredient.isSwapped && ingredient.savings && (
-            <div className="text-xs text-green-600 font-medium">
+            <div className="text-xs text-green-700 font-medium">
               Saved £{ingredient.savings.toFixed(2)}
             </div>
           )}
