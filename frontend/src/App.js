@@ -1440,18 +1440,18 @@ const RecipeDetailView = () => {
             </div>
 
             {/* Recipe Header */}
-            <div className="bg-white rounded-xl p-6 mb-6 shadow-sm">
-              <h1 className="text-3xl font-bold text-gray-800 mb-4 font-lora">{currentRecipe.name}</h1>
-              <p className="text-gray-600 mb-6 leading-relaxed">{currentRecipe.description}</p>
+            <div className="bg-white rounded-xl p-6 mb-6 shadow-sm border border-gray-200">
+              <h1 className="text-3xl font-bold text-gray-900 mb-4 font-lora">{currentRecipe.name}</h1>
+              <p className="text-gray-700 mb-6 leading-relaxed">{currentRecipe.description}</p>
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-primary">{recipe.servings}</div>
-                  <div className="text-sm text-gray-500">Servings</div>
+                  <div className="text-sm text-gray-600">Servings</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-primary">{recipe.cookingTime}</div>
-                  <div className="text-sm text-gray-500">Cook Time</div>
+                  <div className="text-sm text-gray-600">Cook Time</div>
                 </div>
                 <div className="text-center">
                   <div className={`text-2xl font-bold ${
@@ -1460,13 +1460,18 @@ const RecipeDetailView = () => {
                   }`}>
                     {recipe.difficulty}
                   </div>
-                  <div className="text-sm text-gray-500">Difficulty</div>
+                  <div className="text-sm text-gray-600">Difficulty</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-primary">{recipe.cuisine}</div>
-                  <div className="text-sm text-gray-500">Cuisine</div>
+                  <div className="text-sm text-gray-600">Cuisine</div>
                 </div>
               </div>
+
+              {/* Gamification & User Experience Features */}
+              <GamificationDashboard userId={recipeId} />
+              <RecipeRating recipeId={recipeId} />
+              <CookingTimer recipe={currentRecipe} />
 
               {/* Health Changes Alert */}
               {healthierVersion && (
