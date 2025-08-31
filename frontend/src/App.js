@@ -1972,8 +1972,8 @@ const ShoppingListView = () => {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4 font-lora">Your Weekly Shopping List</h1>
-            <p className="text-gray-700">Optimized for UK supermarkets • Perfect for Loughborough students</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-4 font-lora">Here's everything you need!</h1>
+            <p className="text-gray-700">I've organized this perfectly for your next Tesco run 🛒</p>
           </div>
 
           {isGenerating ? (
