@@ -1760,7 +1760,7 @@ const RecipeDetailView = () => {
             {/* UK Substitutes */}
             {showSubstitutes && (
               <div className="bg-white rounded-xl p-6 mb-6 shadow-sm">
-                <h3 className="text-xl font-semibold mb-4 font-lora">🇬🇧 UK Supermarket Substitutes</h3>
+                <h3 className="text-xl font-semibold mb-4 font-lora">🇬🇧 Here's what I found at Tesco for you!</h3>
                 <div className="grid gap-4">
                   {currentRecipe.ingredients.map((ingredient, index) => {
                     const pricing = ingredientsPricing[ingredient.name];
