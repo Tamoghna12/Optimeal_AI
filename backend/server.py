@@ -390,13 +390,13 @@ async def get_daily_stats(user_id: str, date_str: str):
         # Get food entries for the day
         food_entries = await db.food_entries.find({
             "user_id": user_id,
-            "date_consumed": target_date
+            "date_consumed": target_date.isoformat()
         }).to_list(100)
         
         # Get workout entries for the day
         workout_entries = await db.workout_entries.find({
             "user_id": user_id,
-            "date_logged": target_date
+            "date_logged": target_date.isoformat()
         }).to_list(100)
         
         # Calculate totals
