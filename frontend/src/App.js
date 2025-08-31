@@ -1316,7 +1316,7 @@ const ShoppingListView = () => {
 
     setIsGenerating(true);
     
-    // Simulate API call
+    // Simulate AI processing
     setTimeout(() => {
       const selectedRecipesData = getSelectedRecipesData();
       const consolidatedIngredients = {};
@@ -1329,7 +1329,7 @@ const ShoppingListView = () => {
           if (!consolidatedIngredients[key]) {
             consolidatedIngredients[key] = {
               name: ingredient.name,
-              category: ingredient.category,
+              category: ingredient.category || 'User Added',
               totalQuantity: ingredient.quantity,
               recipes: [recipe.name],
               price: ingredientsPricing[ingredient.name]?.price || 0,
