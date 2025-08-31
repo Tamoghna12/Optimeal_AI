@@ -1734,7 +1734,7 @@ const RecipeDetailView = () => {
                   disabled={isHealthifying}
                   className="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isHealthifying ? '🔄 Making Healthier...' : '✨ Make it Healthier'}
+                  {isHealthifying ? '🔄 Working my magic...' : '✨ Make this healthier for me!'}
                 </button>
                 
                 <button
