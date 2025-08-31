@@ -310,7 +310,7 @@ async def analyze_food_endpoint(file: UploadFile = File(...), user_id: str = For
             analysis_confidence=analysis['analysis_confidence'],
             image_base64=image_base64,
             meal_type=meal_type,
-            date_consumed=date.today()
+            date_consumed=date.today().isoformat()
         )
         
         # Save to database
