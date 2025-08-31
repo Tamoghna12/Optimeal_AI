@@ -1943,8 +1943,8 @@ const ShoppingListView = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">No Recipes Selected</h2>
-          <p className="text-gray-700 mb-6">Add some recipes to your weekly tray first!</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Let's pick some recipes first!</h2>
+          <p className="text-gray-700 mb-6">I need to know what you want to cook before I can make your shopping list 😊</p>
           <button 
             onClick={() => navigate('/')}
             className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors"
