@@ -1816,7 +1816,7 @@ const RecipeDetailView = () => {
                       <span className="flex-shrink-0 w-6 h-6 bg-primary text-white rounded-full text-sm flex items-center justify-center mr-3 mt-1">
                         {index + 1}
                       </span>
-                      <span className="text-gray-700 leading-relaxed">{instruction}</span>
+                      <span className="text-gray-800 leading-relaxed">{instruction}</span>
                     </li>
                   ))}
                 </ol>
