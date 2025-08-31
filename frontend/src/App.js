@@ -1722,7 +1722,7 @@ const AboutView = () => {
             <div>
               <h4 className="font-semibold mb-3 text-primary">Impact & Recognition</h4>
               <ul className="space-y-2 text-sm text-gray-700 mb-4">
-                <li>👨‍🏫 <strong>100+ Students Trained</strong> in AI/Data Science (>94% satisfaction)</li>
+                <li>👨‍🏫 <strong>100+ Students Trained</strong> in AI/Data Science (&gt;94% satisfaction)</li>
                 <li>🏆 <strong>Bio-Inspired Design Winner</strong> - National Competition India</li>
                 <li>🧬 <strong>Chem-a-Thon Champion</strong> - Chemical Engineering Hackathon</li>
                 <li>🌍 <strong>ICID Hackathon</strong> - International recognition, Buenos Aires</li>
