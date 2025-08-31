@@ -1138,14 +1138,33 @@ const RecipeDetailView = () => {
               </div>
 
               {/* Health Changes Alert */}
-              {healthierVersion && healthierVersion.healthChanges.length > 0 && (
+              {healthierVersion && (
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                  <h3 className="font-semibold text-green-800 mb-2">✨ Healthy Swaps Made:</h3>
-                  <ul className="text-sm text-green-700 space-y-1">
-                    {healthierVersion.healthChanges.map((change, index) => (
-                      <li key={index}>• {change}</li>
-                    ))}
-                  </ul>
+                  <h3 className="font-semibold text-green-800 mb-2">✨ AI Optimization Applied:</h3>
+                  <div className="text-sm text-green-700 space-y-1">
+                    <p><strong>Optimization Strategy:</strong> Advanced Health Hierarchy Algorithm</p>
+                    <ul className="list-disc list-inside mt-2 space-y-1">
+                      <li>Cooking method optimization (reduce oil, enhance nutrients)</li>
+                      <li>Smart fat source swaps (saturated → unsaturated)</li>
+                      <li>Complex carbohydrate upgrades (fiber boost)</li>
+                      <li>Micronutrient enhancement (vitamins & minerals)</li>
+                    </ul>
+                    
+                    {healthierVersion.ingredients.filter(ing => ing.isSwapped || ing.isAdded).length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-green-200">
+                        <p className="font-medium">Specific Changes:</p>
+                        <ul className="mt-1 space-y-1">
+                          {healthierVersion.ingredients
+                            .filter(ing => ing.isSwapped || ing.isAdded)
+                            .map((ing, index) => (
+                              <li key={index} className="text-xs">
+                                {ing.isSwapped ? `• ${ing.originalName} → ${ing.name}` : `• Added: ${ing.name}`}
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 
