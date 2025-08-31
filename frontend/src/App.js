@@ -360,6 +360,739 @@ const FoodAnalysis = ({ imageBlob, onAnalysisComplete, userId }) => {
   );
 };
 
+const RecipeManager = ({ userId }) => {
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [showConvertForm, setShowConvertForm] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [filterTag, setFilterTag] = useState('');
+
+  useEffect(() => {
+    loadRecipes();
+  }, [filterTag]);
+
+  const loadRecipes = async () => {
+    try {
+      setLoading(true);
+      let url = `${API}/recipes/${userId}`;
+      if (filterTag) {
+        url += `?tag=${filterTag}`;
+      }
+      const response = await axios.get(url);
+      setRecipes(response.data);
+    } catch (error) {
+      console.error('Error loading recipes:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggleFavorite = async (recipeId) => {
+    try {
+      await axios.put(`${API}/recipe/${recipeId}/favorite`);
+      loadRecipes(); // Reload to get updated favorite status
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+    }
+  };
+
+  const deleteRecipe = async (recipeId) => {
+    if (window.confirm('Are you sure you want to delete this recipe?')) {
+      try {
+        await axios.delete(`${API}/recipe/${recipeId}`);
+        loadRecipes();
+      } catch (error) {
+        console.error('Error deleting recipe:', error);
+      }
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <h2 className="heading-3">My Recipe Collection</h2>
+        <div className="flex space-x-3">
+          <button
+            onClick={() => setShowConvertForm(true)}
+            className="btn-secondary px-4 py-2"
+          >
+            🔄 Convert Recipe
+          </button>
+          <button
+            onClick={() => setShowCreateForm(true)}
+            className="btn-primary px-4 py-2"
+          >
+            ➕ Add Recipe
+          </button>
+        </div>
+      </div>
+
+      {/* Filter Tags */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setFilterTag('')}
+          className={`px-3 py-1 rounded-8 text-sm ${
+            filterTag === '' ? 'bg-brand-primary text-white' : 'bg-bg-section text-text-secondary'
+          }`}
+        >
+          All
+        </button>
+        {['vegetarian', 'quick', 'student-friendly', 'traditional', 'vegan'].map((tag) => (
+          <button
+            key={tag}
+            onClick={() => setFilterTag(tag)}
+            className={`px-3 py-1 rounded-8 text-sm capitalize ${
+              filterTag === tag ? 'bg-brand-primary text-white' : 'bg-bg-section text-text-secondary'
+            }`}
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+
+      {/* Recipe Grid */}
+      {loading ? (
+        <div className="text-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-primary mx-auto mb-4"></div>
+          <p className="text-text-secondary">Loading your recipes...</p>
+        </div>
+      ) : recipes.length === 0 ? (
+        <div className="bg-bg-card rounded-12 p-8 border border-border-light text-center">
+          <h3 className="heading-4 mb-2">No Recipes Yet</h3>
+          <p className="body-medium text-text-secondary mb-4">
+            Start building your personal recipe collection! Add traditional family recipes and get AI-powered quick conversions.
+          </p>
+          <button
+            onClick={() => setShowCreateForm(true)}
+            className="btn-primary px-6 py-3"
+          >
+            Add Your First Recipe
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {recipes.map((recipe) => (
+            <div key={recipe.id} className="bg-bg-card rounded-12 p-6 border border-border-light">
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h4 className="font-medium text-text-primary flex items-center">
+                    {recipe.name}
+                    {recipe.is_favorite && <span className="ml-2">❤️</span>}
+                  </h4>
+                  <p className="body-small text-text-secondary">{recipe.cuisine_type}</p>
+                </div>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => toggleFavorite(recipe.id)}
+                    className="text-text-secondary hover:text-red-500"
+                  >
+                    {recipe.is_favorite ? '❤️' : '🤍'}
+                  </button>
+                  <button
+                    onClick={() => deleteRecipe(recipe.id)}
+                    className="text-text-secondary hover:text-red-500"
+                  >
+                    🗑️
+                  </button>
+                </div>
+              </div>
+
+              <p className="body-small text-text-secondary mb-4">{recipe.description}</p>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                {recipe.tags.slice(0, 3).map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-2 py-1 bg-bg-section rounded-8 text-xs text-text-secondary"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-3 gap-4 mb-4 text-center">
+                <div>
+                  <div className="font-medium text-brand-primary">{recipe.total_time_minutes}min</div>
+                  <div className="body-small text-text-secondary">Total Time</div>
+                </div>
+                <div>
+                  <div className="font-medium text-green-600">{recipe.time_saved_minutes}min</div>
+                  <div className="body-small text-text-secondary">Time Saved</div>
+                </div>
+                <div>
+                  <div className="font-medium text-orange-600">{recipe.difficulty_level}</div>
+                  <div className="body-small text-text-secondary">Difficulty</div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => setSelectedRecipe(recipe)}
+                  className="btn-secondary py-2 text-sm"
+                >
+                  📖 View Traditional
+                </button>
+                <button
+                  onClick={() => setSelectedRecipe({...recipe, showQuick: true})}
+                  className="btn-primary py-2 text-sm"
+                >
+                  ⚡ Quick Version
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Recipe Creation Form */}
+      {showCreateForm && (
+        <CreateRecipeForm
+          userId={userId}
+          onClose={() => setShowCreateForm(false)}
+          onRecipeCreated={() => {
+            setShowCreateForm(false);
+            loadRecipes();
+          }}
+        />
+      )}
+
+      {/* Recipe Conversion Form */}
+      {showConvertForm && (
+        <RecipeConversionForm
+          onClose={() => setShowConvertForm(false)}
+        />
+      )}
+
+      {/* Recipe Detail Modal */}
+      {selectedRecipe && (
+        <RecipeDetailModal
+          recipe={selectedRecipe}
+          onClose={() => setSelectedRecipe(null)}
+        />
+      )}
+    </div>
+  );
+};
+
+const CreateRecipeForm = ({ userId, onClose, onRecipeCreated }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    cuisine_type: 'South Asian',
+    original_recipe: '',
+    servings: 4,
+    tags: []
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const submitData = new FormData();
+      submitData.append('user_id', userId);
+      Object.keys(formData).forEach(key => {
+        if (key === 'tags') {
+          // Convert tags array to JSON string
+          submitData.append(key, JSON.stringify(formData[key]));
+        } else {
+          submitData.append(key, formData[key]);
+        }
+      });
+
+      await axios.post(`${API}/recipe`, submitData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      onRecipeCreated();
+    } catch (error) {
+      console.error('Error creating recipe:', error);
+      alert('Failed to create recipe. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addTag = (tag) => {
+    if (tag && !formData.tags.includes(tag)) {
+      setFormData({...formData, tags: [...formData.tags, tag]});
+    }
+  };
+
+  const removeTag = (tag) => {
+    setFormData({...formData, tags: formData.tags.filter(t => t !== tag)});
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-6">
+      <div className="bg-bg-card rounded-12 p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="heading-3">Add New Recipe</h3>
+          <button onClick={onClose} className="text-text-secondary hover:text-text-primary">
+            ✕
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-text-primary mb-2">
+              Recipe Name
+            </label>
+            <input
+              type="text"
+              required
+              value={formData.name}
+              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              className="w-full px-4 py-3 border border-border-medium rounded-8 focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+              placeholder="e.g., Grandma's Chicken Curry"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-text-primary mb-2">
+              Description
+            </label>
+            <textarea
+              required
+              value={formData.description}
+              onChange={(e) => setFormData({...formData, description: e.target.value})}
+              className="w-full px-4 py-3 border border-border-medium rounded-8 focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+              rows="3"
+              placeholder="Brief description of the recipe..."
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-text-primary mb-2">
+                Cuisine Type
+              </label>
+              <select
+                value={formData.cuisine_type}
+                onChange={(e) => setFormData({...formData, cuisine_type: e.target.value})}
+                className="w-full px-4 py-3 border border-border-medium rounded-8 focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+              >
+                <option value="South Asian">South Asian</option>
+                <option value="Indian">Indian</option>
+                <option value="Pakistani">Pakistani</option>
+                <option value="Bangladeshi">Bangladeshi</option>
+                <option value="Sri Lankan">Sri Lankan</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-text-primary mb-2">
+                Servings
+              </label>
+              <input
+                type="number"
+                min="1"
+                max="20"
+                value={formData.servings}
+                onChange={(e) => setFormData({...formData, servings: parseInt(e.target.value)})}
+                className="w-full px-4 py-3 border border-border-medium rounded-8 focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-text-primary mb-2">
+              Traditional Recipe
+            </label>
+            <textarea
+              required
+              value={formData.original_recipe}
+              onChange={(e) => setFormData({...formData, original_recipe: e.target.value})}
+              className="w-full px-4 py-3 border border-border-medium rounded-8 focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+              rows="8"
+              placeholder="Paste your traditional recipe here... Include ingredients and full cooking instructions."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-text-primary mb-2">
+              Tags
+            </label>
+            <div className="flex flex-wrap gap-2 mb-3">
+              {formData.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 bg-brand-primary text-white rounded-8 text-sm flex items-center"
+                >
+                  {tag}
+                  <button
+                    type="button"
+                    onClick={() => removeTag(tag)}
+                    className="ml-2 text-white hover:text-red-200"
+                  >
+                    ✕
+                  </button>
+                </span>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {['vegetarian', 'vegan', 'gluten-free', 'dairy-free', 'spicy', 'mild', 'traditional', 'festive'].map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={() => addTag(tag)}
+                  className="px-3 py-1 bg-bg-section text-text-secondary hover:bg-brand-primary hover:text-white rounded-8 text-sm transition-all"
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex space-x-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="btn-secondary flex-1 py-3"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-primary flex-1 py-3"
+            >
+              {loading ? 'Creating Recipe...' : 'Create & Convert Recipe'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const RecipeConversionForm = ({ onClose }) => {
+  const [recipeText, setRecipeText] = useState('');
+  const [cuisineType, setCuisineType] = useState('South Asian');
+  const [converting, setConverting] = useState(false);
+  const [conversionResult, setConversionResult] = useState(null);
+
+  const handleConvert = async (e) => {
+    e.preventDefault();
+    setConverting(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('recipe_text', recipeText);
+      formData.append('cuisine_type', cuisineType);
+
+      const response = await axios.post(`${API}/recipe/convert`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      setConversionResult(response.data);
+    } catch (error) {
+      console.error('Error converting recipe:', error);
+      alert('Failed to convert recipe. Please try again.');
+    } finally {
+      setConverting(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-6">
+      <div className="bg-bg-card rounded-12 p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="heading-3">Convert Traditional Recipe</h3>
+          <button onClick={onClose} className="text-text-secondary hover:text-text-primary">
+            ✕
+          </button>
+        </div>
+
+        {!conversionResult ? (
+          <form onSubmit={handleConvert} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-text-primary mb-2">
+                Cuisine Type
+              </label>
+              <select
+                value={cuisineType}
+                onChange={(e) => setCuisineType(e.target.value)}
+                className="w-full px-4 py-3 border border-border-medium rounded-8 focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+              >
+                <option value="South Asian">South Asian</option>
+                <option value="Indian">Indian</option>
+                <option value="Pakistani">Pakistani</option>
+                <option value="Bangladeshi">Bangladeshi</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-text-primary mb-2">
+                Traditional Recipe
+              </label>
+              <textarea
+                required
+                value={recipeText}
+                onChange={(e) => setRecipeText(e.target.value)}
+                className="w-full px-4 py-3 border border-border-medium rounded-8 focus:ring-2 focus:ring-brand-primary focus:border-transparent"
+                rows="10"
+                placeholder="Paste your traditional recipe here... Our AI will convert it to a quick, student-friendly version while maintaining authentic flavors."
+              />
+            </div>
+
+            <div className="flex space-x-4">
+              <button
+                type="button"
+                onClick={onClose}
+                className="btn-secondary flex-1 py-3"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={converting || !recipeText.trim()}
+                className="btn-primary flex-1 py-3"
+              >
+                {converting ? 'Converting Recipe...' : 'Convert to Quick Version'}
+              </button>
+            </div>
+          </form>
+        ) : (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Original Recipe */}
+              <div>
+                <h4 className="heading-4 mb-3">Original Recipe</h4>
+                <div className="bg-bg-section p-4 rounded-8 h-64 overflow-y-auto">
+                  <pre className="whitespace-pre-wrap text-sm">{recipeText}</pre>
+                </div>
+              </div>
+
+              {/* Quick Version */}
+              <div>
+                <h4 className="heading-4 mb-3 flex items-center">
+                  ⚡ Quick Version 
+                  <span className="ml-2 px-2 py-1 bg-green-100 text-green-800 rounded-8 text-xs">
+                    -{conversionResult.time_saved_minutes} min
+                  </span>
+                </h4>
+                <div className="bg-bg-section p-4 rounded-8 h-64 overflow-y-auto">
+                  <pre className="whitespace-pre-wrap text-sm">{conversionResult.quick_version}</pre>
+                </div>
+              </div>
+            </div>
+
+            {/* Time Comparison */}
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div className="text-2xl font-bold text-brand-primary">{conversionResult.total_time_minutes}min</div>
+                <div className="body-small text-text-secondary">Total Time</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-green-600">{conversionResult.time_saved_minutes}min</div>
+                <div className="body-small text-text-secondary">Time Saved</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-orange-600">{conversionResult.difficulty_level}</div>
+                <div className="body-small text-text-secondary">Difficulty</div>
+              </div>
+            </div>
+
+            {/* Western Substitutions */}
+            {conversionResult.western_substitutions && conversionResult.western_substitutions.length > 0 && (
+              <div>
+                <h5 className="font-medium text-text-primary mb-3">🛒 Western Grocery Store Substitutions:</h5>
+                <div className="space-y-3">
+                  {conversionResult.western_substitutions.map((sub, index) => (
+                    <div key={index} className="bg-bg-section p-3 rounded-8">
+                      <div className="font-medium">{sub.original} → {sub.substitute}</div>
+                      <div className="body-small text-text-secondary">{sub.notes}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Cultural Notes */}
+            {conversionResult.cultural_notes && (
+              <div>
+                <h5 className="font-medium text-text-primary mb-2">🏛️ Cultural Context:</h5>
+                <p className="body-small text-text-secondary bg-bg-section p-3 rounded-8">
+                  {conversionResult.cultural_notes}
+                </p>
+              </div>
+            )}
+
+            <div className="flex space-x-4">
+              <button
+                onClick={() => {
+                  setConversionResult(null);
+                  setRecipeText('');
+                }}
+                className="btn-secondary flex-1 py-3"
+              >
+                Convert Another Recipe
+              </button>
+              <button
+                onClick={onClose}
+                className="btn-primary flex-1 py-3"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const RecipeDetailModal = ({ recipe, onClose }) => {
+  const showQuick = recipe.showQuick;
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-6">
+      <div className="bg-bg-card rounded-12 p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h3 className="heading-3">{recipe.name}</h3>
+            <p className="body-medium text-text-secondary">{recipe.cuisine_type} • {recipe.servings} servings</p>
+          </div>
+          <button onClick={onClose} className="text-text-secondary hover:text-text-primary">
+            ✕
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Recipe Content */}
+          <div>
+            <h4 className="heading-4 mb-4">
+              {showQuick ? '⚡ Quick Version' : '📖 Traditional Recipe'}
+            </h4>
+            <div className="bg-bg-section p-4 rounded-8 mb-6">
+              <pre className="whitespace-pre-wrap text-sm">
+                {showQuick ? recipe.quick_version : recipe.original_recipe}
+              </pre>
+            </div>
+
+            {showQuick && recipe.quick_instructions && recipe.quick_instructions.length > 0 && (
+              <div>
+                <h5 className="font-medium text-text-primary mb-3">Quick Steps:</h5>
+                <ol className="space-y-2">
+                  {recipe.quick_instructions.map((step, index) => (
+                    <li key={index} className="flex">
+                      <span className="flex-shrink-0 w-6 h-6 bg-brand-primary text-white rounded-full text-xs flex items-center justify-center mr-3 mt-1">
+                        {index + 1}
+                      </span>
+                      <span className="body-small">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+          </div>
+
+          {/* Recipe Info */}
+          <div className="space-y-6">
+            {/* Time & Difficulty */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-bg-section p-4 rounded-8 text-center">
+                <div className="text-xl font-bold text-brand-primary">{recipe.total_time_minutes}min</div>
+                <div className="body-small text-text-secondary">Total Time</div>
+              </div>
+              <div className="bg-bg-section p-4 rounded-8 text-center">
+                <div className="text-xl font-bold text-orange-600 capitalize">{recipe.difficulty_level}</div>
+                <div className="body-small text-text-secondary">Difficulty</div>
+              </div>
+            </div>
+
+            {showQuick && (
+              <div className="bg-green-50 border border-green-200 p-4 rounded-8">
+                <div className="flex items-center mb-2">
+                  <span className="text-green-600 mr-2">⚡</span>
+                  <span className="font-medium text-green-800">Time Saved: {recipe.time_saved_minutes} minutes</span>
+                </div>
+              </div>
+            )}
+
+            {/* Nutritional Info */}
+            {recipe.nutritional_info && (
+              <div>
+                <h5 className="font-medium text-text-primary mb-3">Nutrition per Serving</h5>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-bg-section p-3 rounded-8 text-center">
+                    <div className="font-medium text-brand-primary">{Math.round(recipe.nutritional_info.calories)}</div>
+                    <div className="body-small text-text-secondary">Calories</div>
+                  </div>
+                  <div className="bg-bg-section p-3 rounded-8 text-center">
+                    <div className="font-medium text-green-600">{Math.round(recipe.nutritional_info.protein)}g</div>
+                    <div className="body-small text-text-secondary">Protein</div>
+                  </div>
+                  <div className="bg-bg-section p-3 rounded-8 text-center">
+                    <div className="font-medium text-orange-600">{Math.round(recipe.nutritional_info.carbs)}g</div>
+                    <div className="body-small text-text-secondary">Carbs</div>
+                  </div>
+                  <div className="bg-bg-section p-3 rounded-8 text-center">
+                    <div className="font-medium text-red-600">{Math.round(recipe.nutritional_info.fat)}g</div>
+                    <div className="body-small text-text-secondary">Fat</div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Tags */}
+            {recipe.tags && recipe.tags.length > 0 && (
+              <div>
+                <h5 className="font-medium text-text-primary mb-3">Tags</h5>
+                <div className="flex flex-wrap gap-2">
+                  {recipe.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 bg-bg-section rounded-8 text-sm text-text-secondary"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Western Substitutions */}
+            {showQuick && recipe.western_substitutions && recipe.western_substitutions.length > 0 && (
+              <div>
+                <h5 className="font-medium text-text-primary mb-3">🛒 Western Store Substitutions</h5>
+                <div className="space-y-3">
+                  {recipe.western_substitutions.map((sub, index) => (
+                    <div key={index} className="bg-bg-section p-3 rounded-8">
+                      <div className="font-medium text-sm">{sub.original} → {sub.substitute}</div>
+                      <div className="body-small text-text-secondary">{sub.notes}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Cultural Notes */}
+            {recipe.cultural_notes && (
+              <div>
+                <h5 className="font-medium text-text-primary mb-2">🏛️ Cultural Context</h5>
+                <p className="body-small text-text-secondary bg-bg-section p-3 rounded-8">
+                  {recipe.cultural_notes}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex justify-center mt-8">
+          <button onClick={onClose} className="btn-primary px-8 py-3">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Dashboard = ({ profile, onSignOut }) => {
   const [activeTab, setActiveTab] = useState('scan');
   const [isCapturing, setIsCapturing] = useState(false);
