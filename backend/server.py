@@ -107,6 +107,39 @@ class IngredientSubstitution(BaseModel):
     confidence: float
     usage_notes: str
 
+class Recipe(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    name: str
+    description: str
+    cuisine_type: str  # "South Asian", "Indian", "Pakistani", "Bangladeshi", etc.
+    original_recipe: str
+    quick_version: str
+    prep_time_minutes: int
+    cook_time_minutes: int
+    total_time_minutes: int
+    difficulty_level: str  # "easy", "medium", "hard"
+    servings: int
+    ingredients: List[str]
+    instructions: List[str]
+    quick_instructions: List[str]
+    nutritional_info: Dict[str, float]  # calories, protein, carbs, fat per serving
+    tags: List[str]  # "vegetarian", "vegan", "gluten-free", etc.
+    western_substitutions: List[Dict[str, str]]
+    cultural_notes: str
+    time_saved_minutes: int
+    is_favorite: bool = False
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class RecipeCreate(BaseModel):
+    name: str
+    description: str
+    cuisine_type: str
+    original_recipe: str
+    servings: int = 4
+    tags: List[str] = []
+
 class RecipeConversion(BaseModel):
     original_recipe: str
     quick_version: str
