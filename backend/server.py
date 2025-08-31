@@ -371,7 +371,7 @@ async def log_workout(
             duration_minutes=duration_minutes,
             calories_burned=calories_burned,
             intensity=intensity,
-            date_logged=date.today()
+            date_logged=date.today().isoformat()
         )
         
         await db.workout_entries.insert_one(workout.dict())
