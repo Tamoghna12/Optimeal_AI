@@ -202,7 +202,7 @@ frontend:
           agent: "main"
           comment: "Fixed ingredient list text contrast in recipe detail view. Changed regular ingredients from no explicit color to text-gray-900 font-medium. Improved swapped ingredients from text-green-600 to text-green-700 for better contrast. Enhanced instructions text from text-gray-700 to text-gray-800. Screenshot testing shows significant improvement in readability."
 
-  - task: "Camera Capture Functionality"
+  - task: "Shopping List Item Text Contrast"
     implemented: true
     working: true
     file: "/app/frontend/src/App.js"
@@ -210,12 +210,9 @@ frontend:
     priority: "high"
     needs_retesting: false
     status_history:
-        - working: "NA"
-          agent: "testing"
-          comment: "Camera modal, video stream, and image capture functionality needs testing"
         - working: true
-          agent: "testing"
-          comment: "Camera functionality working correctly. Camera modal opens when Take Photo button is clicked, video stream initializes (with proper error handling for missing camera), and modal can be closed with Cancel button. Camera permissions are properly requested."
+          agent: "main"
+          comment: "Enhanced shopping list ingredient text contrast in EnhancedShoppingItem component. Upgraded quantity text from text-gray-700 to text-gray-800, ingredient total quantity from text-gray-800 to text-gray-900, savings text from text-green-600 to text-green-700, and recipe usage badges from text-blue-800 to text-blue-900. Improved readability across all shopping list elements."
 
   - task: "File Upload Feature"
     implemented: true
