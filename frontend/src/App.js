@@ -1585,6 +1585,231 @@ const ShoppingListView = () => {
   );
 };
 
+const AboutView = () => {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      
+      <div className="container mx-auto px-4 py-12">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-800 mb-4 font-lora">About Homeland Meals</h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Bridging cultures through technology - where artificial intelligence meets authentic South Asian cuisine
+          </p>
+        </div>
+
+        {/* App Story */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+          <div className="bg-white rounded-xl p-8 shadow-sm">
+            <h2 className="text-2xl font-semibold mb-6 font-lora">The Story Behind Homeland Meals</h2>
+            <div className="space-y-4 text-gray-700">
+              <p>
+                Homeland Meals was born from a simple yet profound observation: millions of South Asian diaspora 
+                members struggle to recreate the authentic flavors of home while adapting to local ingredients 
+                and tight budgets.
+              </p>
+              <p>
+                Our AI-powered platform solves this challenge by combining traditional recipe wisdom with 
+                cutting-edge technology, creating personalized meal planning experiences that honor culinary 
+                heritage while embracing modern convenience.
+              </p>
+              <p>
+                From Birmingham to Manchester, from London to Edinburgh, Homeland Meals helps preserve family 
+                recipes while making them accessible for the next generation of busy students and professionals.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-8">
+            <h3 className="text-xl font-semibold mb-4 font-lora">Our Mission</h3>
+            <ul className="space-y-3 text-gray-700">
+              <li className="flex items-start">
+                <span className="text-primary mr-3 mt-1">🏠</span>
+                <span><strong>Preserve Heritage:</strong> Digitally safeguard family recipes for future generations</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-3 mt-1">🧠</span>
+                <span><strong>Smart Adaptation:</strong> Use AI to make traditional recipes healthier and budget-friendly</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-3 mt-1">🛒</span>
+                <span><strong>Local Integration:</strong> Connect authentic ingredients with UK supermarket availability</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-3 mt-1">🌍</span>
+                <span><strong>Cultural Bridge:</strong> Help diaspora communities maintain culinary connections to home</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Technology Section */}
+        <div className="bg-white rounded-xl p-8 shadow-sm mb-16">
+          <h2 className="text-2xl font-semibold mb-6 font-lora text-center">Advanced AI Technology</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-green-600">Health Optimization Engine</h3>
+              <ul className="space-y-2 text-gray-700 text-sm">
+                <li>• <strong>Cooking Method Analysis:</strong> Transforms deep-frying to air-frying techniques</li>
+                <li>• <strong>Fat Source Intelligence:</strong> Swaps saturated fats for heart-healthy alternatives</li>
+                <li>• <strong>Carbohydrate Upgrading:</strong> Enhances fiber content with complex carbs</li>
+                <li>• <strong>Micronutrient Boosting:</strong> Adds vitamins and minerals while preserving taste</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-3 text-blue-600">Budget Optimization Intelligence</h3>
+              <ul className="space-y-2 text-gray-700 text-sm">
+                <li>• <strong>Protein Strategy:</strong> Identifies cost-effective protein alternatives</li>
+                <li>• <strong>Brand Intelligence:</strong> Suggests store-brand equivalents without quality loss</li>
+                <li>• <strong>Form Factor Analysis:</strong> Recommends whole ingredients over processed versions</li>
+                <li>• <strong>Seasonal Awareness:</strong> Factors in UK seasonal pricing variations</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Creator Section */}
+        <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-8 mb-16">
+          <h2 className="text-2xl font-semibold mb-8 font-lora text-center">Meet the Creator</h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Profile Image & Basic Info */}
+            <div className="text-center">
+              <div className="w-32 h-32 bg-gradient-to-br from-primary to-orange-300 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <span className="text-4xl text-white font-bold">TD</span>
+              </div>
+              <h3 className="text-xl font-semibold font-lora">Tamoghna Das</h3>
+              <p className="text-gray-600 mb-4">PhD Researcher & AI Innovation Leader</p>
+              <div className="flex justify-center space-x-3">
+                <a href="https://github.com/Tamoghna12" className="text-gray-600 hover:text-primary transition-colors">
+                  <span className="text-2xl">📱</span>
+                </a>
+                <a href="https://www.linkedin.com/in/tamoghnadas12" className="text-gray-600 hover:text-primary transition-colors">
+                  <span className="text-2xl">💼</span>
+                </a>
+                <a href="mailto:tamoghnadas.12@outlook.com" className="text-gray-600 hover:text-primary transition-colors">
+                  <span className="text-2xl">📧</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Academic & Professional Background */}
+            <div>
+              <h4 className="font-semibold mb-3 text-primary">Academic Excellence</h4>
+              <ul className="space-y-2 text-sm text-gray-700 mb-4">
+                <li>🎓 <strong>PhD Chemical Engineering</strong> - Loughborough University, UK</li>
+                <li>🧬 <strong>MSc Biochemical Engineering</strong> - UCL London, UK</li>
+                <li>📊 <strong>MSc Data Science</strong> - UEA Norwich, UK</li>
+                <li>🧪 <strong>BTech Biotechnology</strong> - VIT Vellore, India</li>
+              </ul>
+              
+              <h4 className="font-semibold mb-3 text-primary">Research Focus</h4>
+              <ul className="space-y-1 text-sm text-gray-700">
+                <li>• AI applications in biological systems</li>
+                <li>• Machine learning for healthcare</li>
+                <li>• Bioinformatics pipeline development</li>
+                <li>• Systems biology & genomics</li>
+              </ul>
+            </div>
+
+            {/* Impact & Achievements */}
+            <div>
+              <h4 className="font-semibold mb-3 text-primary">Impact & Recognition</h4>
+              <ul className="space-y-2 text-sm text-gray-700 mb-4">
+                <li>👨‍🏫 <strong>100+ Students Trained</strong> in AI/Data Science (>94% satisfaction)</li>
+                <li>🏆 <strong>Bio-Inspired Design Winner</strong> - National Competition India</li>
+                <li>🧬 <strong>Chem-a-Thon Champion</strong> - Chemical Engineering Hackathon</li>
+                <li>🌍 <strong>ICID Hackathon</strong> - International recognition, Buenos Aires</li>
+              </ul>
+              
+              <h4 className="font-semibold mb-3 text-primary">Technical Expertise</h4>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs">Python</span>
+                <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs">AI/ML</span>
+                <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs">React</span>
+                <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs">Bioinformatics</span>
+                <span className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs">Cloud Computing</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Personal Connection */}
+          <div className="mt-8 p-6 bg-white rounded-lg">
+            <h4 className="font-semibold mb-3 font-lora">Why Homeland Meals?</h4>
+            <p className="text-gray-700 text-sm italic">
+              "As a researcher living away from home, I understand the deep connection between food and cultural identity. 
+              Homeland Meals represents the intersection of my technical expertise in AI and my personal journey as part 
+              of the diaspora community. By combining cutting-edge machine learning with traditional culinary wisdom, 
+              we're not just creating recipes - we're preserving heritage and building bridges between cultures."
+            </p>
+            <p className="text-gray-600 text-xs mt-3">— Tamoghna Das, Founder & AI Architect</p>
+          </div>
+        </div>
+
+        {/* Technical Architecture */}
+        <div className="bg-white rounded-xl p-8 shadow-sm mb-16">
+          <h2 className="text-2xl font-semibold mb-6 font-lora text-center">Technical Innovation</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🧠</span>
+              </div>
+              <h3 className="font-semibold mb-2">AI-Powered Analysis</h3>
+              <p className="text-sm text-gray-600">
+                Advanced machine learning algorithms analyze recipes for health optimization and cost reduction
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🔄</span>
+              </div>
+              <h3 className="font-semibold mb-2">Real-time Processing</h3>
+              <p className="text-sm text-gray-600">
+                Instant recipe conversion and shopping list generation with UK supermarket integration
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">📱</span>
+              </div>
+              <h3 className="font-semibold mb-2">Mobile-First Design</h3>
+              <p className="text-sm text-gray-600">
+                Responsive React application optimized for student lifestyle and on-the-go meal planning
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Contact & Collaboration */}
+        <div className="bg-gradient-to-r from-primary to-orange-500 rounded-xl p-8 text-white text-center">
+          <h2 className="text-2xl font-semibold mb-4 font-lora">Let's Connect & Collaborate</h2>
+          <p className="mb-6 text-orange-100">
+            Interested in the intersection of AI, food technology, and cultural preservation? 
+            Let's discuss research collaborations, technical partnerships, or the future of diaspora-focused technology.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+              href="mailto:tamoghnadas.12@outlook.com" 
+              className="bg-white text-primary px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors"
+            >
+              📧 Email for Collaboration
+            </a>
+            <a 
+              href="https://www.linkedin.com/in/tamoghnadas12" 
+              className="bg-white/20 text-white px-6 py-3 rounded-lg font-medium hover:bg-white/30 transition-colors border border-white/30"
+            >
+              💼 Connect on LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 function App() {
   return (
     <MealTrayProvider>
