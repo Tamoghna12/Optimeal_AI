@@ -1819,6 +1819,7 @@ function App() {
             <Route path="/" element={<HomeView />} />
             <Route path="/recipe/:recipeId" element={<RecipeDetailView />} />
             <Route path="/cookbook" element={<PersonalCookbookView />} />
+            <Route path="/about" element={<AboutView />} />
             <Route path="/shopping-list" element={<ShoppingListView />} />
           </Routes>
         </div>
