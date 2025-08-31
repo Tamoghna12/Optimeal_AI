@@ -417,11 +417,188 @@ a:focus-visible {
   text-decoration: line-through;
 }
 
-/* Ingredient Swap Highlight */
-.ingredient-swapped {
-  background: linear-gradient(90deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%);
-  border-left: 3px solid #4CAF50;
-  padding-left: 1rem;
+/* Ingredient and Shopping List Styles - Enhanced Contrast */
+.ingredient-item {
+  color: var(--color-text-body);
+  font-weight: 500;
+}
+
+.ingredient-quantity {
+  color: var(--color-text-heading);
+  font-weight: 600;
+}
+
+.ingredient-name {
+  color: var(--color-text-heading);
+  font-weight: 500;
+}
+
+.shopping-item {
+  transition: all 0.2s ease;
+}
+
+.shopping-item:hover {
+  background-color: rgba(255, 107, 53, 0.05);
+}
+
+.shopping-item.completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.shopping-item .ingredient-text {
+  color: var(--color-text-heading);
+  font-weight: 500;
+}
+
+.shopping-item .quantity-text {
+  color: var(--color-text-body);
+  font-weight: 400;
+}
+
+/* Why Chip Styles for Co-Pilot Intelligence */
+.why-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.why-chip.budget {
+  background-color: #DEF7EC;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+}
+
+.why-chip.health {
+  background-color: #DBEAFE;
+  color: #1E3A8A;
+  border: 1px solid #93C5FD;
+}
+
+.why-chip.convenience {
+  background-color: #FED7AA;
+  color: #9A3412;
+  border: 1px solid #FDBA74;
+}
+
+.why-chip.flavor {
+  background-color: #FCE7F3;
+  color: #86198F;
+  border: 1px solid #F9A8D4;
+}
+
+/* Proactive Insight Badges */
+.insight-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.insight-badge:hover {
+  transform: scale(1.1);
+}
+
+.insight-badge.budget-hint {
+  background-color: #DEF7EC;
+  color: #065F46;
+  border: 2px solid #10B981;
+}
+
+.insight-badge.health-hint {
+  background-color: #DBEAFE;
+  color: #1E3A8A;
+  border: 2px solid #3B82F6;
+}
+
+.insight-badge.convenience-hint {
+  background-color: #FED7AA;
+  color: #9A3412;
+  border: 2px solid #F59E0B;
+}
+
+/* Tooltip Styles */
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: var(--color-text-heading);
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1000;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--color-text-heading) transparent transparent transparent;
+}
+
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Co-Pilot Dialog Styles */
+.copilot-dialog {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 24px;
+  color: white;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.copilot-option {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.copilot-option:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.copilot-option.selected {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 /* Loading States */
