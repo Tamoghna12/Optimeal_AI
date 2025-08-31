@@ -282,7 +282,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "All backend APIs tested and working"
+    - "Profile Setup Form"
+    - "Dashboard Navigation"
+    - "Camera Capture Functionality"
+    - "File Upload Feature"
+    - "Food Analysis Workflow"
+    - "Mobile Responsiveness"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
