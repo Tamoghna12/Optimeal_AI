@@ -38,5 +38,22 @@
   "Bay Leaves": { "price": 1.20, "unit": "10g pack" },
   "Cinnamon Stick": { "price": 1.80, "unit": "25g pack" },
   "Green Cardamom": { "price": 4.20, "unit": "50g pack" },
-  "Ghee": { "price": 4.50, "unit": "500g jar", "budget_alternative": "Butter", "savings": 2.90 }
+  "Ghee": { "price": 4.50, "unit": "500g jar", "budget_alternative": "Butter", "savings": 2.90 },
+  "Toor Dal (Pigeon Peas)": { "price": 3.20, "unit": "500g bag" },
+  "Black Urad Dal": { "price": 3.80, "unit": "500g bag" },
+  "Tamarind Paste": { "price": 2.80, "unit": "200g jar" },
+  "Sambar Powder": { "price": 2.60, "unit": "100g jar" },
+  "Mustard Seeds": { "price": 1.40, "unit": "100g jar" },
+  "Curry Leaves": { "price": 1.80, "unit": "10g pack", "budget_alternative": "Bay Leaves", "savings": 0.80 },
+  "Coconut (Desiccated)": { "price": 1.20, "unit": "200g pack" },
+  "Semolina (Rava)": { "price": 1.80, "unit": "1kg bag" },
+  "Drumstick": { "price": 4.50, "unit": "per kg", "budget_alternative": "Green Beans", "savings": 1.50 },
+  "Okra": { "price": 3.80, "unit": "per kg" },
+  "Aubergine": { "price": 2.20, "unit": "per kg" },
+  "Green Beans": { "price": 3.00, "unit": "per kg" },
+  "Green Peas": { "price": 2.40, "unit": "per kg" },
+  "Carrot": { "price": 1.20, "unit": "per kg" },
+  "Cashew Nuts": { "price": 8.50, "unit": "200g pack", "budget_alternative": "Peanuts", "savings": 5.00 },
+  "Fresh Coriander": { "price": 0.80, "unit": "30g pack" },
+  "Lemon": { "price": 2.50, "unit": "per kg" }
 }
