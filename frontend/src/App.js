@@ -2134,49 +2134,35 @@ const ShoppingListView = () => {
                     
                     <div className="space-y-3">
                       {ingredients.map((ingredient, index) => (
-                        <div key={index} className={`flex items-center justify-between p-3 rounded-lg border ${
-                          ingredient.isSwapped ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'
-                        }`}>
-                          <div className="flex items-center">
-                            <input 
-                              type="checkbox" 
-                              className="mr-3 w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary"
-                            />
-                            <div>
-                              <div className="font-medium text-gray-900">
-                                {ingredient.name}
-                                {ingredient.isSwapped && (
-                                  <span className="ml-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
-                                    SWAPPED: {ingredient.originalName} → {ingredient.name}
-                                  </span>
-                                )}
-                              </div>
-                              <div className="text-sm text-gray-600">
-                                {ingredient.totalQuantity}
-                                {ingredient.recipes.length > 1 && (
-                                  <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">
-                                    Used in {ingredient.recipes.length} recipes
-                                  </span>
-                                )}
-                                {ingredient.swapReason && (
-                                  <div className="text-xs text-green-600 mt-1 font-medium">
-                                    💡 {ingredient.swapReason}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <div className="text-right">
-                            <div className="font-medium text-gray-900">£{ingredient.price.toFixed(2)}</div>
-                            <div className="text-xs text-gray-600">{ingredient.unit}</div>
-                            {ingredient.isSwapped && ingredient.savings && (
-                              <div className="text-xs text-green-600 font-medium">
-                                Save £{ingredient.savings.toFixed(2)}
-                              </div>
-                            )}
-                          </div>
-                        </div>
+                        <EnhancedShoppingItem
+                          key={index}
+                          ingredient={ingredient}
+                          index={index}
+                          onOptimizeItem={(idx, optimizedIngredient) => {
+                            // Update the specific ingredient in the shopping list
+                            const updatedCategories = { ...shoppingList.categories };
+                            updatedCategories[category][idx] = optimizedIngredient;
+                            
+                            // Recalculate total cost and savings
+                            let newTotalCost = 0;
+                            let totalSavings = 0;
+                            
+                            Object.values(updatedCategories).forEach(categoryIngredients => {
+                              categoryIngredients.forEach(ing => {
+                                newTotalCost += ing.price;
+                                if (ing.savings) totalSavings += ing.savings;
+                              });
+                            });
+                            
+                            setShoppingList({
+                              ...shoppingList,
+                              categories: updatedCategories,
+                              totalCost: newTotalCost,
+                              totalSavings: totalSavings,
+                              originalCost: shoppingList.originalCost || shoppingList.totalCost
+                            });
+                          }}
+                        />
                       ))}
                     </div>
                   </div>
