@@ -2120,7 +2120,7 @@ const ShoppingListView = () => {
                   onClick={() => window.print()}
                   className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg font-medium transition-colors"
                 >
-                  🖨️ Print Shopping List
+                  📝 Print this for me
                 </button>
                 
                 <button
