@@ -1550,7 +1550,7 @@ const HomeView = () => {
               <div className="flex-1">
                 <input
                   type="text"
-                  placeholder="Search recipes..."
+                  placeholder="What are you craving today?"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent"
