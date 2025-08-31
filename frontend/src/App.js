@@ -2025,7 +2025,7 @@ const ShoppingListView = () => {
                       disabled={isOptimizing}
                       className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {isOptimizing ? '🔄 Optimizing...' : '💰 My budget is tight. Optimize it!'}
+                      {isOptimizing ? '🔄 Finding better deals...' : '💰 Help me save some money!'}
                     </button>
                   </div>
                 )}
