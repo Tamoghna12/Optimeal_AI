@@ -1794,10 +1794,10 @@ const RecipeDetailView = () => {
                   {currentRecipe.ingredients.map((ingredient, index) => (
                     <li key={index} className="flex items-center">
                       <span className="w-2 h-2 bg-primary rounded-full mr-3 flex-shrink-0"></span>
-                      <span className={ingredient.isSwapped ? 'text-green-600 font-medium' : ''}>
+                      <span className={ingredient.isSwapped ? 'text-green-700 font-medium' : 'text-gray-900 font-medium'}>
                         {ingredient.quantity} {ingredient.name}
                         {ingredient.isSwapped && (
-                          <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full ml-2">
+                          <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full ml-2">
                             Healthier swap!
                           </span>
                         )}
