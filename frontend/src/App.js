@@ -355,6 +355,284 @@ const applyBudgetOptimization = (shoppingList) => {
   return optimizedList;
 };
 
+// Co-Pilot Intelligence Components
+const WhyChip = ({ category, reason, savings }) => {
+  const getChipStyle = (category) => {
+    if (category?.includes('BUDGET')) return 'budget';
+    if (category?.includes('HEALTH')) return 'health';
+    if (category?.includes('CONVENIENCE')) return 'convenience';
+    if (category?.includes('FLAVOR')) return 'flavor';
+    return 'budget';
+  };
+
+  const getIcon = (category) => {
+    if (category?.includes('BUDGET')) return '🐷';
+    if (category?.includes('HEALTH')) return '❤️';
+    if (category?.includes('CONVENIENCE')) return '⚡';
+    if (category?.includes('FLAVOR')) return '🌟';
+    return '💡';
+  };
+
+  return (
+    <span className={`why-chip ${getChipStyle(category)}`}>
+      <span className="mr-1">{getIcon(category)}</span>
+      {reason}
+      {savings > 0 && <span className="ml-1">(-£{savings.toFixed(2)})</span>}
+    </span>
+  );
+};
+
+const ProactiveInsightBadge = ({ ingredient, onHover }) => {
+  const pricing = ingredientsPricing[ingredient.name];
+  
+  if (!pricing || (!pricing.budget_alternative && !pricing.health_alternative)) {
+    return null;
+  }
+
+  const getHintType = () => {
+    if (pricing.budget_alternative && pricing.savings > 0) return 'budget-hint';
+    if (pricing.health_alternative) return 'health-hint';
+    return 'convenience-hint';
+  };
+
+  const getTooltipText = () => {
+    if (pricing.budget_alternative && pricing.savings > 0) {
+      return `💰 Save £${pricing.savings.toFixed(2)} with ${pricing.budget_alternative}`;
+    }
+    if (pricing.health_alternative) {
+      return `🌿 Healthier option available: ${pricing.health_alternative}`;
+    }
+    return `⚡ Smart alternative available`;
+  };
+
+  const getHintIcon = () => {
+    if (pricing.budget_alternative && pricing.savings > 0) return '🐷';
+    if (pricing.health_alternative) return '🌿';
+    return '⚡';
+  };
+
+  return (
+    <div className="tooltip-container">
+      <div className={`insight-badge ${getHintType()}`}>
+        <span style={{ fontSize: '10px' }}>{getHintIcon()}</span>
+      </div>
+      <span className="tooltip-text">{getTooltipText()}</span>
+    </div>
+  );
+};
+
+const CoPilotDialog = ({ isOpen, onClose, ingredient, onSelection }) => {
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  if (!isOpen || !ingredient) return null;
+
+  const pricing = ingredientsPricing[ingredient.name];
+  const options = [];
+
+  // Budget option
+  if (pricing?.budget_alternative && pricing.savings > 0) {
+    options.push({
+      id: 'budget',
+      type: 'Budget-Friendly',
+      alternative: pricing.budget_alternative,
+      savings: pricing.savings,
+      icon: '🐷',
+      description: `Save £${pricing.savings.toFixed(2)} while maintaining great taste`,
+      reasoning: pricing.reason || 'More economical choice'
+    });
+  }
+
+  // Health option  
+  if (pricing?.health_alternative) {
+    options.push({
+      id: 'health',
+      type: 'Health-Conscious',
+      alternative: pricing.health_alternative,
+      savings: pricing.health_savings || 0,
+      icon: '🌿',
+      description: 'Better nutritional profile for your wellness goals',
+      reasoning: 'Supports heart health and reduces saturated fat intake'
+    });
+  }
+
+  // Keep original option
+  options.push({
+    id: 'original',
+    type: 'Keep Original',
+    alternative: ingredient.name,
+    savings: 0,
+    icon: '✨',
+    description: 'Stick with the authentic, traditional ingredient',
+    reasoning: 'Maintains the most authentic flavor profile'
+  });
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
+      <div className="copilot-dialog max-w-2xl w-full">
+        <div className="flex items-center mb-6">
+          <div className="text-2xl mr-3">🤖</div>
+          <div>
+            <h3 className="text-xl font-semibold">AI Co-Pilot Suggestion</h3>
+            <p className="text-white/80">I found a few ways to optimize <strong>{ingredient.name}</strong> for your recipe:</p>
+          </div>
+        </div>
+
+        <div className="space-y-3 mb-6">
+          {options.map((option) => (
+            <div
+              key={option.id}
+              className={`copilot-option ${selectedOption?.id === option.id ? 'selected' : ''}`}
+              onClick={() => setSelectedOption(option)}
+            >
+              <div className="flex items-start justify-between">
+                <div className="flex items-start">
+                  <span className="text-2xl mr-3">{option.icon}</span>
+                  <div>
+                    <h4 className="font-semibold text-lg">{option.type}</h4>
+                    <p className="text-white/90 font-medium">{option.alternative}</p>
+                    <p className="text-white/70 text-sm mt-1">{option.description}</p>
+                    <p className="text-white/60 text-xs mt-2 italic">💡 {option.reasoning}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  {option.savings > 0 && (
+                    <div className="text-green-300 font-bold">
+                      Save £{option.savings.toFixed(2)}
+                    </div>
+                  )}
+                  {option.savings < 0 && (
+                    <div className="text-yellow-300 font-bold">
+                      +£{Math.abs(option.savings).toFixed(2)}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex space-x-4">
+          <button
+            onClick={onClose}
+            className="flex-1 bg-white/20 hover:bg-white/30 text-white py-3 px-6 rounded-lg font-medium transition-colors"
+          >
+            Maybe Later
+          </button>
+          <button
+            onClick={() => {
+              if (selectedOption) {
+                onSelection(selectedOption);
+                onClose();
+              }
+            }}
+            disabled={!selectedOption}
+            className="flex-1 bg-white hover:bg-white/90 text-purple-800 py-3 px-6 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Apply This Choice
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Enhanced Shopping List Components with Co-Pilot Intelligence
+const EnhancedShoppingItem = ({ ingredient, index, onOptimizeItem }) => {
+  const [showCoPilotDialog, setShowCoPilotDialog] = useState(false);
+
+  const handleCoPilotSelection = (option) => {
+    if (option.id !== 'original') {
+      const optimizedIngredient = {
+        ...ingredient,
+        name: option.alternative,
+        originalName: ingredient.name,
+        isSwapped: true,
+        savings: option.savings,
+        swapReason: option.reasoning,
+        category: option.type,
+        price: ingredient.price - (option.savings || 0)
+      };
+      onOptimizeItem && onOptimizeItem(index, optimizedIngredient);
+    }
+  };
+
+  return (
+    <>
+      <div className={`flex items-center justify-between p-4 rounded-lg border transition-all ${
+        ingredient.isSwapped ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'
+      }`}>
+        <div className="flex items-center">
+          <input 
+            type="checkbox" 
+            className="mr-3 w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary"
+          />
+          <div className="flex-1">
+            <div className="flex items-center">
+              <span className="font-medium text-gray-900 ingredient-name">
+                {ingredient.name}
+              </span>
+              
+              {ingredient.isSwapped && ingredient.category && ingredient.swapReason && (
+                <WhyChip 
+                  category={ingredient.category}
+                  reason={ingredient.swapReason}
+                  savings={ingredient.savings}
+                />
+              )}
+              
+              {!ingredient.isSwapped && (
+                <ProactiveInsightBadge 
+                  ingredient={ingredient}
+                  onHover={() => setShowCoPilotDialog(true)}
+                />
+              )}
+            </div>
+            
+            <div className="text-sm text-gray-600 quantity-text">
+              <span className="ingredient-quantity">{ingredient.totalQuantity}</span>
+              {ingredient.recipes.length > 1 && (
+                <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">
+                  Used in {ingredient.recipes.length} recipes
+                </span>
+              )}
+              {ingredient.swapReason && (
+                <div className="text-xs text-green-600 mt-1 font-medium">
+                  💡 {ingredient.swapReason}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        
+        <div className="text-right">
+          <div className="font-medium text-gray-900">£{ingredient.price.toFixed(2)}</div>
+          <div className="text-xs text-gray-600">{ingredient.unit}</div>
+          {ingredient.isSwapped && ingredient.savings && (
+            <div className="text-xs text-green-600 font-medium">
+              Saved £{ingredient.savings.toFixed(2)}
+            </div>
+          )}
+          {!ingredient.isSwapped && ingredientsPricing[ingredient.name]?.budget_alternative && (
+            <button
+              onClick={() => setShowCoPilotDialog(true)}
+              className="text-xs text-primary hover:text-primary-dark mt-1 font-medium"
+            >
+              💡 Optimize
+            </button>
+          )}
+        </div>
+      </div>
+
+      <CoPilotDialog
+        isOpen={showCoPilotDialog}
+        onClose={() => setShowCoPilotDialog(false)}
+        ingredient={ingredient}
+        onSelection={handleCoPilotSelection}
+      />
+    </>
+  );
+};
+
 // Enhanced User Experience Features
 const CookingTimer = ({ recipe, currentStep, onStepComplete }) => {
   const [timeRemaining, setTimeRemaining] = useState(0);
