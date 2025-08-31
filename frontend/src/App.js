@@ -87,6 +87,7 @@ const MealTrayProvider = ({ children }) => {
 // Components
 const Header = () => {
   const navigate = useNavigate();
+  const location = window.location;
   
   return (
     <header className="bg-white shadow-sm border-b border-gray-100">
@@ -99,9 +100,21 @@ const Header = () => {
             <h1 className="text-2xl font-bold text-primary font-lora">Homeland Meals</h1>
             <p className="text-sm text-gray-600 font-inter">Your taste of home, healthier and smarter</p>
           </div>
-          <div className="hidden md:flex items-center space-x-6">
-            <button className="text-gray-600 hover:text-primary transition-colors">Browse</button>
-            <button className="text-gray-600 hover:text-primary transition-colors">About</button>
+          <div className="flex items-center space-x-6">
+            <button 
+              onClick={() => navigate('/')}
+              className={`text-gray-600 hover:text-primary transition-colors ${location.pathname === '/' ? 'text-primary font-medium' : ''}`}
+            >
+              Browse
+            </button>
+            <button 
+              onClick={() => navigate('/cookbook')}
+              className={`text-gray-600 hover:text-primary transition-colors flex items-center ${location.pathname === '/cookbook' ? 'text-primary font-medium' : ''}`}
+            >
+              <span className="mr-1">📖</span>
+              My Cookbook
+            </button>
+            <button className="text-gray-600 hover:text-primary transition-colors hidden md:block">About</button>
           </div>
         </div>
       </div>
