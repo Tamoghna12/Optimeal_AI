@@ -122,7 +122,12 @@ const Header = () => {
               <span className="mr-1">📖</span>
               My Cookbook
             </button>
-            <button className="text-gray-600 hover:text-primary transition-colors hidden md:block">About</button>
+            <button 
+              onClick={() => navigate('/about')}
+              className="text-gray-600 hover:text-primary transition-colors hidden md:block"
+            >
+              About
+            </button>
           </div>
         </div>
       </div>
