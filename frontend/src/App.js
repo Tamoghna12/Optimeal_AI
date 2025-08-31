@@ -1979,8 +1979,8 @@ const ShoppingListView = () => {
           {isGenerating ? (
             <div className="bg-white rounded-xl p-8 shadow-sm text-center border border-gray-200">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-              <h3 className="text-lg font-semibold mb-2 text-gray-900">Generating Your Shopping List</h3>
-              <p className="text-gray-700">Consolidating ingredients and calculating costs...</p>
+              <h3 className="text-lg font-semibold mb-2 text-gray-900">I'm preparing your list...</h3>
+              <p className="text-gray-700">Checking what you need and finding the best prices 💭</p>
             </div>
           ) : (
             <>
