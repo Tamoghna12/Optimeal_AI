@@ -1712,12 +1712,16 @@ const ShoppingListView = () => {
     }, 2000);
   };
 
+  const handleOrderOnline = (store, deliverySlot) => {
+    alert(`🛒 Redirecting to ${store.toUpperCase()} online shopping...\nDelivery: ${deliverySlot}\nThis would integrate with actual supermarket APIs in production.`);
+  };
+
   if (selectedRecipes.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">No Recipes Selected</h2>
-          <p className="text-gray-600 mb-6">Add some recipes to your weekly tray first!</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">No Recipes Selected</h2>
+          <p className="text-gray-700 mb-6">Add some recipes to your weekly tray first!</p>
           <button 
             onClick={() => navigate('/')}
             className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors"
@@ -1737,7 +1741,7 @@ const ShoppingListView = () => {
         {/* Navigation */}
         <button 
           onClick={() => navigate('/')}
-          className="flex items-center text-gray-600 hover:text-primary mb-6 transition-colors"
+          className="flex items-center text-gray-700 hover:text-primary mb-6 transition-colors font-medium"
         >
           ← Back to Recipes
         </button>
@@ -1745,34 +1749,34 @@ const ShoppingListView = () => {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4 font-lora">Your Weekly Shopping List</h1>
-            <p className="text-gray-600">Optimized for UK supermarkets • Perfect for Loughborough students</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-4 font-lora">Your Weekly Shopping List</h1>
+            <p className="text-gray-700">Optimized for UK supermarkets • Perfect for Loughborough students</p>
           </div>
 
           {isGenerating ? (
-            <div className="bg-white rounded-xl p-8 shadow-sm text-center">
+            <div className="bg-white rounded-xl p-8 shadow-sm text-center border border-gray-200">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-              <h3 className="text-lg font-semibold mb-2">Generating Your Shopping List</h3>
-              <p className="text-gray-600">Consolidating ingredients and calculating costs...</p>
+              <h3 className="text-lg font-semibold mb-2 text-gray-900">Generating Your Shopping List</h3>
+              <p className="text-gray-700">Consolidating ingredients and calculating costs...</p>
             </div>
           ) : (
             <>
               {/* Summary */}
-              <div className="bg-white rounded-xl p-6 shadow-sm mb-8">
+              <div className="bg-white rounded-xl p-6 shadow-sm mb-8 border border-gray-200">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
                   <div>
                     <div className="text-2xl font-bold text-primary">{shoppingList.recipes.length}</div>
-                    <div className="text-sm text-gray-500">Recipes</div>
+                    <div className="text-sm text-gray-600">Recipes</div>
                   </div>
                   <div>
                     <div className="text-2xl font-bold text-primary">{shoppingList.totalItems}</div>
-                    <div className="text-sm text-gray-500">Ingredients</div>
+                    <div className="text-sm text-gray-600">Ingredients</div>
                   </div>
                   <div>
                     <div className={`text-2xl font-bold ${isOptimized ? 'text-green-600' : 'text-primary'}`}>
                       £{shoppingList.totalCost.toFixed(2)}
                     </div>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-gray-600">
                       {isOptimized ? 'Optimized Total' : 'Estimated Total'}
                     </div>
                   </div>
@@ -1780,12 +1784,12 @@ const ShoppingListView = () => {
                     {isOptimized && shoppingList.totalSavings > 0 ? (
                       <>
                         <div className="text-2xl font-bold text-green-600">£{shoppingList.totalSavings.toFixed(2)}</div>
-                        <div className="text-sm text-gray-500">Total Savings</div>
+                        <div className="text-sm text-gray-600">Total Savings</div>
                       </>
                     ) : (
                       <>
                         <div className="text-2xl font-bold text-orange-600">Student</div>
-                        <div className="text-sm text-gray-500">Budget Friendly</div>
+                        <div className="text-sm text-gray-600">Budget Friendly</div>
                       </>
                     )}
                   </div>
@@ -1815,18 +1819,24 @@ const ShoppingListView = () => {
                 )}
               </div>
 
+              {/* Smart Shopping Integration */}
+              <SmartShoppingIntegration 
+                shoppingList={shoppingList}
+                onOrderOnline={handleOrderOnline}
+              />
+
               {/* Selected Recipes */}
-              <div className="bg-white rounded-xl p-6 shadow-sm mb-8">
-                <h3 className="font-semibold mb-4 font-lora">Recipes in Your Weekly Plan</h3>
+              <div className="bg-white rounded-xl p-6 shadow-sm mb-8 border border-gray-200">
+                <h3 className="font-semibold mb-4 font-lora text-gray-900">Recipes in Your Weekly Plan</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {shoppingList.recipes.map(recipe => (
-                    <div key={recipe.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                    <div key={recipe.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
                       <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center">
                         <span className="text-lg">🍛</span>
                       </div>
                       <div>
-                        <h4 className="font-medium text-sm">{recipe.name}</h4>
-                        <p className="text-xs text-gray-500">{recipe.servings} servings</p>
+                        <h4 className="font-medium text-sm text-gray-900">{recipe.name}</h4>
+                        <p className="text-xs text-gray-600">{recipe.servings} servings</p>
                       </div>
                     </div>
                   ))}
@@ -1836,8 +1846,8 @@ const ShoppingListView = () => {
               {/* Shopping List by Category */}
               <div className="space-y-6">
                 {Object.entries(shoppingList.categories).map(([category, ingredients]) => (
-                  <div key={category} className="bg-white rounded-xl p-6 shadow-sm">
-                    <h3 className="text-lg font-semibold mb-4 font-lora flex items-center">
+                  <div key={category} className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                    <h3 className="text-lg font-semibold mb-4 font-lora flex items-center text-gray-900">
                       <span className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3">
                         {ingredients.length}
                       </span>
@@ -1846,37 +1856,42 @@ const ShoppingListView = () => {
                     
                     <div className="space-y-3">
                       {ingredients.map((ingredient, index) => (
-                        <div key={index} className={`flex items-center justify-between p-3 rounded-lg ${
-                          ingredient.isSwapped ? 'bg-green-50 border border-green-200' : 'bg-gray-50'
+                        <div key={index} className={`flex items-center justify-between p-3 rounded-lg border ${
+                          ingredient.isSwapped ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'
                         }`}>
                           <div className="flex items-center">
                             <input 
                               type="checkbox" 
-                              className="mr-3 w-4 h-4 text-primary"
+                              className="mr-3 w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary"
                             />
                             <div>
-                              <div className="font-medium">
+                              <div className="font-medium text-gray-900">
                                 {ingredient.name}
                                 {ingredient.isSwapped && (
-                                  <span className="ml-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
+                                  <span className="ml-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
                                     SWAPPED: {ingredient.originalName} → {ingredient.name}
                                   </span>
                                 )}
                               </div>
-                              <div className="text-sm text-gray-500">
+                              <div className="text-sm text-gray-600">
                                 {ingredient.totalQuantity}
                                 {ingredient.recipes.length > 1 && (
-                                  <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                                  <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">
                                     Used in {ingredient.recipes.length} recipes
                                   </span>
+                                )}
+                                {ingredient.swapReason && (
+                                  <div className="text-xs text-green-600 mt-1 font-medium">
+                                    💡 {ingredient.swapReason}
+                                  </div>
                                 )}
                               </div>
                             </div>
                           </div>
                           
                           <div className="text-right">
-                            <div className="font-medium">£{ingredient.price.toFixed(2)}</div>
-                            <div className="text-xs text-gray-500">{ingredient.unit}</div>
+                            <div className="font-medium text-gray-900">£{ingredient.price.toFixed(2)}</div>
+                            <div className="text-xs text-gray-600">{ingredient.unit}</div>
                             {ingredient.isSwapped && ingredient.savings && (
                               <div className="text-xs text-green-600 font-medium">
                                 Save £{ingredient.savings.toFixed(2)}
