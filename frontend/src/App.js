@@ -1767,16 +1767,16 @@ const RecipeDetailView = () => {
                     return (
                       <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                         <div>
-                          <span className="font-medium">{ingredient.name}</span>
-                          <span className="text-gray-500 ml-2">({ingredient.quantity})</span>
+                          <span className="font-medium text-gray-900">{ingredient.name}</span>
+                          <span className="text-gray-700 ml-2">({ingredient.quantity})</span>
                         </div>
                         {pricing && pricing.budget_alternative ? (
                           <div className="text-sm">
-                            <span className="text-blue-600">Available: {pricing.budget_alternative}</span>
-                            <span className="text-green-600 ml-2">(Save £{pricing.savings?.toFixed(2)})</span>
+                            <span className="text-blue-700">Available: {pricing.budget_alternative}</span>
+                            <span className="text-green-700 ml-2">(Save £{pricing.savings?.toFixed(2)})</span>
                           </div>
                         ) : (
-                          <span className="text-green-600 text-sm">✓ Available at Tesco/Asda</span>
+                          <span className="text-green-700 text-sm">✓ Available at Tesco/Asda</span>
                         )}
                       </div>
                     );
