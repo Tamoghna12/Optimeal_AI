@@ -85,7 +85,7 @@ const MealTrayProvider = ({ children }) => {
       addRecipe,
       removeRecipe,
       clearTray,
-      getSelectedRecipesData: () => selectedRecipes.map(id => recipesData.find(r => r.id === id)).filter(Boolean)
+      getSelectedRecipesData
     }}>
       {children}
     </MealTrayContext.Provider>
