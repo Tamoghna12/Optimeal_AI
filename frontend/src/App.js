@@ -122,6 +122,663 @@ const Header = () => {
   );
 };
 
+// Cookbook Management Functions
+const loadUserCookbook = () => {
+  try {
+    const savedCookbook = localStorage.getItem('homeland_user_cookbook');
+    return savedCookbook ? JSON.parse(savedCookbook) : [];
+  } catch (error) {
+    console.error('Error loading cookbook:', error);
+    return [];
+  }
+};
+
+const saveUserCookbook = (cookbook) => {
+  try {
+    localStorage.setItem('homeland_user_cookbook', JSON.stringify(cookbook));
+    return true;
+  } catch (error) {
+    console.error('Error saving cookbook:', error);
+    return false;
+  }
+};
+
+// Advanced AI Optimization Logic
+const applyHealthOptimization = (recipe) => {
+  const optimizedRecipe = JSON.parse(JSON.stringify(recipe)); // Deep clone
+  const changes = [];
+
+  // 1. Cooking Method Modification
+  optimizedRecipe.instructions = optimizedRecipe.instructions.map(instruction => {
+    let modifiedInstruction = instruction;
+    
+    if (instruction.toLowerCase().includes('deep fry') || instruction.toLowerCase().includes('fry in oil')) {
+      modifiedInstruction = instruction.replace(/deep fry|fry in oil/gi, 'air-fry at 200°C or bake at 180°C');
+      changes.push('Modified cooking method from deep frying to healthier air-frying/baking to reduce oil content');
+    }
+    
+    if (instruction.toLowerCase().includes('fry') && !instruction.toLowerCase().includes('air-fry')) {
+      modifiedInstruction = modifiedInstruction.replace(/fry/gi, 'pan-sear with minimal oil');
+      changes.push('Reduced oil usage in cooking method for better heart health');
+    }
+    
+    return modifiedInstruction;
+  });
+
+  // 2. Fat Source Swap
+  optimizedRecipe.ingredients = optimizedRecipe.ingredients.map(ingredient => {
+    let modifiedIngredient = { ...ingredient };
+    
+    if (ingredient.name.toLowerCase().includes('ghee') || ingredient.name.toLowerCase().includes('butter')) {
+      modifiedIngredient.name = 'Extra Virgin Olive Oil';
+      modifiedIngredient.originalName = ingredient.name;
+      modifiedIngredient.isSwapped = true;
+      changes.push(`Replaced ${ingredient.name} with Extra Virgin Olive Oil to reduce saturated fat and add heart-healthy monounsaturated fats`);
+    }
+    
+    if (ingredient.name.toLowerCase().includes('double cream') || ingredient.name.toLowerCase().includes('heavy cream')) {
+      modifiedIngredient.name = 'Greek Yogurt';
+      modifiedIngredient.originalName = ingredient.name;
+      modifiedIngredient.isSwapped = true;
+      changes.push(`Replaced ${ingredient.name} with Greek Yogurt to reduce fat and increase protein content`);
+    }
+    
+    if (ingredient.name.toLowerCase().includes('vegetable oil')) {
+      modifiedIngredient.name = 'Avocado Oil';
+      modifiedIngredient.originalName = ingredient.name;
+      modifiedIngredient.isSwapped = true;
+      changes.push('Switched to Avocado Oil for higher smoke point and better nutrient profile');
+    }
+    
+    return modifiedIngredient;
+  });
+
+  // 3. Carbohydrate Source Swap
+  optimizedRecipe.ingredients = optimizedRecipe.ingredients.map(ingredient => {
+    let modifiedIngredient = { ...ingredient };
+    
+    if (ingredient.name.toLowerCase().includes('basmati rice') && !ingredient.name.toLowerCase().includes('brown')) {
+      modifiedIngredient.name = 'Brown Basmati Rice';
+      modifiedIngredient.originalName = ingredient.name;
+      modifiedIngredient.isSwapped = true;
+      changes.push('Upgraded to Brown Basmati Rice for higher fiber and slower glucose release');
+    }
+    
+    if (ingredient.name.toLowerCase().includes('plain flour') || ingredient.name.toLowerCase().includes('all-purpose flour')) {
+      modifiedIngredient.name = 'Whole Wheat Flour';
+      modifiedIngredient.originalName = ingredient.name;
+      modifiedIngredient.isSwapped = true;
+      changes.push('Switched to Whole Wheat Flour for increased fiber and B-vitamins');
+    }
+    
+    return modifiedIngredient;
+  });
+
+  // 4. Nutrient & Fiber Boost
+  const hasVegetables = optimizedRecipe.ingredients.some(ing => 
+    ing.category === 'Fresh Produce' && 
+    (ing.name.toLowerCase().includes('spinach') || 
+     ing.name.toLowerCase().includes('bell pepper') ||
+     ing.name.toLowerCase().includes('carrot') ||
+     ing.name.toLowerCase().includes('peas'))
+  );
+
+  if (!hasVegetables && (recipe.name.toLowerCase().includes('chicken') || recipe.name.toLowerCase().includes('curry'))) {
+    optimizedRecipe.ingredients.push({
+      name: 'Fresh Spinach',
+      quantity: '100g',
+      category: 'Fresh Produce',
+      isAdded: true
+    });
+    changes.push('Added spinach to boost iron, folate, and fiber content while maintaining authentic flavor');
+  }
+
+  // 5. Protein Enhancement
+  if (recipe.name.toLowerCase().includes('dal') || recipe.name.toLowerCase().includes('lentil')) {
+    const hasQuinoa = optimizedRecipe.ingredients.some(ing => ing.name.toLowerCase().includes('quinoa'));
+    if (!hasQuinoa) {
+      optimizedRecipe.ingredients.push({
+        name: 'Quinoa',
+        quantity: '50g',
+        category: 'Rice & Grains',
+        isAdded: true
+      });
+      changes.push('Added quinoa to create a complete protein profile with all essential amino acids');
+    }
+  }
+
+  return {
+    healthierRecipe: optimizedRecipe,
+    summaryOfChanges: changes
+  };
+};
+
+const applyBudgetOptimization = (shoppingList) => {
+  const optimizedList = JSON.parse(JSON.stringify(shoppingList)); // Deep clone
+  let totalSavings = 0;
+
+  Object.entries(optimizedList.categories).forEach(([category, ingredients]) => {
+    optimizedList.categories[category] = ingredients.map(ingredient => {
+      const pricing = ingredientsPricing[ingredient.name];
+      
+      // 1. Protein Swap (Highest Impact)
+      if (ingredient.name === 'Chicken Breast' && pricing.budget_alternative) {
+        totalSavings += pricing.savings;
+        return {
+          ...ingredient,
+          name: pricing.budget_alternative,
+          originalName: ingredient.name,
+          isSwapped: true,
+          savings: pricing.savings,
+          price: ingredientsPricing[pricing.budget_alternative].price,
+          swapReason: 'Protein Optimization: Chicken thighs are more flavorful and budget-friendly'
+        };
+      }
+
+      // 2. Dairy Optimization
+      if (ingredient.name === 'Double Cream' && pricing.budget_alternative) {
+        totalSavings += pricing.savings;
+        return {
+          ...ingredient,
+          name: pricing.budget_alternative,
+          originalName: ingredient.name,
+          isSwapped: true,
+          savings: pricing.savings,
+          price: ingredientsPricing[pricing.budget_alternative].price,
+          swapReason: 'Smart Swap: Single cream works perfectly for most recipes'
+        };
+      }
+
+      // 3. Grain/Staple Optimization
+      if (ingredient.name === 'Basmati Rice' && pricing.budget_alternative) {
+        totalSavings += pricing.savings;
+        return {
+          ...ingredient,
+          name: pricing.budget_alternative,
+          originalName: ingredient.name,
+          isSwapped: true,
+          savings: pricing.savings,
+          price: ingredientsPricing[pricing.budget_alternative].price,
+          swapReason: 'Store Brand: Same quality, better price'
+        };
+      }
+
+      // 4. Oil/Fat Optimization
+      if (ingredient.name === 'Vegetable Oil' && pricing.budget_alternative) {
+        totalSavings += pricing.savings;
+        return {
+          ...ingredient,
+          name: pricing.budget_alternative,
+          originalName: ingredient.name,
+          isSwapped: true,
+          savings: pricing.savings,
+          price: ingredientsPricing[pricing.budget_alternative].price,
+          swapReason: 'Budget Win: Sunflower oil is cheaper and works equally well'
+        };
+      }
+
+      // 5. Premium Ingredient Swaps
+      if (ingredient.name === 'Paneer' && pricing.budget_alternative) {
+        totalSavings += pricing.savings;
+        return {
+          ...ingredient,
+          name: pricing.budget_alternative,
+          originalName: ingredient.name,
+          isSwapped: true,
+          savings: pricing.savings,
+          price: ingredientsPricing[pricing.budget_alternative].price,
+          swapReason: 'Protein Alternative: Extra firm tofu is budget-friendly and absorbs flavors well'
+        };
+      }
+
+      return ingredient;
+    });
+  });
+
+  optimizedList.totalSavings = totalSavings;
+  optimizedList.originalCost = optimizedList.totalCost;
+  optimizedList.totalCost = optimizedList.totalCost - totalSavings;
+
+  return optimizedList;
+};
+
+// Components
+const AddRecipeModal = ({ isOpen, onClose, onSave }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    servings: 4,
+    cookingTime: '',
+    difficulty: 'Easy',
+    cuisine: 'Home Style',
+    ingredients: '',
+    instructions: ''
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Parse ingredients from textarea
+    const ingredientLines = formData.ingredients.split('\n').filter(line => line.trim());
+    const parsedIngredients = ingredientLines.map((line, index) => {
+      // Simple parsing - could be more sophisticated
+      const parts = line.trim().split(' ');
+      const quantity = parts.slice(0, 2).join(' '); // First 2 words as quantity
+      const name = parts.slice(2).join(' '); // Rest as ingredient name
+      
+      return {
+        name: name || line.trim(),
+        quantity: quantity || '1 portion',
+        category: 'User Added'
+      };
+    });
+
+    // Parse instructions from textarea
+    const instructionLines = formData.instructions.split('\n').filter(line => line.trim());
+
+    const recipe = {
+      id: Date.now(), // Simple ID generation
+      name: formData.name,
+      description: formData.description,
+      servings: parseInt(formData.servings),
+      cookingTime: formData.cookingTime,
+      difficulty: formData.difficulty,
+      cuisine: formData.cuisine,
+      ingredients: parsedIngredients,
+      instructions: instructionLines,
+      tags: ['Personal', 'Home Recipe'],
+      userGenerated: true,
+      imageUrl: '/images/user-recipe.jpg' // Placeholder
+    };
+
+    onSave(recipe);
+    setFormData({
+      name: '',
+      description: '',
+      servings: 4,
+      cookingTime: '',
+      difficulty: 'Easy',
+      cuisine: 'Home Style',
+      ingredients: '',
+      instructions: ''
+    });
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-xl font-semibold font-lora">Add Family Recipe</h3>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+            ✕
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Recipe Name</label>
+              <input
+                type="text"
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                placeholder="e.g., Nani's Special Dal"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Cooking Time</label>
+              <input
+                type="text"
+                value={formData.cookingTime}
+                onChange={(e) => setFormData({...formData, cookingTime: e.target.value})}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                placeholder="e.g., 30 minutes"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <input
+              type="text"
+              required
+              value={formData.description}
+              onChange={(e) => setFormData({...formData, description: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              placeholder="A brief description of your recipe..."
+            />
+          </div>
+
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Servings</label>
+              <input
+                type="number"
+                min="1"
+                value={formData.servings}
+                onChange={(e) => setFormData({...formData, servings: e.target.value})}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Difficulty</label>
+              <select
+                value={formData.difficulty}
+                onChange={(e) => setFormData({...formData, difficulty: e.target.value})}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              >
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Cuisine</label>
+              <select
+                value={formData.cuisine}
+                onChange={(e) => setFormData({...formData, cuisine: e.target.value})}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              >
+                <option value="Home Style">Home Style</option>
+                <option value="North Indian">North Indian</option>
+                <option value="South Indian">South Indian</option>
+                <option value="Punjabi">Punjabi</option>
+                <option value="Bengali">Bengali</option>
+                <option value="Pakistani">Pakistani</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Ingredients 
+              <span className="text-xs text-gray-500">(One ingredient per line)</span>
+            </label>
+            <textarea
+              required
+              value={formData.ingredients}
+              onChange={(e) => setFormData({...formData, ingredients: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              rows="6"
+              placeholder={`500g Chicken pieces\n2 tbsp Vegetable oil\n1 large Onion chopped\n3 cloves Garlic minced\n1 tsp Garam masala`}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Instructions 
+              <span className="text-xs text-gray-500">(One step per line)</span>
+            </label>
+            <textarea
+              required
+              value={formData.instructions}
+              onChange={(e) => setFormData({...formData, instructions: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              rows="8"
+              placeholder={`Heat oil in a large pan over medium heat\nAdd chopped onions and cook until golden\nAdd garlic and garam masala, cook for 1 minute\nAdd chicken pieces and cook until browned\nSimmer for 20 minutes until cooked through`}
+            />
+          </div>
+
+          <div className="flex space-x-4 pt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-3 px-6 rounded-lg font-medium transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="flex-1 bg-primary hover:bg-primary-dark text-white py-3 px-6 rounded-lg font-medium transition-colors"
+            >
+              Save Recipe
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const PersonalCookbookView = () => {
+  const navigate = useNavigate();
+  const { addRecipe: addToMealTray, selectedRecipes } = useMealTray();
+  const [userRecipes, setUserRecipes] = useState([]);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+
+  useEffect(() => {
+    const cookbook = loadUserCookbook();
+    setUserRecipes(cookbook);
+  }, []);
+
+  const handleSaveRecipe = (recipe) => {
+    const updatedCookbook = [...userRecipes, recipe];
+    if (saveUserCookbook(updatedCookbook)) {
+      setUserRecipes(updatedCookbook);
+      setShowAddModal(false);
+    } else {
+      alert('Failed to save recipe. Please try again.');
+    }
+  };
+
+  const handleDeleteRecipe = (recipeId) => {
+    if (window.confirm('Are you sure you want to delete this recipe?')) {
+      const updatedCookbook = userRecipes.filter(recipe => recipe.id !== recipeId);
+      if (saveUserCookbook(updatedCookbook)) {
+        setUserRecipes(updatedCookbook);
+      }
+    }
+  };
+
+  const handleViewRecipe = (recipe) => {
+    setSelectedRecipe(recipe);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800 mb-4 font-lora">My Personal Cookbook</h1>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Preserve your family's treasured recipes and never lose those precious culinary memories. 
+            Add them to your meal plans and generate smart shopping lists.
+          </p>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+            <div className="text-2xl font-bold text-primary">{userRecipes.length}</div>
+            <div className="text-sm text-gray-500">Family Recipes</div>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+            <div className="text-2xl font-bold text-green-600">
+              {userRecipes.filter(recipe => selectedRecipes.includes(recipe.id)).length}
+            </div>
+            <div className="text-sm text-gray-500">In Meal Tray</div>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+            <div className="text-2xl font-bold text-orange-600">∞</div>
+            <div className="text-sm text-gray-500">Memories Preserved</div>
+          </div>
+        </div>
+
+        {/* Add Recipe Button */}
+        <div className="text-center mb-8">
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-lg font-medium transition-colors inline-flex items-center"
+          >
+            <span className="text-xl mr-2">➕</span>
+            Add Family Recipe
+          </button>
+        </div>
+
+        {/* Recipe Grid */}
+        {userRecipes.length === 0 ? (
+          <div className="bg-white rounded-xl p-12 shadow-sm text-center">
+            <div className="text-6xl opacity-20 mb-4">📖</div>
+            <h3 className="text-xl font-semibold mb-4 font-lora">Your Cookbook is Empty</h3>
+            <p className="text-gray-600 mb-6 max-w-md mx-auto">
+              Start building your personal collection of family recipes. Preserve those special dishes 
+              that remind you of home and create a digital legacy for future generations.
+            </p>
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            >
+              Add Your First Recipe
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {userRecipes.map((recipe) => (
+              <div key={recipe.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div className="relative h-48 bg-gradient-to-br from-purple-100 to-blue-100">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-6xl opacity-20">👩‍🍳</div>
+                  </div>
+                  <div className="absolute top-3 right-3">
+                    {selectedRecipes.includes(recipe.id) && (
+                      <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+                        ✓
+                      </div>
+                    )}
+                  </div>
+                  <div className="absolute top-3 left-3">
+                    <span className="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">
+                      Family Recipe
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="p-4">
+                  <h3 className="font-lora text-lg font-semibold text-gray-800 mb-2">{recipe.name}</h3>
+                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">{recipe.description}</p>
+                  
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-4 text-xs text-gray-500">
+                      <span>👥 {recipe.servings}</span>
+                      <span>📍 {recipe.cuisine}</span>
+                      {recipe.cookingTime && <span>⏱️ {recipe.cookingTime}</span>}
+                    </div>
+                  </div>
+
+                  <div className="flex space-x-2 mb-4">
+                    <button 
+                      onClick={() => handleViewRecipe(recipe)}
+                      className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-3 rounded-lg transition-colors text-sm font-medium"
+                    >
+                      View Recipe
+                    </button>
+                    <button 
+                      onClick={() => selectedRecipes.includes(recipe.id) ? null : addToMealTray(recipe.id)}
+                      disabled={selectedRecipes.includes(recipe.id)}
+                      className={`flex-1 py-2 px-3 rounded-lg transition-colors text-sm font-medium ${
+                        selectedRecipes.includes(recipe.id)
+                          ? 'bg-green-100 text-green-700 cursor-not-allowed'
+                          : 'bg-primary hover:bg-primary-dark text-white'
+                      }`}
+                    >
+                      {selectedRecipes.includes(recipe.id) ? 'In Tray ✓' : 'Add to Tray'}
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => handleDeleteRecipe(recipe.id)}
+                    className="w-full text-red-500 hover:text-red-700 text-sm transition-colors"
+                  >
+                    Delete Recipe
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Add Recipe Modal */}
+        <AddRecipeModal
+          isOpen={showAddModal}
+          onClose={() => setShowAddModal(false)}
+          onSave={handleSaveRecipe}
+        />
+
+        {/* Recipe Detail Modal */}
+        {selectedRecipe && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-6">
+                <div>
+                  <h3 className="text-2xl font-semibold font-lora">{selectedRecipe.name}</h3>
+                  <p className="text-gray-600">{selectedRecipe.description}</p>
+                </div>
+                <button 
+                  onClick={() => setSelectedRecipe(null)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Ingredients */}
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 font-lora">Ingredients</h4>
+                  <ul className="space-y-2">
+                    {selectedRecipe.ingredients.map((ingredient, index) => (
+                      <li key={index} className="flex items-center">
+                        <span className="w-2 h-2 bg-primary rounded-full mr-3 flex-shrink-0"></span>
+                        <span>{ingredient.quantity} {ingredient.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Instructions */}
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 font-lora">Instructions</h4>
+                  <ol className="space-y-3">
+                    {selectedRecipe.instructions.map((instruction, index) => (
+                      <li key={index} className="flex">
+                        <span className="flex-shrink-0 w-6 h-6 bg-primary text-white rounded-full text-sm flex items-center justify-center mr-3 mt-1">
+                          {index + 1}
+                        </span>
+                        <span className="text-gray-700">{instruction}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+
+              <div className="flex justify-center mt-8">
+                <button 
+                  onClick={() => setSelectedRecipe(null)}
+                  className="bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg font-medium transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <WeeklyMealTray />
+    </div>
+  );
+};
+
 const RecipeCard = ({ recipe, onViewRecipe }) => {
   const { selectedRecipes } = useMealTray();
   const isSelected = selectedRecipes.includes(recipe.id);
