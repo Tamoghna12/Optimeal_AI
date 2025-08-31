@@ -1711,7 +1711,7 @@ const RecipeDetailView = () => {
                     
                     {healthierVersion.ingredients.filter(ing => ing.isSwapped || ing.isAdded).length > 0 && (
                       <div className="mt-3 pt-3 border-t border-green-200">
-                        <p className="font-medium">Specific Changes:</p>
+                        <p className="font-medium">What I changed:</p>
                         <ul className="mt-1 space-y-1">
                           {healthierVersion.ingredients
                             .filter(ing => ing.isSwapped || ing.isAdded)
