@@ -83,7 +83,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography */
+/* Typography Hierarchy - 3 Font System */
 .font-lora {
   font-family: 'Lora', serif;
 }
@@ -92,11 +92,31 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+/* Heading Typography */
+h1, .text-heading {
   font-family: 'Lora', serif;
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-heading);
+  line-height: var(--line-height-heading);
   color: var(--color-text-heading);
-  font-weight: 600;
-  line-height: 1.2;
+}
+
+/* Sub-heading Typography */
+h2, h3, .text-subheading {
+  font-family: 'Lora', serif;
+  font-size: var(--font-size-subheading);
+  font-weight: var(--font-weight-subheading);
+  line-height: var(--line-height-subheading);
+  color: var(--color-text-subheading);
+}
+
+/* Body Typography */
+p, .text-body, body {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body);
 }
 
 /* Custom Utility Classes */
