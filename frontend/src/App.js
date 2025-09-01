@@ -105,7 +105,7 @@ const Header = () => {
             className="cursor-pointer"
             onClick={() => navigate('/')}
           >
-            <h1 className="text-2xl font-bold text-primary font-lora">Homeland Meals</h1>
+            <h1 className="text-2xl font-bold text-primary font-lora">Desi Kitchen Co-Pilot</h1>
             <p className="text-sm text-gray-600 font-inter">Your taste of home, healthier and smarter</p>
           </div>
           <div className="flex items-center space-x-6">
