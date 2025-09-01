@@ -2325,83 +2325,83 @@ const ShoppingListView = () => {
 
 const AboutView = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Header />
       
       <div className="container mx-auto px-4 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-heading mb-6">About Homeland Meals</h1>
-          <p className="text-body max-w-2xl mx-auto text-gray-600">
+          <h1 className="text-4xl font-bold text-gray-900 mb-6 font-lora">About Homeland Meals</h1>
+          <p className="text-lg text-gray-700 max-w-2xl mx-auto font-inter">
             Where AI meets authentic South Asian cuisine to help you cook the food you miss from home
           </p>
         </div>
 
         {/* Mission Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+          <div className="bg-gray-50 rounded-xl p-6 shadow-sm text-center border">
             <div className="text-4xl mb-4">🏠</div>
-            <h3 className="text-subheading mb-2">Preserve Heritage</h3>
-            <p className="text-body text-gray-600 text-sm">Keep family recipes alive for future generations</p>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2 font-lora">Preserve Heritage</h3>
+            <p className="text-gray-700 text-sm font-inter">Keep family recipes alive for future generations</p>
           </div>
           
-          <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+          <div className="bg-gray-50 rounded-xl p-6 shadow-sm text-center border">
             <div className="text-4xl mb-4">🧠</div>
-            <h3 className="text-subheading mb-2">Smart Cooking</h3>
-            <p className="text-body text-gray-600 text-sm">AI-powered health and budget optimization</p>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2 font-lora">Smart Cooking</h3>
+            <p className="text-gray-700 text-sm font-inter">AI-powered health and budget optimization</p>
           </div>
           
-          <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+          <div className="bg-gray-50 rounded-xl p-6 shadow-sm text-center border">
             <div className="text-4xl mb-4">🛒</div>
-            <h3 className="text-subheading mb-2">UK Integration</h3>
-            <p className="text-body text-gray-600 text-sm">Find ingredients at your local Tesco</p>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2 font-lora">UK Integration</h3>
+            <p className="text-gray-700 text-sm font-inter">Find ingredients at your local Tesco</p>
           </div>
           
-          <div className="bg-white rounded-xl p-6 shadow-sm text-center">
+          <div className="bg-gray-50 rounded-xl p-6 shadow-sm text-center border">
             <div className="text-4xl mb-4">🌍</div>
-            <h3 className="text-subheading mb-2">Cultural Bridge</h3>
-            <p className="text-body text-gray-600 text-sm">Connect diaspora communities to home</p>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2 font-lora">Cultural Bridge</h3>
+            <p className="text-gray-700 text-sm font-inter">Connect diaspora communities to home</p>
           </div>
         </div>
 
         {/* Creator Section - Simplified */}
-        <div className="bg-white rounded-xl p-8 shadow-sm text-center">
-          <h2 className="text-subheading mb-8">Meet the Creator</h2>
+        <div className="bg-gray-50 rounded-xl p-8 shadow-sm text-center border">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-8 font-lora">Meet the Creator</h2>
           
           <div className="max-w-2xl mx-auto">
             <div className="w-24 h-24 bg-gradient-to-br from-primary to-orange-300 rounded-full mx-auto mb-4 flex items-center justify-center">
               <span className="text-2xl text-white font-bold">TD</span>
             </div>
             
-            <h3 className="text-subheading mb-2">Tamoghna Das</h3>
-            <p className="text-body text-gray-600 mb-4">PhD Researcher & AI Innovation Leader</p>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2 font-lora">Tamoghna Das</h3>
+            <p className="text-gray-700 mb-4 font-inter">PhD Researcher & AI Innovation Leader</p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div>
                 <h4 className="font-semibold text-primary mb-2">Education</h4>
-                <p className="text-sm text-gray-700">PhD Chemical Engineering<br/>Loughborough University</p>
+                <p className="text-sm text-gray-800">PhD Chemical Engineering<br/>Loughborough University</p>
               </div>
               
               <div>
                 <h4 className="font-semibold text-primary mb-2">Expertise</h4>
-                <p className="text-sm text-gray-700">AI & Machine Learning<br/>for Biological Systems</p>
+                <p className="text-sm text-gray-800">AI & Machine Learning<br/>for Biological Systems</p>
               </div>
               
               <div>
                 <h4 className="font-semibold text-primary mb-2">Impact</h4>
-                <p className="text-sm text-gray-700">100+ Students Trained<br/>94% Satisfaction Rate</p>
+                <p className="text-sm text-gray-800">100+ Students Trained<br/>94% Satisfaction Rate</p>
               </div>
             </div>
             
             <div className="flex justify-center space-x-4">
-              <a href="https://github.com/Tamoghna12" className="text-gray-600 hover:text-primary transition-colors">
-                <span className="text-2xl">📱 GitHub</span>
+              <a href="https://github.com/Tamoghna12" className="text-gray-700 hover:text-primary transition-colors">
+                <span className="text-lg font-medium">📱 GitHub</span>
               </a>
-              <a href="https://www.linkedin.com/in/tamoghnadas12" className="text-gray-600 hover:text-primary transition-colors">
-                <span className="text-2xl">💼 LinkedIn</span>
+              <a href="https://www.linkedin.com/in/tamoghnadas12" className="text-gray-700 hover:text-primary transition-colors">
+                <span className="text-lg font-medium">💼 LinkedIn</span>
               </a>
-              <a href="mailto:tamoghnadas.12@outlook.com" className="text-gray-600 hover:text-primary transition-colors">
-                <span className="text-2xl">📧 Email</span>
+              <a href="mailto:tamoghnadas.12@outlook.com" className="text-gray-700 hover:text-primary transition-colors">
+                <span className="text-lg font-medium">📧 Email</span>
               </a>
             </div>
           </div>
