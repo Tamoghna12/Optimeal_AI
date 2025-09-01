@@ -8,21 +8,90 @@
     "cookingTime": "45 minutes",
     "difficulty": "Medium",
     "cuisine": "North Indian",
-    "tags": ["Popular", "Creamy", "Comfort Food"],
+    "tags": [
+      "Popular",
+      "Creamy",
+      "Comfort Food"
+    ],
     "ingredients": [
-      { "name": "Chicken Breast", "quantity": "500g", "category": "Meat & Fish" },
-      { "name": "Greek Yogurt", "quantity": "200g", "category": "Dairy & Chilled" },
-      { "name": "Tomato Passata", "quantity": "400g", "category": "Tinned Food" },
-      { "name": "Double Cream", "quantity": "200ml", "category": "Dairy & Chilled" },
-      { "name": "Onion", "quantity": "2 large", "category": "Fresh Produce" },
-      { "name": "Garlic", "quantity": "6 cloves", "category": "Fresh Produce" },
-      { "name": "Fresh Ginger", "quantity": "2 inch piece", "category": "Fresh Produce" },
-      { "name": "Garam Masala", "quantity": "2 tsp", "category": "Herbs & Spices" },
-      { "name": "Cumin Powder", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Paprika", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Turmeric", "quantity": "1/2 tsp", "category": "Herbs & Spices" },
-      { "name": "Vegetable Oil", "quantity": "3 tbsp", "category": "Cooking Essentials" },
-      { "name": "Basmati Rice", "quantity": "300g", "category": "Rice & Grains" }
+      {
+        "name": "Chicken Breast",
+        "quantity": 500,
+        "unit": "g",
+        "category": "Meat & Fish"
+      },
+      {
+        "name": "Greek Yogurt",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Tomato Passata",
+        "quantity": 400,
+        "unit": "g",
+        "category": "Tinned Food"
+      },
+      {
+        "name": "Double Cream",
+        "quantity": 200,
+        "unit": "ml",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Onion",
+        "quantity": 2,
+        "unit": "large",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Garlic",
+        "quantity": 6,
+        "unit": "cloves",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 2,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Garam Masala",
+        "quantity": 2,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Cumin Powder",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Paprika",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      },
+      {
+        "name": "Basmati Rice",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Rice & Grains"
+      }
     ],
     "instructions": [
       "Cut chicken into bite-sized pieces and marinate with yogurt, half the garam masala, salt for 30 minutes",
@@ -33,7 +102,8 @@
       "Pour in tomato passata and simmer for 10 minutes until thickened",
       "Return chicken to the pan, add cream and simmer for 5 minutes",
       "Serve hot with basmati rice and fresh coriander"
-    ]
+    ],
+    "baseServings": 4
   },
   {
     "id": 2,
@@ -44,20 +114,84 @@
     "cookingTime": "35 minutes",
     "difficulty": "Easy",
     "cuisine": "North Indian",
-    "tags": ["Vegetarian", "Healthy", "Iron-Rich"],
+    "tags": [
+      "Vegetarian",
+      "Healthy",
+      "Iron-Rich"
+    ],
     "ingredients": [
-      { "name": "Fresh Spinach", "quantity": "500g", "category": "Fresh Produce" },
-      { "name": "Paneer", "quantity": "250g", "category": "Dairy & Chilled" },
-      { "name": "Onion", "quantity": "1 medium", "category": "Fresh Produce" },
-      { "name": "Tomato", "quantity": "2 medium", "category": "Fresh Produce" },
-      { "name": "Garlic", "quantity": "4 cloves", "category": "Fresh Produce" },
-      { "name": "Fresh Ginger", "quantity": "1 inch piece", "category": "Fresh Produce" },
-      { "name": "Green Chilli", "quantity": "2", "category": "Fresh Produce" },
-      { "name": "Cumin Seeds", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Garam Masala", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Turmeric", "quantity": "1/2 tsp", "category": "Herbs & Spices" },
-      { "name": "Single Cream", "quantity": "100ml", "category": "Dairy & Chilled" },
-      { "name": "Vegetable Oil", "quantity": "2 tbsp", "category": "Cooking Essentials" }
+      {
+        "name": "Fresh Spinach",
+        "quantity": 500,
+        "unit": "g",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Paneer",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Onion",
+        "quantity": 1,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Tomato",
+        "quantity": 2,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Garlic",
+        "quantity": 4,
+        "unit": "cloves",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 1,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Green Chilli",
+        "quantity": 2,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Cumin Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Garam Masala",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Single Cream",
+        "quantity": 100,
+        "unit": "ml",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      }
     ],
     "instructions": [
       "Blanch spinach in boiling water for 2 minutes, drain and blend to smooth paste",
@@ -70,7 +204,8 @@
       "Add spinach puree and simmer for 10 minutes",
       "Gently fold in paneer cubes and cream, simmer for 3 minutes",
       "Serve hot with naan or rice"
-    ]
+    ],
+    "baseServings": 4
   },
   {
     "id": 3,
@@ -81,20 +216,84 @@
     "cookingTime": "60 minutes",
     "difficulty": "Medium",
     "cuisine": "Punjabi",
-    "tags": ["Vegetarian", "Protein-Rich", "Restaurant Style"],
+    "tags": [
+      "Vegetarian",
+      "Protein-Rich",
+      "Restaurant Style"
+    ],
     "ingredients": [
-      { "name": "Black Urad Dal", "quantity": "200g", "category": "Rice & Grains" },
-      { "name": "Red Kidney Beans", "quantity": "50g", "category": "Rice & Grains" },
-      { "name": "Tomato", "quantity": "4 large", "category": "Fresh Produce" },
-      { "name": "Onion", "quantity": "1 medium", "category": "Fresh Produce" },
-      { "name": "Garlic", "quantity": "6 cloves", "category": "Fresh Produce" },
-      { "name": "Fresh Ginger", "quantity": "2 inch piece", "category": "Fresh Produce" },
-      { "name": "Double Cream", "quantity": "150ml", "category": "Dairy & Chilled" },
-      { "name": "Butter", "quantity": "3 tbsp", "category": "Dairy & Chilled" },
-      { "name": "Garam Masala", "quantity": "2 tsp", "category": "Herbs & Spices" },
-      { "name": "Cumin Powder", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Red Chilli Powder", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Turmeric", "quantity": "1/2 tsp", "category": "Herbs & Spices" }
+      {
+        "name": "Black Urad Dal",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Red Kidney Beans",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Tomato",
+        "quantity": 4,
+        "unit": "large",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Onion",
+        "quantity": 1,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Garlic",
+        "quantity": 6,
+        "unit": "cloves",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 2,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Double Cream",
+        "quantity": 150,
+        "unit": "ml",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Butter",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Garam Masala",
+        "quantity": 2,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Cumin Powder",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Red Chilli Powder",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      }
     ],
     "instructions": [
       "Soak black urad dal and kidney beans overnight",
@@ -108,7 +307,8 @@
       "Add the cooked lentils and simmer on low heat for 30 minutes",
       "Stir in cream and simmer for another 10 minutes until thick and creamy",
       "Garnish with fresh coriander and serve with rice or naan"
-    ]
+    ],
+    "baseServings": 6
   },
   {
     "id": 4,
@@ -119,21 +319,90 @@
     "cookingTime": "90 minutes",
     "difficulty": "Hard",
     "cuisine": "Hyderabadi",
-    "tags": ["Special Occasion", "Aromatic", "Traditional"],
+    "tags": [
+      "Special Occasion",
+      "Aromatic",
+      "Traditional"
+    ],
     "ingredients": [
-      { "name": "Chicken Thighs", "quantity": "1kg", "category": "Meat & Fish" },
-      { "name": "Basmati Rice", "quantity": "500g", "category": "Rice & Grains" },
-      { "name": "Greek Yogurt", "quantity": "250g", "category": "Dairy & Chilled" },
-      { "name": "Onion", "quantity": "4 large", "category": "Fresh Produce" },
-      { "name": "Garlic", "quantity": "8 cloves", "category": "Fresh Produce" },
-      { "name": "Fresh Ginger", "quantity": "3 inch piece", "category": "Fresh Produce" },
-      { "name": "Saffron", "quantity": "1/2 tsp", "category": "Herbs & Spices" },
-      { "name": "Biryani Masala", "quantity": "3 tsp", "category": "Herbs & Spices" },
-      { "name": "Bay Leaves", "quantity": "4", "category": "Herbs & Spices" },
-      { "name": "Cinnamon Stick", "quantity": "2", "category": "Herbs & Spices" },
-      { "name": "Green Cardamom", "quantity": "6 pods", "category": "Herbs & Spices" },
-      { "name": "Vegetable Oil", "quantity": "4 tbsp", "category": "Cooking Essentials" },
-      { "name": "Ghee", "quantity": "3 tbsp", "category": "Cooking Essentials" }
+      {
+        "name": "Chicken Thighs",
+        "quantity": 1000,
+        "unit": "g",
+        "category": "Meat & Fish"
+      },
+      {
+        "name": "Basmati Rice",
+        "quantity": 500,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Greek Yogurt",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Onion",
+        "quantity": 4,
+        "unit": "large",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Garlic",
+        "quantity": 8,
+        "unit": "cloves",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 3,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Saffron",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Biryani Masala",
+        "quantity": 3,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Bay Leaves",
+        "quantity": 4,
+        "unit": "pieces",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Cinnamon Stick",
+        "quantity": 2,
+        "unit": "pieces",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Green Cardamom",
+        "quantity": null,
+        "unit": "6 pods",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 4,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      },
+      {
+        "name": "Ghee",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      }
     ],
     "instructions": [
       "Marinate chicken with yogurt, ginger-garlic paste, biryani masala and salt for 2 hours",
@@ -147,7 +416,8 @@
       "Reduce heat to lowest setting and cook for 45 minutes",
       "Let it rest for 10 minutes before opening",
       "Gently mix and serve with raita and boiled eggs"
-    ]
+    ],
+    "baseServings": 6
   },
   {
     "id": 5,
@@ -158,19 +428,78 @@
     "cookingTime": "50 minutes",
     "difficulty": "Medium",
     "cuisine": "Punjabi",
-    "tags": ["Street Food", "Spicy", "Weekend Special"],
+    "tags": [
+      "Street Food",
+      "Spicy",
+      "Weekend Special"
+    ],
     "ingredients": [
-      { "name": "Chickpeas (Dried)", "quantity": "200g", "category": "Rice & Grains" },
-      { "name": "Plain Flour", "quantity": "300g", "category": "Baking & Desserts" },
-      { "name": "Greek Yogurt", "quantity": "100g", "category": "Dairy & Chilled" },
-      { "name": "Onion", "quantity": "2 large", "category": "Fresh Produce" },
-      { "name": "Tomato", "quantity": "3 medium", "category": "Fresh Produce" },
-      { "name": "Garlic", "quantity": "6 cloves", "category": "Fresh Produce" },
-      { "name": "Fresh Ginger", "quantity": "2 inch piece", "category": "Fresh Produce" },
-      { "name": "Chole Masala", "quantity": "2 tsp", "category": "Herbs & Spices" },
-      { "name": "Cumin Seeds", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Baking Powder", "quantity": "1/2 tsp", "category": "Baking & Desserts" },
-      { "name": "Vegetable Oil", "quantity": "500ml", "category": "Cooking Essentials" }
+      {
+        "name": "Chickpeas (Dried)",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Plain Flour",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Baking & Desserts"
+      },
+      {
+        "name": "Greek Yogurt",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Onion",
+        "quantity": 2,
+        "unit": "large",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Tomato",
+        "quantity": 3,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Garlic",
+        "quantity": 6,
+        "unit": "cloves",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 2,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Chole Masala",
+        "quantity": 2,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Cumin Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Baking Powder",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Baking & Desserts"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 500,
+        "unit": "ml",
+        "category": "Cooking Essentials"
+      }
     ],
     "instructions": [
       "Soak chickpeas overnight, then pressure cook until soft",
@@ -183,7 +512,8 @@
       "Simmer for 15 minutes until thick and flavorful",
       "Roll bhature dough into circles and deep fry until puffed and golden",
       "Serve hot chole with freshly fried bhature and pickled onions"
-    ]
+    ],
+    "baseServings": 4
   },
   {
     "id": 6,
@@ -194,18 +524,72 @@
     "cookingTime": "45 minutes",
     "difficulty": "Easy",
     "cuisine": "North Indian",
-    "tags": ["Comfort Food", "Protein-Rich", "Home Style"],
+    "tags": [
+      "Comfort Food",
+      "Protein-Rich",
+      "Home Style"
+    ],
     "ingredients": [
-      { "name": "Red Kidney Beans", "quantity": "250g", "category": "Rice & Grains" },
-      { "name": "Basmati Rice", "quantity": "300g", "category": "Rice & Grains" },
-      { "name": "Onion", "quantity": "2 medium", "category": "Fresh Produce" },
-      { "name": "Tomato", "quantity": "3 large", "category": "Fresh Produce" },
-      { "name": "Garlic", "quantity": "5 cloves", "category": "Fresh Produce" },
-      { "name": "Fresh Ginger", "quantity": "1 inch piece", "category": "Fresh Produce" },
-      { "name": "Rajma Masala", "quantity": "2 tsp", "category": "Herbs & Spices" },
-      { "name": "Cumin Seeds", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Red Chilli Powder", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Vegetable Oil", "quantity": "2 tbsp", "category": "Cooking Essentials" }
+      {
+        "name": "Red Kidney Beans",
+        "quantity": 250,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Basmati Rice",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Onion",
+        "quantity": 2,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Tomato",
+        "quantity": 3,
+        "unit": "large",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Garlic",
+        "quantity": 5,
+        "unit": "cloves",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 1,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Rajma Masala",
+        "quantity": 2,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Cumin Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Red Chilli Powder",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      }
     ],
     "instructions": [
       "Soak rajma overnight, then pressure cook until very soft",
@@ -219,7 +603,8 @@
       "Simmer for 20 minutes until thick and creamy",
       "Mash some beans to thicken the curry",
       "Serve hot over steamed rice with a dollop of ghee"
-    ]
+    ],
+    "baseServings": 4
   },
   {
     "id": 7,
@@ -230,23 +615,103 @@
     "cookingTime": "45 minutes (plus overnight fermentation)",
     "difficulty": "Medium",
     "cuisine": "South Indian",
-    "tags": ["Authentic", "Fermented", "Breakfast", "Gluten-Free"],
+    "tags": [
+      "Authentic",
+      "Fermented",
+      "Breakfast",
+      "Gluten-Free"
+    ],
     "ingredients": [
-      { "name": "Basmati Rice", "quantity": "200g", "category": "Rice & Grains" },
-      { "name": "Black Urad Dal", "quantity": "100g", "category": "Rice & Grains" },
-      { "name": "Potatoes", "quantity": "4 medium", "category": "Fresh Produce" },
-      { "name": "Onion", "quantity": "2 medium", "category": "Fresh Produce" },
-      { "name": "Tomato", "quantity": "2 medium", "category": "Fresh Produce" },
-      { "name": "Toor Dal (Pigeon Peas)", "quantity": "150g", "category": "Rice & Grains" },
-      { "name": "Tamarind Paste", "quantity": "2 tbsp", "category": "Herbs & Spices" },
-      { "name": "Sambar Powder", "quantity": "2 tbsp", "category": "Herbs & Spices" },
-      { "name": "Turmeric", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Mustard Seeds", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Curry Leaves", "quantity": "10 leaves", "category": "Herbs & Spices" },
-      { "name": "Green Chilli", "quantity": "3", "category": "Fresh Produce" },
-      { "name": "Fresh Ginger", "quantity": "1 inch piece", "category": "Fresh Produce" },
-      { "name": "Vegetable Oil", "quantity": "4 tbsp", "category": "Cooking Essentials" },
-      { "name": "Fresh Coriander", "quantity": "2 tbsp", "category": "Fresh Produce" }
+      {
+        "name": "Basmati Rice",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Black Urad Dal",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Potatoes",
+        "quantity": 4,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Onion",
+        "quantity": 2,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Tomato",
+        "quantity": 2,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Toor Dal (Pigeon Peas)",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Tamarind Paste",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Sambar Powder",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Mustard Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Curry Leaves",
+        "quantity": 10,
+        "unit": "leaves",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Green Chilli",
+        "quantity": 3,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 1,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 4,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      },
+      {
+        "name": "Fresh Coriander",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Fresh Produce"
+      }
     ],
     "instructions": [
       "Soak rice and urad dal separately for 4-6 hours, then grind into smooth batters",
@@ -259,7 +724,8 @@
       "For potato filling: boil and cube potatoes, sauté with onions and spices",
       "Heat non-stick pan, spread dosa batter thin, cook until golden and crispy",
       "Place potato filling on one side, fold dosa and serve hot with sambar"
-    ]
+    ],
+    "baseServings": 4
   },
   {
     "id": 8,
@@ -270,23 +736,103 @@
     "cookingTime": "30 minutes (plus overnight fermentation)",
     "difficulty": "Easy",
     "cuisine": "South Indian",
-    "tags": ["Healthy", "Steamed", "Probiotic", "Breakfast"],
+    "tags": [
+      "Healthy",
+      "Steamed",
+      "Probiotic",
+      "Breakfast"
+    ],
     "ingredients": [
-      { "name": "Basmati Rice", "quantity": "300g", "category": "Rice & Grains" },
-      { "name": "Black Urad Dal", "quantity": "100g", "category": "Rice & Grains" },
-      { "name": "Toor Dal (Pigeon Peas)", "quantity": "150g", "category": "Rice & Grains" },
-      { "name": "Coconut (Desiccated)", "quantity": "50g", "category": "Baking & Desserts" },
-      { "name": "Drumstick", "quantity": "2 pieces", "category": "Fresh Produce" },
-      { "name": "Okra", "quantity": "100g", "category": "Fresh Produce" },
-      { "name": "Aubergine", "quantity": "1 small", "category": "Fresh Produce" },
-      { "name": "Onion", "quantity": "1 medium", "category": "Fresh Produce" },
-      { "name": "Tomato", "quantity": "2 medium", "category": "Fresh Produce" },
-      { "name": "Tamarind Paste", "quantity": "2 tbsp", "category": "Herbs & Spices" },
-      { "name": "Sambar Powder", "quantity": "2 tbsp", "category": "Herbs & Spices" },
-      { "name": "Turmeric", "quantity": "1/2 tsp", "category": "Herbs & Spices" },
-      { "name": "Mustard Seeds", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Curry Leaves", "quantity": "8 leaves", "category": "Herbs & Spices" },
-      { "name": "Vegetable Oil", "quantity": "3 tbsp", "category": "Cooking Essentials" }
+      {
+        "name": "Basmati Rice",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Black Urad Dal",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Toor Dal (Pigeon Peas)",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Coconut (Desiccated)",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Baking & Desserts"
+      },
+      {
+        "name": "Drumstick",
+        "quantity": null,
+        "unit": "2 pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Okra",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Aubergine",
+        "quantity": 1,
+        "unit": "small",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Onion",
+        "quantity": 1,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Tomato",
+        "quantity": 2,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Tamarind Paste",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Sambar Powder",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Mustard Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Curry Leaves",
+        "quantity": 8,
+        "unit": "leaves",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      }
     ],
     "instructions": [
       "Soak rice and urad dal separately for 4-6 hours",
@@ -300,7 +846,8 @@
       "Add vegetables, sambar powder, and cook for 5 minutes",
       "Add cooked dal, tamarind paste, coconut, and simmer until thick",
       "Garnish with fresh coriander and serve hot with soft idlis"
-    ]
+    ],
+    "baseServings": 4
   },
   {
     "id": 9,
@@ -311,25 +858,115 @@
     "cookingTime": "60 minutes",
     "difficulty": "Medium",
     "cuisine": "South Indian",
-    "tags": ["Street Food", "Crispy", "Comfort Food", "Traditional"],
+    "tags": [
+      "Street Food",
+      "Crispy",
+      "Comfort Food",
+      "Traditional"
+    ],
     "ingredients": [
-      { "name": "Black Urad Dal", "quantity": "200g", "category": "Rice & Grains" },
-      { "name": "Toor Dal (Pigeon Peas)", "quantity": "150g", "category": "Rice & Grains" },
-      { "name": "Green Chilli", "quantity": "4", "category": "Fresh Produce" },
-      { "name": "Fresh Ginger", "quantity": "1 inch piece", "category": "Fresh Produce" },
-      { "name": "Onion", "quantity": "2 medium", "category": "Fresh Produce" },
-      { "name": "Tomato", "quantity": "3 medium", "category": "Fresh Produce" },
-      { "name": "Carrot", "quantity": "1 medium", "category": "Fresh Produce" },
-      { "name": "Green Beans", "quantity": "100g", "category": "Fresh Produce" },
-      { "name": "Aubergine", "quantity": "1 small", "category": "Fresh Produce" },
-      { "name": "Tamarind Paste", "quantity": "3 tbsp", "category": "Herbs & Spices" },
-      { "name": "Sambar Powder", "quantity": "3 tbsp", "category": "Herbs & Spices" },
-      { "name": "Turmeric", "quantity": "1/2 tsp", "category": "Herbs & Spices" },
-      { "name": "Mustard Seeds", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Cumin Seeds", "quantity": "1/2 tsp", "category": "Herbs & Spices" },
-      { "name": "Curry Leaves", "quantity": "12 leaves", "category": "Herbs & Spices" },
-      { "name": "Vegetable Oil", "quantity": "500ml", "category": "Cooking Essentials" },
-      { "name": "Fresh Coriander", "quantity": "3 tbsp", "category": "Fresh Produce" }
+      {
+        "name": "Black Urad Dal",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Toor Dal (Pigeon Peas)",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Green Chilli",
+        "quantity": 4,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 1,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Onion",
+        "quantity": 2,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Tomato",
+        "quantity": 3,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Carrot",
+        "quantity": 1,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Green Beans",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Aubergine",
+        "quantity": 1,
+        "unit": "small",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Tamarind Paste",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Sambar Powder",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Mustard Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Cumin Seeds",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Curry Leaves",
+        "quantity": 12,
+        "unit": "leaves",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 500,
+        "unit": "ml",
+        "category": "Cooking Essentials"
+      },
+      {
+        "name": "Fresh Coriander",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Fresh Produce"
+      }
     ],
     "instructions": [
       "Soak urad dal for 3-4 hours, then drain completely",
@@ -348,7 +985,8 @@
       "Simmer for 15-20 minutes until vegetables are tender and sambar thickens",
       "Gently place fried vadas in hot sambar and simmer for 2 minutes",
       "Garnish with fresh coriander and serve immediately"
-    ]
+    ],
+    "baseServings": 4
   },
   {
     "id": 10,
@@ -359,22 +997,97 @@
     "cookingTime": "25 minutes",
     "difficulty": "Easy",
     "cuisine": "South Indian",
-    "tags": ["Quick", "Healthy", "Breakfast", "Vegetarian"],
+    "tags": [
+      "Quick",
+      "Healthy",
+      "Breakfast",
+      "Vegetarian"
+    ],
     "ingredients": [
-      { "name": "Semolina (Rava)", "quantity": "200g", "category": "Rice & Grains" },
-      { "name": "Onion", "quantity": "1 large", "category": "Fresh Produce" },
-      { "name": "Carrot", "quantity": "1 medium", "category": "Fresh Produce" },
-      { "name": "Green Beans", "quantity": "50g", "category": "Fresh Produce" },
-      { "name": "Green Peas", "quantity": "50g", "category": "Fresh Produce" },
-      { "name": "Green Chilli", "quantity": "2", "category": "Fresh Produce" },
-      { "name": "Fresh Ginger", "quantity": "1 inch piece", "category": "Fresh Produce" },
-      { "name": "Mustard Seeds", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Cumin Seeds", "quantity": "1/2 tsp", "category": "Herbs & Spices" },
-      { "name": "Curry Leaves", "quantity": "8 leaves", "category": "Herbs & Spices" },
-      { "name": "Turmeric", "quantity": "1/4 tsp", "category": "Herbs & Spices" },
-      { "name": "Vegetable Oil", "quantity": "3 tbsp", "category": "Cooking Essentials" },
-      { "name": "Fresh Coriander", "quantity": "2 tbsp", "category": "Fresh Produce" },
-      { "name": "Lemon", "quantity": "1", "category": "Fresh Produce" }
+      {
+        "name": "Semolina (Rava)",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Onion",
+        "quantity": 1,
+        "unit": "large",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Carrot",
+        "quantity": 1,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Green Beans",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Green Peas",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Green Chilli",
+        "quantity": 2,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 1,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Mustard Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Cumin Seeds",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Curry Leaves",
+        "quantity": 8,
+        "unit": "leaves",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.25,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      },
+      {
+        "name": "Fresh Coriander",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Lemon",
+        "quantity": 1,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      }
     ],
     "instructions": [
       "Dry roast semolina in a pan until lightly golden and aromatic, set aside",
@@ -390,7 +1103,8 @@
       "Cook on low heat for 5-7 minutes until water is absorbed",
       "Garnish with fresh coriander and lemon juice",
       "Serve hot with coconut chutney or pickle"
-    ]
+    ],
+    "baseServings": 4
   },
   {
     "id": 11,
@@ -401,19 +1115,79 @@
     "cookingTime": "35 minutes",
     "difficulty": "Easy",
     "cuisine": "South Indian",
-    "tags": ["Aromatic", "Festival Food", "Coconut", "Traditional"],
+    "tags": [
+      "Aromatic",
+      "Festival Food",
+      "Coconut",
+      "Traditional"
+    ],
     "ingredients": [
-      { "name": "Basmati Rice", "quantity": "300g", "category": "Rice & Grains" },
-      { "name": "Coconut (Desiccated)", "quantity": "100g", "category": "Baking & Desserts" },
-      { "name": "Cashew Nuts", "quantity": "20", "category": "Baking & Desserts" },
-      { "name": "Green Chilli", "quantity": "3", "category": "Fresh Produce" },
-      { "name": "Fresh Ginger", "quantity": "1 inch piece", "category": "Fresh Produce" },
-      { "name": "Mustard Seeds", "quantity": "1 tsp", "category": "Herbs & Spices" },
-      { "name": "Cumin Seeds", "quantity": "1/2 tsp", "category": "Herbs & Spices" },
-      { "name": "Curry Leaves", "quantity": "10 leaves", "category": "Herbs & Spices" },
-      { "name": "Turmeric", "quantity": "1/4 tsp", "category": "Herbs & Spices" },
-      { "name": "Ghee", "quantity": "3 tbsp", "category": "Cooking Essentials" },
-      { "name": "Fresh Coriander", "quantity": "2 tbsp", "category": "Fresh Produce" }
+      {
+        "name": "Basmati Rice",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Coconut (Desiccated)",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Baking & Desserts"
+      },
+      {
+        "name": "Cashew Nuts",
+        "quantity": 20,
+        "unit": "pieces",
+        "category": "Baking & Desserts"
+      },
+      {
+        "name": "Green Chilli",
+        "quantity": 3,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 1,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Mustard Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Cumin Seeds",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Curry Leaves",
+        "quantity": 10,
+        "unit": "leaves",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.25,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Ghee",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      },
+      {
+        "name": "Fresh Coriander",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Fresh Produce"
+      }
     ],
     "instructions": [
       "Cook basmati rice with a pinch of salt until fluffy, set aside to cool",
@@ -427,6 +1201,7 @@
       "Add salt to taste and mix gently",
       "Garnish with fried cashews and fresh coriander",
       "Serve warm with South Indian pickle or papad"
-    ]
+    ],
+    "baseServings": 4
   }
 ]
