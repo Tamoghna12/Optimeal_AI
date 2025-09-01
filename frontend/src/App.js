@@ -2393,30 +2393,6 @@ const AboutView = () => {
             </div>
           </div>
         </div>
-              
-              <h4 className="font-semibold mb-3 text-primary">Technical Expertise</h4>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs">Python</span>
-                <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs">AI/ML</span>
-                <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs">React</span>
-                <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs">Bioinformatics</span>
-                <span className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs">Cloud Computing</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Personal Connection */}
-          <div className="mt-8 p-6 bg-white rounded-lg">
-            <h4 className="font-semibold mb-3 font-lora">Why Homeland Meals?</h4>
-            <p className="text-gray-700 text-sm italic">
-              "As a researcher living away from home, I understand the deep connection between food and cultural identity. 
-              Homeland Meals represents the intersection of my technical expertise in AI and my personal journey as part 
-              of the diaspora community. By combining cutting-edge machine learning with traditional culinary wisdom, 
-              we're not just creating recipes - we're preserving heritage and building bridges between cultures."
-            </p>
-            <p className="text-gray-600 text-xs mt-3">— Tamoghna Das, Founder & AI Architect</p>
-          </div>
-        </div>
 
         {/* Technical Architecture */}
         <div className="bg-white rounded-xl p-8 shadow-sm mb-16">
