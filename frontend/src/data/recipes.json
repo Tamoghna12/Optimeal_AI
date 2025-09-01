@@ -314,7 +314,7 @@
     "id": 4,
     "name": "Chicken Biryani",
     "description": "Aromatic basmati rice layered with spiced chicken - the crown jewel of Indian cuisine. Each grain is infused with saffron and whole spices for an unforgettable feast.",
-    "imageUrl": "/images/chicken-biryani.jpg",
+    "imageUrl": "https://customer-assets.emergentagent.com/job_desi-kitchen-1/artifacts/9d8bw4vg_chicken_biriyani.png",
     "servings": 6,
     "cookingTime": "90 minutes",
     "difficulty": "Hard",
