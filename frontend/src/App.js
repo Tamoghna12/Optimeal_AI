@@ -902,10 +902,21 @@ const EnhancedRecipeCard = ({ recipe, onViewRecipe }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer border border-gray-200">
       <div 
-        className="relative h-48 bg-gradient-to-br from-orange-100 to-orange-200"
+        className="relative h-48 bg-gradient-to-br from-orange-100 to-orange-200 overflow-hidden"
         onClick={() => onViewRecipe(recipe.id)}
       >
-        <div className="absolute inset-0 flex items-center justify-center">
+        {recipe.imageUrl && recipe.imageUrl.includes('customer-assets') ? (
+          <img 
+            src={recipe.imageUrl} 
+            alt={recipe.name}
+            className="absolute inset-0 w-full h-full object-cover"
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'flex';
+            }}
+          />
+        ) : null}
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-orange-100 to-orange-200" style={{display: recipe.imageUrl && recipe.imageUrl.includes('customer-assets') ? 'none' : 'flex'}}>
           <div className="text-6xl opacity-20">🍛</div>
         </div>
         <div className="absolute top-3 right-3">
