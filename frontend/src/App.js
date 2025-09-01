@@ -1615,12 +1615,20 @@ const HomeView = () => {
       <Header />
       
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-orange-50 to-orange-100 py-12">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4 font-lora">
+      <div className="relative py-16 overflow-hidden">
+        <div className="absolute inset-0">
+          <img 
+            src="https://customer-assets.emergentagent.com/job_desi-kitchen-1/artifacts/4c8t9ady_banner.png"
+            alt="Authentic South Asian Cuisine"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        <div className="relative container mx-auto px-4 text-center text-white">
+          <h1 className="text-heading mb-6">
             Let's cook the food you miss from home
-          </h2>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto font-inter">
+          </h1>
+          <p className="text-body text-gray-200 mb-12 max-w-2xl mx-auto">
             I'll help you make authentic dishes with ingredients from your local Tesco. 
             Perfect for busy students and professionals who want a taste of home! 🏡
           </p>
