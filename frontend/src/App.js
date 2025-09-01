@@ -969,31 +969,49 @@ const AddRecipeModal = ({ isOpen, onClose, onSave }) => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    servings: 4,
+    baseServings: 4,
     cookingTime: '',
     difficulty: 'Easy',
     cuisine: 'Home Style',
-    ingredients: '',
     instructions: ''
   });
+
+  const [ingredients, setIngredients] = useState([
+    { name: '', quantity: '', unit: '' }
+  ]);
+
+  const addIngredient = () => {
+    setIngredients([...ingredients, { name: '', quantity: '', unit: '' }]);
+  };
+
+  const removeIngredient = (index) => {
+    if (ingredients.length > 1) {
+      setIngredients(ingredients.filter((_, i) => i !== index));
+    }
+  };
+
+  const updateIngredient = (index, field, value) => {
+    const updatedIngredients = ingredients.map((ingredient, i) => {
+      if (i === index) {
+        return { ...ingredient, [field]: value };
+      }
+      return ingredient;
+    });
+    setIngredients(updatedIngredients);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Parse ingredients from textarea
-    const ingredientLines = formData.ingredients.split('\n').filter(line => line.trim());
-    const parsedIngredients = ingredientLines.map((line, index) => {
-      // Simple parsing - could be more sophisticated
-      const parts = line.trim().split(' ');
-      const quantity = parts.slice(0, 2).join(' '); // First 2 words as quantity
-      const name = parts.slice(2).join(' '); // Rest as ingredient name
-      
-      return {
-        name: name || line.trim(),
-        quantity: quantity || '1 portion',
+    // Process ingredients into the new structured format
+    const processedIngredients = ingredients
+      .filter(ing => ing.name.trim()) // Only include ingredients with names
+      .map(ingredient => ({
+        name: ingredient.name.trim(),
+        quantity: ingredient.quantity ? parseFloat(ingredient.quantity) : null,
+        unit: ingredient.unit.trim() || 'to taste',
         category: 'User Added'
-      };
-    });
+      }));
 
     // Parse instructions from textarea
     const instructionLines = formData.instructions.split('\n').filter(line => line.trim());
@@ -1002,11 +1020,12 @@ const AddRecipeModal = ({ isOpen, onClose, onSave }) => {
       id: Date.now(), // Simple ID generation
       name: formData.name,
       description: formData.description,
-      servings: parseInt(formData.servings),
+      servings: parseInt(formData.baseServings), // Keep for compatibility
+      baseServings: parseInt(formData.baseServings), // New field for dynamic serving
       cookingTime: formData.cookingTime,
       difficulty: formData.difficulty,
       cuisine: formData.cuisine,
-      ingredients: parsedIngredients,
+      ingredients: processedIngredients,
       instructions: instructionLines,
       tags: ['Personal', 'Home Recipe'],
       userGenerated: true,
@@ -1014,16 +1033,18 @@ const AddRecipeModal = ({ isOpen, onClose, onSave }) => {
     };
 
     onSave(recipe);
+    
+    // Reset form
     setFormData({
       name: '',
       description: '',
-      servings: 4,
+      baseServings: 4,
       cookingTime: '',
       difficulty: 'Easy',
       cuisine: 'Home Style',
-      ingredients: '',
       instructions: ''
     });
+    setIngredients([{ name: '', quantity: '', unit: '' }]);
   };
 
   if (!isOpen) return null;
