@@ -1142,18 +1142,65 @@ const AddRecipeModal = ({ isOpen, onClose, onSave }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Ingredients 
-              <span className="text-xs text-gray-500">(One ingredient per line)</span>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Ingredients
+              <span className="text-xs text-gray-500 ml-2">(Add ingredients one by one)</span>
             </label>
-            <textarea
-              required
-              value={formData.ingredients}
-              onChange={(e) => setFormData({...formData, ingredients: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              rows="6"
-              placeholder={`500g Chicken pieces\n2 tbsp Vegetable oil\n1 large Onion chopped\n3 cloves Garlic minced\n1 tsp Garam masala`}
-            />
+            <div className="space-y-3">
+              {ingredients.map((ingredient, index) => (
+                <div key={index} className="grid grid-cols-12 gap-2 items-end">
+                  <div className="col-span-3">
+                    <input
+                      type="number"
+                      step="0.1"
+                      placeholder="Amount"
+                      value={ingredient.quantity}
+                      onChange={(e) => updateIngredient(index, 'quantity', e.target.value)}
+                      className="w-full px-2 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <input
+                      type="text"
+                      placeholder="Unit"
+                      value={ingredient.unit}
+                      onChange={(e) => updateIngredient(index, 'unit', e.target.value)}
+                      className="w-full px-2 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div className="col-span-6">
+                    <input
+                      type="text"
+                      placeholder="Ingredient name"
+                      required
+                      value={ingredient.name}
+                      onChange={(e) => updateIngredient(index, 'name', e.target.value)}
+                      className="w-full px-2 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <div className="col-span-1">
+                    <button
+                      type="button"
+                      onClick={() => removeIngredient(index)}
+                      className="w-full h-10 text-red-500 hover:text-red-700 text-sm font-bold"
+                      disabled={ingredients.length === 1}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={addIngredient}
+                className="text-primary hover:text-primary-dark text-sm font-medium"
+              >
+                + Add another ingredient
+              </button>
+              <p className="text-xs text-gray-500 mt-2">
+                Leave "Amount" empty for items like "salt to taste" or "garnish"
+              </p>
+            </div>
           </div>
 
           <div>
