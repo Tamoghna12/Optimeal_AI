@@ -1099,12 +1099,14 @@ const AddRecipeModal = ({ isOpen, onClose, onSave }) => {
 
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Servings</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Base number of servings for this recipe?</label>
               <input
                 type="number"
                 min="1"
-                value={formData.servings}
-                onChange={(e) => setFormData({...formData, servings: e.target.value})}
+                max="20"
+                required
+                value={formData.baseServings}
+                onChange={(e) => setFormData({...formData, baseServings: e.target.value})}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               />
             </div>
