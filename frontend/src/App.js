@@ -1715,6 +1715,13 @@ const RecipeDetailView = () => {
               <h1 className="text-3xl font-bold text-gray-900 mb-4 font-lora">{currentRecipe.name}</h1>
               <p className="text-gray-700 mb-6 leading-relaxed">{currentRecipe.description}</p>
               
+              {/* Serving Size Stepper */}
+              <ServingSizeStepper
+                currentServings={desiredServings}
+                baseServings={recipe.baseServings || recipe.servings}
+                onServingChange={setDesiredServings}
+              />
+              
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-primary">{recipe.servings}</div>
