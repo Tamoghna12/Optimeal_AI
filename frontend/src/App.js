@@ -2331,7 +2331,7 @@ const AboutView = () => {
       <div className="container mx-auto px-4 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6 font-lora">About Homeland Meals</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-6 font-lora">About Desi Kitchen Co-Pilot</h1>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto font-inter">
             Where AI meets authentic South Asian cuisine to help you cook the food you miss from home
           </p>
