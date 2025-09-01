@@ -1640,10 +1640,10 @@ const HomeView = () => {
               <select
                 value={selectedCuisine}
                 onChange={(e) => setSelectedCuisine(e.target.value)}
-                className="px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent bg-white"
+                className="px-4 py-3 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary bg-white text-gray-800 font-medium shadow-sm"
               >
                 {cuisines.map(cuisine => (
-                  <option key={cuisine} value={cuisine}>{cuisine}</option>
+                  <option key={cuisine} value={cuisine} className="text-gray-800 font-medium">{cuisine}</option>
                 ))}
               </select>
             </div>
