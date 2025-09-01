@@ -1606,6 +1606,9 @@ const RecipeDetailView = () => {
   const allRecipes = [...recipesData, ...loadUserCookbook()];
   const recipe = allRecipes.find(r => r.id === parseInt(recipeId));
   const isInTray = selectedRecipes.includes(parseInt(recipeId));
+  
+  // Dynamic serving size state
+  const [desiredServings, setDesiredServings] = useState(recipe?.baseServings || recipe?.servings || 4);
 
   if (!recipe) {
     return (
