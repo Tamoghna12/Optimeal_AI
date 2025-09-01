@@ -1811,8 +1811,21 @@ const RecipeDetailView = () => {
           {/* Recipe Content */}
           <div className="lg:col-span-2">
             {/* Hero Image */}
-            <div className="bg-gradient-to-br from-orange-100 to-orange-200 rounded-xl h-64 md:h-80 flex items-center justify-center mb-8 relative">
-              <div className="text-8xl opacity-30">🍛</div>
+            <div className="bg-gradient-to-br from-orange-100 to-orange-200 rounded-xl h-64 md:h-80 flex items-center justify-center mb-8 relative overflow-hidden">
+              {recipe.imageUrl && recipe.imageUrl.includes('customer-assets') ? (
+                <img 
+                  src={recipe.imageUrl} 
+                  alt={recipe.name}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+              ) : null}
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-orange-100 to-orange-200" style={{display: recipe.imageUrl && recipe.imageUrl.includes('customer-assets') ? 'none' : 'flex'}}>
+                <div className="text-8xl opacity-30">🍛</div>
+              </div>
               {healthierVersion && (
                 <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                   ✨ Healthier Version
