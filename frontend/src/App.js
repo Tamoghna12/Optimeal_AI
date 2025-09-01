@@ -1654,6 +1654,27 @@ const RecipeDetailView = () => {
   
   // Dynamic serving size state
   const [desiredServings, setDesiredServings] = useState(recipe?.baseServings || recipe?.servings || 4);
+  
+  // Helper function to calculate display quantity
+  const calculateDisplayQuantity = (ingredient, baseServings, desiredServings) => {
+    if (ingredient.quantity === null || ingredient.quantity === undefined) {
+      return ingredient.unit; // Return unit as-is for "to taste" items
+    }
+    
+    const multiplier = desiredServings / baseServings;
+    const displayQuantity = ingredient.quantity * multiplier;
+    
+    // Round to sensible precision
+    const roundedQuantity = Math.round(displayQuantity * 10) / 10;
+    
+    // Convert decimals to fractions for common cases
+    if (roundedQuantity === 0.5) return `½ ${ingredient.unit}`;
+    if (roundedQuantity === 0.25) return `¼ ${ingredient.unit}`;
+    if (roundedQuantity === 0.75) return `¾ ${ingredient.unit}`;
+    if (roundedQuantity === 1.5) return `1½ ${ingredient.unit}`;
+    
+    return `${roundedQuantity} ${ingredient.unit}`;
+  };
 
   if (!recipe) {
     return (
