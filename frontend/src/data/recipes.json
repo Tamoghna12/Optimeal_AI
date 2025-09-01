@@ -211,7 +211,7 @@
     "id": 3,
     "name": "Dal Makhani",
     "description": "The king of lentil curries - slow-cooked black lentils in a rich, creamy tomato sauce. This restaurant-style dal is the ultimate comfort food that tastes like a warm hug from home.",
-    "imageUrl": "/images/dal-makhani.jpg",
+    "imageUrl": "https://customer-assets.emergentagent.com/job_desi-kitchen-1/artifacts/uq86k402_dal_makhani.png",
     "servings": 6,
     "cookingTime": "60 minutes",
     "difficulty": "Medium",
