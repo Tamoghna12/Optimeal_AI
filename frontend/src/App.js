@@ -1594,6 +1594,51 @@ const HomeView = () => {
   );
 };
 
+// Serving Size Stepper Component
+const ServingSizeStepper = ({ currentServings, baseServings, onServingChange }) => {
+  const handleDecrement = () => {
+    if (currentServings > 1) {
+      onServingChange(currentServings - 1);
+    }
+  };
+
+  const handleIncrement = () => {
+    if (currentServings < 20) { // Upper limit of 20 servings
+      onServingChange(currentServings + 1);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center space-x-4 mb-6 bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+      <span className="text-lg font-medium text-gray-800">Servings:</span>
+      <div className="flex items-center space-x-3">
+        <button
+          onClick={handleDecrement}
+          disabled={currentServings <= 1}
+          className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg font-bold text-gray-700 transition-colors"
+        >
+          −
+        </button>
+        <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold">
+          {currentServings}
+        </div>
+        <button
+          onClick={handleIncrement}
+          disabled={currentServings >= 20}
+          className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg font-bold text-gray-700 transition-colors"
+        >
+          +
+        </button>
+      </div>
+      {currentServings !== baseServings && (
+        <span className="text-sm text-gray-600">
+          (originally {baseServings} servings)
+        </span>
+      )}
+    </div>
+  );
+};
+
 const RecipeDetailView = () => {
   const { recipeId } = useParams();
   const navigate = useNavigate();
