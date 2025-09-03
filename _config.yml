@@ -1,0 +1,33 @@
+# GitHub Pages Configuration
+title: "Nutrichef AI - Your AI Cooking Assistant"
+description: "Transform your South Asian cooking with AI. Get instant recipe suggestions, nutritional analysis, and cooking guidance."
+url: "https://your-username.github.io"
+baseurl: "/homeland_meals"
+
+# SEO settings
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - CLAUDE.md
+  - backend/
+  - frontend/
+  - tests/
+  - venv/
+  - node_modules/
+  - "*.md"
+  - Gemfile
+  - Gemfile.lock
+
+# Include files
+include:
+  - index.html
+  - landing.css
+  - landing.js

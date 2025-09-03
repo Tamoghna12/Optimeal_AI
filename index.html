@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrichef AI - Transform Your South Asian Cooking with AI</title>
+    <meta name="description" content="Your AI cooking assistant for authentic South Asian cuisine. Get instant recipe suggestions, nutritional analysis, and cooking guidance from ingredients you have.">
+    <meta name="keywords" content="AI cooking, South Asian recipes, Indian recipes, nutrition analysis, recipe suggestions, cooking assistant">
+    
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="Nutrichef AI - Your AI Cooking Assistant">
+    <meta property="og:description" content="Transform your South Asian cooking with AI. Get instant recipe ideas, nutritional analysis, and smart cooking guidance.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-username.github.io/homeland_meals">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.svg">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="landing.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR-ANALYTICS-ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-YOUR-ANALYTICS-ID');
+        
+        // Custom event tracking function
+        function trackEvent(eventName, parameters = {}) {
+            gtag('event', eventName, parameters);
+            console.log('Event tracked:', eventName, parameters);
+        }
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-icon">🤖</span>
+                <span class="brand-text">Nutrichef AI</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#demo" class="nav-link">Try Demo</a>
+                <a href="#about" class="nav-link">About</a>
+                <button class="cta-button nav-cta" onclick="scrollToDemo()">Try Now</button>
+            </div>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="floating-spice spice-1">🌶️</div>
+            <div class="floating-spice spice-2">🧄</div>
+            <div class="floating-spice spice-3">🧅</div>
+            <div class="floating-spice spice-4">🌿</div>
+            <div class="floating-spice spice-5">🍅</div>
+            <div class="floating-spice spice-6">🫛</div>
+        </div>
+        
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Transform Your 
+                    <span class="gradient-text">South Asian Cooking</span> 
+                    with AI
+                </h1>
+                <p class="hero-subtitle">
+                    From traditional recipes to quick meals - your AI sous chef understands your heritage, 
+                    your ingredients, and your busy lifestyle.
+                </p>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Recipes Analyzed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Cuisines Supported</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">Accuracy Rate</span>
+                    </div>
+                </div>
+                
+                <div class="hero-ctas">
+                    <button class="cta-button primary" onclick="scrollToDemo()">
+                        📸 Try Free Food Analysis
+                    </button>
+                    <button class="cta-button secondary" onclick="trackEvent('view_app_clicked'); window.open('#app', '_blank')">
+                        🚀 Launch App
+                    </button>
+                </div>
+                
+                <div class="hero-trust">
+                    <p>✨ No signup required for demo • 🔒 Your data stays private • 🆓 Always free to try</p>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="app-interface">
+                            <div class="chat-bubble ai">
+                                🤖 I see you have onions, tomatoes, and garam masala. How about making a quick Bhuna Gosht? I can walk you through it step by step!
+                            </div>
+                            <div class="chat-bubble user">
+                                Perfect! How long will it take?
+                            </div>
+                            <div class="typing-indicator">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo Section (Surprise Element) -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🎯 Experience AI Food Analysis</h2>
+                <p class="section-subtitle">
+                    Upload any food photo and watch our AI instantly analyze nutrition, ingredients, and cultural context
+                </p>
+            </div>
+            
+            <div class="demo-container">
+                <div class="demo-upload" id="demoUpload">
+                    <div class="upload-zone" id="uploadZone">
+                        <div class="upload-icon">📸</div>
+                        <h3>Drop your food photo here</h3>
+                        <p>Or click to select an image</p>
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                        <button class="upload-button" onclick="document.getElementById('fileInput').click()">
+                            Choose Photo
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="demo-results" id="demoResults" style="display: none;">
+                    <div class="result-header">
+                        <h3>🧠 AI Analysis Results</h3>
+                        <button class="try-again-btn" onclick="resetDemo()">Try Another Photo</button>
+                    </div>
+                    
+                    <div class="analysis-grid">
+                        <div class="analysis-card nutrition">
+                            <h4>📊 Nutrition Facts</h4>
+                            <div id="nutritionData">
+                                <div class="nutrition-item">
+                                    <span>Calories:</span>
+                                    <span id="calories">Loading...</span>
+                                </div>
+                                <div class="nutrition-item">
+                                    <span>Protein:</span>
+                                    <span id="protein">Loading...</span>
+                                </div>
+                                <div class="nutrition-item">
+                                    <span>Carbs:</span>
+                                    <span id="carbs">Loading...</span>
+                                </div>
+                                <div class="nutrition-item">
+                                    <span>Fat:</span>
+                                    <span id="fat">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="analysis-card ingredients">
+                            <h4>🧄 Detected Ingredients</h4>
+                            <div id="ingredientsList">
+                                <div class="loading-skeleton"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="analysis-card cultural">
+                            <h4>🌍 Cultural Context</h4>
+                            <div id="culturalContext">
+                                <div class="loading-skeleton"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-cta">
+                        <p>🚀 Want personalized recipes and cooking guidance?</p>
+                        <button class="cta-button primary" onclick="trackEvent('demo_conversion'); alert('App launching soon! Join our waitlist.')">
+                            Get Full Access
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="demo-loading" id="demoLoading" style="display: none;">
+                    <div class="loading-animation">
+                        <div class="cooking-pot">🍲</div>
+                        <div class="loading-text">
+                            <h3>AI is analyzing your food...</h3>
+                            <p id="loadingSteps">Identifying ingredients...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-examples">
+                <p class="examples-header">Try these sample photos:</p>
+                <div class="example-images">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=100&h=100&fit=crop" alt="Indian curry" class="example-img" onclick="loadSampleAnalysis('curry')">
+                    <img src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=100&h=100&fit=crop" alt="Biryani" class="example-img" onclick="loadSampleAnalysis('biryani')">
+                    <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=100&h=100&fit=crop" alt="Dal" class="example-img" onclick="loadSampleAnalysis('dal')">
+                    <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=100&h=100&fit=crop" alt="Samosa" class="example-img" onclick="loadSampleAnalysis('samosa')">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🌟 Your AI Cooking Superpowers</h2>
+                <p class="section-subtitle">
+                    Everything you need to cook authentic, healthy, and budget-friendly South Asian meals
+                </p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card" data-feature="recipes">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Recipe Magic</h3>
+                    <p>Got random ingredients? Get instant, authentic recipe suggestions that actually work with what you have.</p>
+                    <div class="feature-demo">
+                        <div class="demo-input">"I have leftover rice, onions, and curry leaves"</div>
+                        <div class="demo-arrow">→</div>
+                        <div class="demo-output">"Perfect for Coconut Rice! Here's how..."</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-feature="nutrition">
+                    <div class="feature-icon">📊</div>
+                    <h3>Smart Nutrition Analysis</h3>
+                    <p>Upload any food photo and get detailed nutritional breakdown, portion sizes, and health insights.</p>
+                    <div class="feature-demo">
+                        <div class="demo-input">📸 Photo of your plate</div>
+                        <div class="demo-arrow">→</div>
+                        <div class="demo-output">🎯 Complete nutrition facts</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-feature="substitutions">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Cultural Bridge</h3>
+                    <p>Find perfect Western grocery alternatives for traditional ingredients. No more hunting in specialty stores!</p>
+                    <div class="feature-demo">
+                        <div class="demo-input">"Where can I find methi?"</div>
+                        <div class="demo-arrow">→</div>
+                        <div class="demo-output">"Try fenugreek leaves in the organic section"</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-feature="budget">
+                    <div class="feature-icon">💰</div>
+                    <h3>Budget Planning</h3>
+                    <p>Plan authentic weekly meals that fit your budget. Get cost estimates and smart shopping lists.</p>
+                    <div class="feature-demo">
+                        <div class="demo-input">Budget: $40/week</div>
+                        <div class="demo-arrow">→</div>
+                        <div class="demo-output">7 days of authentic meals planned!</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-feature="guidance">
+                    <div class="feature-icon">👨‍🍳</div>
+                    <h3>Step-by-Step Guidance</h3>
+                    <p>Never wonder "what next?" again. Get real-time cooking guidance that adapts to your pace.</p>
+                    <div class="feature-demo">
+                        <div class="demo-input">"How do I know when dal is ready?"</div>
+                        <div class="demo-arrow">→</div>
+                        <div class="demo-output">"Look for this texture..." [with photo]</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-feature="heritage">
+                    <div class="feature-icon">🏠</div>
+                    <h3>Taste of Home</h3>
+                    <p>Recreate your family's traditional recipes with modern shortcuts. Keep the heritage, save the time.</p>
+                    <div class="feature-demo">
+                        <div class="demo-input">"My grandmother's biryani recipe"</div>
+                        <div class="demo-arrow">→</div>
+                        <div class="demo-output">30-min version with authentic taste</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">💝 Loved by the Diaspora Community</h2>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Finally, an AI that understands that 'a pinch of this' and 'cook until it looks right' are valid measurements! 😂"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👩</div>
+                        <div class="author-info">
+                            <div class="author-name">Priya S.</div>
+                            <div class="author-title">Software Engineer, California</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"As a busy grad student, this is a lifesaver. I can finally make authentic food without calling my mom every time!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👨</div>
+                        <div class="author-info">
+                            <div class="author-name">Arjun M.</div>
+                            <div class="author-title">PhD Student, Boston</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The ingredient substitutions are spot-on. Found perfect alternatives at my local Kroger!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👩</div>
+                        <div class="author-info">
+                            <div class="author-name">Kavya R.</div>
+                            <div class="author-title">Marketing Manager, Texas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-number">4.9★</div>
+                    <div class="stat-label">Average Rating</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Happy Cooks</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Recipes Created</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Cooking?</h2>
+                <p>Join thousands of home cooks who've discovered the joy of AI-powered South Asian cooking</p>
+                
+                <div class="cta-buttons">
+                    <button class="cta-button primary large" onclick="trackEvent('final_cta_clicked'); alert('App launching soon! Join our waitlist.')">
+                        🚀 Start Cooking Smarter
+                    </button>
+                    <button class="cta-button secondary large" onclick="scrollToDemo()">
+                        📸 Try Demo First
+                    </button>
+                </div>
+                
+                <div class="cta-trust">
+                    <p>✅ Free to start • ✅ No credit card required • ✅ Cancel anytime</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand">
+                        <span class="brand-icon">🤖</span>
+                        <span class="brand-text">Nutrichef AI</span>
+                    </div>
+                    <p>Your AI cooking assistant for authentic South Asian cuisine</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#demo">Try Demo</a>
+                        <a href="#pricing">Pricing</a>
+                        <a href="#api">API</a>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Company</h4>
+                        <a href="#about">About Us</a>
+                        <a href="#blog">Blog</a>
+                        <a href="#careers">Careers</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <a href="#docs">Documentation</a>
+                        <a href="#support">Support</a>
+                        <a href="#community">Community</a>
+                        <a href="#changelog">Changelog</a>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Legal</h4>
+                        <a href="#privacy">Privacy Policy</a>
+                        <a href="#terms">Terms of Service</a>
+                        <a href="#cookies">Cookies</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Nutrichef AI. Made with ❤️ for the South Asian diaspora.</p>
+                <div class="social-links">
+                    <a href="#" onclick="trackEvent('social_click', {platform: 'twitter'})">🐦</a>
+                    <a href="#" onclick="trackEvent('social_click', {platform: 'instagram'})">📸</a>
+                    <a href="#" onclick="trackEvent('social_click', {platform: 'github'})">👨‍💻</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="landing.js"></script>
+</body>
+</html>
