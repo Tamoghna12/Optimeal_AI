@@ -26,7 +26,7 @@
     
     /* Spacing */
     --section-padding: 5rem 0;
-    --container-max-width: 1200px;
+    --container-max-width: 1400px;
     --border-radius: 12px;
     --border-radius-large: 24px;
     
@@ -50,7 +50,7 @@ body {
 .container {
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 clamp(1rem, 5vw, 4rem);
 }
 
 /* Navigation */
@@ -69,7 +69,7 @@ body {
 .nav-container {
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 clamp(1rem, 5vw, 4rem);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -970,10 +970,61 @@ body {
     border-radius: 4px;
 }
 
-/* Social Proof */
-.social-proof {
+/* Stats Section */
+.stats-section {
     padding: var(--section-padding);
     background: var(--neutral-100);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    background: var(--soft-cream);
+    padding: 2rem;
+    border-radius: var(--border-radius-large);
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: var(--transition-smooth);
+    border: 2px solid transparent;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-orange);
+}
+
+.stat-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.stat-card .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-orange);
+    font-family: var(--font-display);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-label {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--neutral-900);
+    margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-desc {
+    font-size: 0.9rem;
+    color: var(--neutral-700);
+    line-height: 1.4;
 }
 
 .testimonials-grid {
@@ -1173,6 +1224,20 @@ body {
 }
 
 /* Responsive Design */
+@media (min-width: 1920px) {
+    .container {
+        padding: 0 clamp(2rem, 8vw, 8rem);
+    }
+    
+    .nav-container {
+        padding: 0 clamp(2rem, 8vw, 8rem);
+    }
+    
+    .hero-container {
+        gap: 6rem;
+    }
+}
+
 @media (max-width: 1024px) {
     .hero-container {
         grid-template-columns: 1fr;
@@ -1184,6 +1249,10 @@ body {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
     
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
     .phone-mockup {
         width: 250px;
         height: 500px;
@@ -1193,6 +1262,14 @@ body {
 @media (max-width: 768px) {
     :root {
         --section-padding: 3rem 0;
+    }
+    
+    .container {
+        padding: 0 clamp(1rem, 4vw, 2rem);
+    }
+    
+    .nav-container {
+        padding: 0 clamp(1rem, 4vw, 2rem);
     }
     
     .nav-menu {
@@ -1216,8 +1293,8 @@ body {
         grid-template-columns: 1fr;
     }
     
-    .testimonials-grid {
-        grid-template-columns: 1fr;
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
     
     .footer-content {
@@ -1244,9 +1321,17 @@ body {
         padding: 0 1rem;
     }
     
+    .nav-container {
+        padding: 0 1rem;
+    }
+    
     .hero-stats {
         grid-template-columns: 1fr;
         gap: 1rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
     }
     
     .footer-links {
