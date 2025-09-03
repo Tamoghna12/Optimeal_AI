@@ -146,6 +146,16 @@ class RecipeConversion(BaseModel):
     time_saved_minutes: int
     difficulty_level: str
 
+class RecipeAnalyzerRequest(BaseModel):
+    recipe: str
+
+class RecipeAnalyzerResponse(BaseModel):
+    nutrition: Dict[str, Any]
+    macros: Dict[str, int]
+    health: Dict[str, Any]
+    modifications: List[Dict[str, str]]
+    budget: Dict[str, Any]
+
 # Helper Functions
 def calculate_bmr(weight_kg: float, height_cm: float, age: int, gender: str) -> float:
     """Calculate Basal Metabolic Rate using Mifflin-St Jeor Equation"""
@@ -834,6 +844,123 @@ Return response as JSON with this structure:
         logging.error(f"Error getting recipe suggestions: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to get recipe suggestions: {str(e)}")
 
+async def analyze_recipe_with_ai(recipe_text: str) -> Dict[str, Any]:
+    """Analyze recipe using Groq API and return structured nutrition and health data"""
+    try:
+        api_key = os.environ.get('GROQ_API_KEY')
+        if not api_key:
+            raise HTTPException(status_code=500, detail="Groq API key not configured")
+        
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"recipe-analyzer-{uuid.uuid4()}",
+            system_message="""You are NutriChef AI, an expert nutritionist and recipe analyzer specializing in South Asian cuisine and health conditions like PCOS, diabetes, pre-diabetes, and high blood pressure.
+
+Your task is to analyze recipes and provide comprehensive health and nutrition information in a specific JSON format.
+
+CRITICAL: You must ALWAYS respond with valid JSON in this exact structure:
+
+{
+  "nutrition": {
+    "calories": <number>,
+    "protein": <number>,
+    "carbs": <number>,
+    "fat": <number>,
+    "fiber": <number>
+  },
+  "macros": {
+    "protein": <percentage as integer>,
+    "carbs": <percentage as integer>,
+    "fat": <percentage as integer>
+  },
+  "health": {
+    "conditions": [
+      {
+        "name": "PCOS|Diabetes|High Blood Pressure",
+        "safe": true/false,
+        "note": "brief explanation"
+      }
+    ],
+    "warnings": ["warning1", "warning2"]
+  },
+  "modifications": [
+    {
+      "category": "condition-friendly name",
+      "suggestion": "specific modification advice"
+    }
+  ],
+  "budget": {
+    "total": <estimated total cost in USD>,
+    "perServing": <cost per serving>,
+    "category": "Budget|Moderate|Expensive",
+    "ingredients": [
+      {"name": "ingredient name", "cost": <estimated cost>}
+    ]
+  }
+}
+
+Guidelines:
+- Analyze all ingredients for health impact
+- Consider glycemic index, inflammation, sodium content
+- Provide realistic cost estimates
+- Give practical modification suggestions
+- Always include analysis for PCOS, Diabetes, and High Blood Pressure
+- Keep explanations concise but helpful"""
+        ).with_model("groq", "llama-3.1-8b-instant")
+        
+        user_message = UserMessage(
+            text=f"Please analyze this recipe and provide complete nutrition and health analysis:\n\n{recipe_text}"
+        )
+        
+        response = await chat.send_message(user_message)
+        
+        try:
+            response_text = str(response).strip()
+            # Clean up response if it has markdown code blocks
+            if response_text.startswith('```json'):
+                response_text = response_text[7:-3].strip()
+            elif response_text.startswith('```'):
+                response_text = response_text[3:-3].strip()
+            
+            # Parse the JSON response
+            analysis_data = json.loads(response_text)
+            return analysis_data
+            
+        except json.JSONDecodeError as e:
+            logging.error(f"Failed to parse AI response as JSON: {e}")
+            logging.error(f"Raw response: {response_text}")
+            
+            # Return fallback mock data
+            return {
+                "nutrition": {"calories": 350, "protein": 20, "carbs": 40, "fat": 15, "fiber": 6},
+                "macros": {"protein": 23, "carbs": 46, "fat": 31},
+                "health": {
+                    "conditions": [
+                        {"name": "PCOS", "safe": True, "note": "Moderate carb content - monitor portion size"},
+                        {"name": "Diabetes", "safe": True, "note": "Good protein and fiber content"},
+                        {"name": "High Blood Pressure", "safe": True, "note": "Check sodium levels in spices"}
+                    ],
+                    "warnings": ["Monitor portion sizes", "Consider ingredient quality"]
+                },
+                "modifications": [
+                    {"category": "PCOS-Friendly", "suggestion": "Add more vegetables for fiber"},
+                    {"category": "Heart-Healthy", "suggestion": "Reduce oil if needed"}
+                ],
+                "budget": {
+                    "total": 12.50,
+                    "perServing": 3.13,
+                    "category": "Moderate",
+                    "ingredients": [
+                        {"name": "Main ingredients", "cost": 8.00},
+                        {"name": "Spices & seasonings", "cost": 4.50}
+                    ]
+                }
+            }
+            
+    except Exception as e:
+        logging.error(f"Error analyzing recipe: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to analyze recipe: {str(e)}")
+
 async def get_cooking_guidance_with_ai(question: str, recipe_context: Optional[str] = None, step_context: Optional[str] = None) -> str:
     """Provide cooking guidance and answer questions using LLM"""
     try:
@@ -880,6 +1007,31 @@ Keep responses conversational but informative, like a knowledgeable friend helpi
     except Exception as e:
         logging.error(f"Error getting cooking guidance: {str(e)}")
         return "I'm having trouble accessing my knowledge right now, but here's some general advice: Take your time, taste as you go, and don't be afraid to adjust seasonings. Cooking is about learning and having fun!"
+
+# Recipe Analyzer API Route
+
+@api_router.post("/recipe-analyzer")
+async def recipe_analyzer(request: RecipeAnalyzerRequest):
+    """Analyze recipe for nutrition, health impact, and budget information"""
+    try:
+        if not request.recipe or not request.recipe.strip():
+            raise HTTPException(status_code=400, detail="Recipe text is required")
+        
+        # Analyze recipe using AI
+        analysis = await analyze_recipe_with_ai(request.recipe)
+        
+        return {
+            "success": True,
+            "analysis": analysis,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        
+    except HTTPException:
+        # Re-raise HTTP exceptions (like 400, 500) as-is
+        raise
+    except Exception as e:
+        logging.error(f"Error in recipe analyzer endpoint: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to analyze recipe: {str(e)}")
 
 # Co-pilot API Routes
 

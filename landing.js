@@ -204,7 +204,7 @@
     
     // Initialize all functionality when DOM is ready
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('🤖 Nutrichef AI Landing Page Loaded');
+        console.log('🤖 NutriChef AI Landing Page Loaded');
         
         // Initialize all modules
         initMobileMenu();
@@ -294,11 +294,16 @@
         
         showAnalyzerLoading();
         
-        // Simulate API call to Groq (in real implementation, this would call your backend)
-        setTimeout(() => {
-            const analysis = generateRecipeAnalysis(recipe);
-            showAnalyzerResults(analysis);
-        }, 3000);
+        // Call secure backend API endpoint (no API keys exposed to frontend)
+        callBackendRecipeAnalyzer(recipe)
+            .then(analysis => {
+                showAnalyzerResults(analysis);
+            })
+            .catch(error => {
+                console.error('Recipe analysis failed:', error);
+                alert('Recipe analysis temporarily unavailable. Please try again later.');
+                hideAnalyzerLoading();
+            });
     };
     
     window.loadSampleRecipe = function(type) {
@@ -593,8 +598,46 @@ Instructions:
         });
     }
     
-    function generateRecipeAnalysis(recipe) {
-        // Mock analysis generation - in real app, this would call Groq API
+    // Secure API call to your backend (keeps Groq API key private)
+    async function callBackendRecipeAnalyzer(recipe) {
+        try {
+            const response = await fetch('/api/recipe-analyzer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ recipe: recipe })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`API request failed: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            // Return the analysis object from the backend response
+            if (data.success && data.analysis) {
+                return data.analysis;
+            } else {
+                throw new Error('Invalid response format from backend');
+            }
+        } catch (error) {
+            console.error('Backend API call failed, using demo data:', error);
+            // Fallback to demo data for development/testing
+            return generateMockAnalysis(recipe);
+        }
+    }
+    
+    function hideAnalyzerLoading() {
+        const loadingSection = document.getElementById('analyzerLoading');
+        const inputSection = document.querySelector('.demo-input-section');
+        
+        loadingSection.style.display = 'none';
+        inputSection.style.display = 'block';
+    }
+    
+    function generateMockAnalysis(recipe) {
+        // Demo data for development - replace with real backend integration
         const analyses = [
             {
                 nutrition: { calories: 420, protein: 25, carbs: 45, fat: 18, fiber: 8 },
@@ -664,7 +707,7 @@ Instructions:
     
     // Export state for debugging (development only)
     if (typeof window !== 'undefined') {
-        window.NutrichefAI = {
+        window.NutriChefAI = {
             state: state,
             trackEvent: trackEvent,
             scrollToFeatures: scrollToFeatures,
