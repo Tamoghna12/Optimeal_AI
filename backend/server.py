@@ -156,6 +156,23 @@ class RecipeAnalyzerResponse(BaseModel):
     modifications: List[Dict[str, str]]
     budget: Dict[str, Any]
 
+class EmailSignupRequest(BaseModel):
+    email: str
+    name: Optional[str] = None
+    healthUpdates: bool = False
+    source: str = "landing_page"
+    timestamp: str
+
+class EmailSubscriber(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    email: str
+    name: Optional[str] = None
+    health_updates: bool = False
+    source: str = "landing_page"
+    subscribed_at: datetime = Field(default_factory=datetime.utcnow)
+    confirmed: bool = False
+    active: bool = True
+
 # Helper Functions
 def calculate_bmr(weight_kg: float, height_cm: float, age: int, gender: str) -> float:
     """Calculate Basal Metabolic Rate using Mifflin-St Jeor Equation"""
@@ -1007,6 +1024,88 @@ Keep responses conversational but informative, like a knowledgeable friend helpi
     except Exception as e:
         logging.error(f"Error getting cooking guidance: {str(e)}")
         return "I'm having trouble accessing my knowledge right now, but here's some general advice: Take your time, taste as you go, and don't be afraid to adjust seasonings. Cooking is about learning and having fun!"
+
+# Email Signup API Route
+
+@api_router.post("/email-signup")
+async def email_signup(request: EmailSignupRequest):
+    """Collect email addresses for waitlist and updates"""
+    try:
+        # Validate email format
+        import re
+        email_pattern = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'
+        if not re.match(email_pattern, request.email):
+            raise HTTPException(status_code=400, detail="Invalid email format")
+        
+        # Check if email already exists
+        existing_subscriber = await db.email_subscribers.find_one({
+            "email": request.email.lower(),
+            "active": True
+        })
+        
+        if existing_subscriber:
+            # Update existing subscriber info if provided
+            update_data = {
+                "updated_at": datetime.utcnow()
+            }
+            if request.name:
+                update_data["name"] = request.name
+            update_data["health_updates"] = request.healthUpdates
+            update_data["source"] = request.source
+            
+            await db.email_subscribers.update_one(
+                {"email": request.email.lower()},
+                {"$set": update_data}
+            )
+            
+            return {
+                "success": True,
+                "message": "Email updated successfully! You're already on our waitlist.",
+                "existing": True
+            }
+        
+        # Create new subscriber
+        subscriber = EmailSubscriber(
+            email=request.email.lower(),
+            name=request.name,
+            health_updates=request.healthUpdates,
+            source=request.source
+        )
+        
+        # Save to database
+        await db.email_subscribers.insert_one(subscriber.model_dump())
+        
+        # Log successful signup
+        logging.info(f"New email subscriber: {request.email} from {request.source}")
+        
+        return {
+            "success": True,
+            "message": "Successfully joined the waitlist! We'll notify you when NutriChef AI launches.",
+            "subscriber_id": subscriber.id
+        }
+        
+    except HTTPException:
+        # Re-raise HTTP exceptions
+        raise
+    except Exception as e:
+        logging.error(f"Error in email signup: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to process email signup")
+
+@api_router.get("/email-subscribers")
+async def get_email_subscribers():
+    """Get all email subscribers (admin endpoint)"""
+    try:
+        subscribers = await db.email_subscribers.find({}).to_list(length=None)
+        
+        return {
+            "success": True,
+            "count": len(subscribers),
+            "subscribers": subscribers
+        }
+        
+    except Exception as e:
+        logging.error(f"Error getting email subscribers: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to retrieve subscribers")
 
 # Recipe Analyzer API Route
 

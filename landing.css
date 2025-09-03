@@ -1,7 +1,7 @@
 /* Reset and Base Styles */
 * {
-    margin: 1rem;
-    padding: 1rem;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -50,7 +50,7 @@ body {
 .container {
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 clamp(1.5rem, 6vw, 5rem);
+    padding: 0 clamp(2rem, 8vw, 6rem);
 }
 
 /* Navigation */
@@ -69,7 +69,7 @@ body {
 .nav-container {
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 clamp(1.5rem, 6vw, 5rem);
+    padding: 0 clamp(2rem, 8vw, 6rem);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -191,7 +191,7 @@ body {
     display: flex;
     align-items: center;
     position: relative;
-    padding: 2rem 0;
+    padding: 8rem 0 6rem 0;
     background: linear-gradient(135deg, var(--soft-cream) 0%, var(--neutral-200) 100%);
     overflow: hidden;
 }
@@ -227,7 +227,7 @@ body {
 .hero-container {
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 clamp(1.5rem, 6vw, 5rem);
+    padding: 2rem clamp(2rem, 8vw, 6rem);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
@@ -1270,20 +1270,24 @@ body {
         --section-padding: 4rem 0;
     }
     
+    .hero {
+        padding: 6rem 0 4rem 0;
+    }
+    
     .section-header {
         margin-bottom: 3rem;
     }
     
     .container {
-        padding: 0 clamp(1.5rem, 5vw, 2.5rem);
+        padding: 0 clamp(1.5rem, 6vw, 2.5rem);
     }
     
     .nav-container {
-        padding: 0 clamp(1.5rem, 5vw, 2.5rem);
+        padding: 0 clamp(1.5rem, 6vw, 2.5rem);
     }
     
     .hero-container {
-        padding: 0 clamp(1.5rem, 5vw, 2.5rem);
+        padding: 2rem clamp(1.5rem, 6vw, 2.5rem);
     }
     
     .nav-menu {
@@ -1335,16 +1339,20 @@ body {
         --section-padding: 3rem 0;
     }
     
+    .hero {
+        padding: 5rem 0 3rem 0;
+    }
+    
     .container {
-        padding: 0 1.5rem;
+        padding: 0 2rem;
     }
     
     .nav-container {
-        padding: 0 1.5rem;
+        padding: 0 2rem;
     }
     
     .hero-container {
-        padding: 0 1.5rem;
+        padding: 2rem;
         gap: 2rem;
     }
     
@@ -1409,6 +1417,245 @@ body {
         background: white;
         color: black;
         page-break-inside: avoid;
+    }
+}
+
+/* Email Modal Styles */
+.email-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.email-modal-content {
+    background: var(--neutral-100);
+    border-radius: var(--border-radius-large);
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from { 
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.email-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 2rem 1rem;
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.email-modal-header h3 {
+    margin: 0;
+    color: var(--neutral-900);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.email-modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--neutral-700);
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition-smooth);
+}
+
+.email-modal-close:hover {
+    background: var(--neutral-200);
+    color: var(--primary-orange);
+}
+
+.email-modal-body {
+    padding: 2rem;
+}
+
+.email-modal-body > p {
+    color: var(--neutral-700);
+    margin-bottom: 2rem;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.email-signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--neutral-800);
+    font-size: 0.9rem;
+}
+
+.email-input {
+    padding: 1rem;
+    border: 2px solid var(--neutral-300);
+    border-radius: var(--border-radius);
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    transition: var(--transition-smooth);
+    background: var(--neutral-100);
+}
+
+.email-input:focus {
+    outline: none;
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--neutral-700);
+    line-height: 1.4;
+}
+
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--neutral-400);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
+    background: var(--primary-orange);
+    border-color: var(--primary-orange);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+    content: '✓';
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.email-submit-btn {
+    background: linear-gradient(135deg, var(--primary-orange), var(--secondary-yellow));
+    color: var(--neutral-100);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition-bounce);
+    position: relative;
+    overflow: hidden;
+}
+
+.email-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+}
+
+.email-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.email-disclaimer {
+    font-size: 0.8rem;
+    color: var(--neutral-600);
+    text-align: center;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.email-success {
+    text-align: center;
+}
+
+.success-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.email-success h4 {
+    color: var(--neutral-900);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.email-success p {
+    color: var(--neutral-700);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* Mobile optimization for modal */
+@media (max-width: 480px) {
+    .email-modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+    
+    .email-modal-header,
+    .email-modal-body {
+        padding: 1.5rem;
+    }
+    
+    .email-modal-header {
+        padding-bottom: 1rem;
+    }
+    
+    .email-modal-header h3 {
+        font-size: 1.3rem;
     }
 }
 

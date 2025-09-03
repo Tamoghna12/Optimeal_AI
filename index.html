@@ -100,8 +100,8 @@
                 </div>
                 
                 <div class="hero-ctas">
-                    <button class="cta-button primary" onclick="trackEvent('get_started_clicked'); alert('App launching soon! Join our waitlist.')">
-                        🛒 Order Groceries Now
+                    <button class="cta-button primary" onclick="showEmailSignup('get_started')">
+                        🛒 Join Waitlist - Get Early Access
                     </button>
                     <button class="cta-button secondary" onclick="scrollToDemo()">
                         📝 Try Recipe Analyzer
@@ -234,8 +234,8 @@ Instructions: 1. Soak rice for 30 mins, 2. Marinate chicken with yogurt..."
                     
                     <div class="demo-cta">
                         <p>🚀 Want to save this analysis and get personalized meal plans?</p>
-                        <button class="cta-button primary" onclick="trackEvent('analyzer_conversion'); alert('Join our waitlist for full access!')">
-                            💾 Save to My Cookbook
+                        <button class="cta-button primary" onclick="showEmailSignup('recipe_analyzer')">
+                            💾 Save Analysis + Join Waitlist
                         </button>
                     </div>
                 </div>
@@ -381,8 +381,8 @@ Instructions: 1. Soak rice for 30 mins, 2. Marinate chicken with yogurt..."
                 <p>Join thousands of home cooks who've discovered the joy of AI-powered South Asian cooking</p>
                 
                 <div class="cta-buttons">
-                    <button class="cta-button primary large" onclick="trackEvent('final_cta_clicked'); alert('App launching soon! Join our waitlist.')">
-                        🚀 Start Cooking Smarter
+                    <button class="cta-button primary large" onclick="showEmailSignup('final_cta')">
+                        🚀 Join Waitlist - Get Notified
                     </button>
                     <button class="cta-button secondary large" onclick="scrollToFeatures()">
                         🌟 View Features
@@ -452,6 +452,58 @@ Instructions: 1. Soak rice for 30 mins, 2. Marinate chicken with yogurt..."
             </div>
         </div>
     </footer>
+
+    <!-- Email Signup Modal -->
+    <div id="emailModal" class="email-modal" style="display: none;">
+        <div class="email-modal-content">
+            <div class="email-modal-header">
+                <h3>🚀 Join the NutriChef AI Waitlist</h3>
+                <button class="email-modal-close" onclick="hideEmailSignup()">&times;</button>
+            </div>
+            
+            <div class="email-modal-body">
+                <p>Get early access to NutriChef AI and be the first to know when we launch!</p>
+                
+                <form id="emailSignupForm" class="email-signup-form">
+                    <div class="form-group">
+                        <label for="userEmail">Email Address *</label>
+                        <input type="email" id="userEmail" name="email" required 
+                               placeholder="your@email.com" class="email-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userName">First Name (Optional)</label>
+                        <input type="text" id="userName" name="name" 
+                               placeholder="Your first name" class="email-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="healthUpdates" name="healthUpdates">
+                            <span class="checkmark"></span>
+                            Send me health tips and recipe updates
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="email-submit-btn">
+                        <span class="btn-text">🎉 Join Waitlist</span>
+                        <span class="btn-loading" style="display: none;">⏳ Joining...</span>
+                    </button>
+                    
+                    <p class="email-disclaimer">
+                        We'll never spam you. Unsubscribe anytime with one click.
+                    </p>
+                </form>
+                
+                <div id="emailSuccessMessage" class="email-success" style="display: none;">
+                    <div class="success-icon">✅</div>
+                    <h4>Welcome to the Waitlist!</h4>
+                    <p>We'll notify you as soon as NutriChef AI is ready. Check your email for a confirmation!</p>
+                    <button class="cta-button secondary" onclick="hideEmailSignup()">Continue Exploring</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- JavaScript -->
     <script src="landing.js"></script>

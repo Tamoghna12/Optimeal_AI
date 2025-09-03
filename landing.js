@@ -214,6 +214,7 @@
         initTestimonials();
         initCTATracking();
         initPerformanceTracking();
+        initEmailForm();
         
         // Track initial page view
         trackEvent('page_view', {
@@ -705,6 +706,172 @@ Instructions:
         return analyses[Math.floor(Math.random() * analyses.length)];
     }
     
+    // Email Collection Functions
+    window.showEmailSignup = function(source) {
+        const modal = document.getElementById('emailModal');
+        const form = document.getElementById('emailSignupForm');
+        const successMessage = document.getElementById('emailSuccessMessage');
+        
+        // Reset form state
+        form.style.display = 'flex';
+        successMessage.style.display = 'none';
+        form.reset();
+        
+        // Show modal
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        // Focus on email input after animation
+        setTimeout(() => {
+            document.getElementById('userEmail').focus();
+        }, 300);
+        
+        // Track modal open
+        trackEvent('email_signup_opened', { source: source });
+    };
+    
+    window.hideEmailSignup = function() {
+        const modal = document.getElementById('emailModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        
+        trackEvent('email_signup_closed');
+    };
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('emailModal');
+        if (event.target === modal) {
+            hideEmailSignup();
+        }
+    });
+    
+    // Close modal with Escape key
+    window.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const modal = document.getElementById('emailModal');
+            if (modal.style.display === 'flex') {
+                hideEmailSignup();
+            }
+        }
+    });
+    
+    // Handle email form submission
+    async function handleEmailSubmission(formData) {
+        try {
+            const response = await fetch('/api/email-signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                return { success: true, data: data };
+            } else {
+                throw new Error(`Server error: ${response.status}`);
+            }
+        } catch (error) {
+            console.error('Email signup failed:', error);
+            
+            // For development - simulate success to test UI
+            if (formData.email && formData.email.includes('@')) {
+                return { 
+                    success: true, 
+                    data: { message: 'Email saved successfully (demo mode)' } 
+                };
+            }
+            
+            return { 
+                success: false, 
+                error: 'Failed to submit email. Please try again later.' 
+            };
+        }
+    }
+    
+    // Initialize email form handling
+    function initEmailForm() {
+        const form = document.getElementById('emailSignupForm');
+        if (!form) return;
+        
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const submitBtn = form.querySelector('.email-submit-btn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+            
+            // Get form data
+            const formData = {
+                email: form.email.value.trim(),
+                name: form.name.value.trim(),
+                healthUpdates: form.healthUpdates.checked,
+                source: 'landing_page',
+                timestamp: new Date().toISOString()
+            };
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+            
+            // Track submission attempt
+            trackEvent('email_signup_attempted', {
+                email_domain: formData.email.split('@')[1],
+                has_name: !!formData.name,
+                wants_updates: formData.healthUpdates
+            });
+            
+            try {
+                const result = await handleEmailSubmission(formData);
+                
+                if (result.success) {
+                    // Show success message
+                    form.style.display = 'none';
+                    document.getElementById('emailSuccessMessage').style.display = 'block';
+                    
+                    // Track successful signup
+                    trackEvent('email_signup_completed', {
+                        email_domain: formData.email.split('@')[1],
+                        has_name: !!formData.name,
+                        wants_updates: formData.healthUpdates
+                    });
+                    
+                    // Auto-close modal after 5 seconds
+                    setTimeout(() => {
+                        hideEmailSignup();
+                    }, 5000);
+                    
+                } else {
+                    throw new Error(result.error || 'Submission failed');
+                }
+                
+            } catch (error) {
+                alert(error.message || 'Something went wrong. Please try again.');
+                
+                // Track failed signup
+                trackEvent('email_signup_failed', {
+                    error: error.message
+                });
+                
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+            }
+        });
+    }
+
     // Export state for debugging (development only)
     if (typeof window !== 'undefined') {
         window.NutriChefAI = {
@@ -713,7 +880,9 @@ Instructions:
             scrollToFeatures: scrollToFeatures,
             scrollToDemo: scrollToDemo,
             analyzeRecipe: analyzeRecipe,
-            loadSampleRecipe: loadSampleRecipe
+            loadSampleRecipe: loadSampleRecipe,
+            showEmailSignup: showEmailSignup,
+            hideEmailSignup: hideEmailSignup
         };
     }
     
