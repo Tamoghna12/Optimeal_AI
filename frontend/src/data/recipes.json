@@ -103,7 +103,15 @@
       "Return chicken to the pan, add cream and simmer for 5 minutes",
       "Serve hot with basmati rice and fresh coriander"
     ],
-    "baseServings": 4
+    "baseServings": 4,
+    "nutrition": {
+      "caloriesPerServing": 485,
+      "proteinG": 32,
+      "carbsG": 45,
+      "fatG": 18,
+      "fiberG": 3,
+      "sugarG": 8
+    }
   },
   {
     "id": 2,
@@ -205,7 +213,15 @@
       "Gently fold in paneer cubes and cream, simmer for 3 minutes",
       "Serve hot with naan or rice"
     ],
-    "baseServings": 4
+    "baseServings": 4,
+    "nutrition": {
+      "caloriesPerServing": 320,
+      "proteinG": 18,
+      "carbsG": 12,
+      "fatG": 22,
+      "fiberG": 6,
+      "sugarG": 5
+    }
   },
   {
     "id": 3,
@@ -308,7 +324,15 @@
       "Stir in cream and simmer for another 10 minutes until thick and creamy",
       "Garnish with fresh coriander and serve with rice or naan"
     ],
-    "baseServings": 6
+    "baseServings": 6,
+    "nutrition": {
+      "caloriesPerServing": 380,
+      "proteinG": 22,
+      "carbsG": 35,
+      "fatG": 16,
+      "fiberG": 8,
+      "sugarG": 4
+    }
   },
   {
     "id": 4,
@@ -1201,6 +1225,837 @@
       "Add salt to taste and mix gently",
       "Garnish with fried cashews and fresh coriander",
       "Serve warm with South Indian pickle or papad"
+    ],
+    "baseServings": 4
+  },
+  {
+    "id": 12,
+    "name": "Quick Masala Scrambled Eggs",
+    "description": "Protein-packed scrambled eggs with Indian spices, tomatoes and cilantro. Ready in 10 minutes and perfect for busy mornings!",
+    "imageUrl": "https://customer-assets.emergentagent.com/job_desi-kitchen-1/artifacts/masala_eggs.png",
+    "servings": 2,
+    "cookingTime": "10 minutes",
+    "difficulty": "Easy",
+    "cuisine": "Indian Fusion",
+    "category": "breakfast",
+    "tags": [
+      "Breakfast",
+      "Quick",
+      "High Protein",
+      "Healthy"
+    ],
+    "ingredients": [
+      {
+        "name": "Eggs",
+        "quantity": 4,
+        "unit": "large",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Tomato",
+        "quantity": 1,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Green Chilli",
+        "quantity": 1,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 0.5,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Coriander",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Cumin Seeds",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.25,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Olive Oil",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      },
+      {
+        "name": "Greek Yogurt",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Dairy & Chilled"
+      }
+    ],
+    "instructions": [
+      "Beat eggs with salt and turmeric in a bowl",
+      "Heat olive oil in non-stick pan, add cumin seeds until they splutter",
+      "Add chopped ginger and green chilli, sauté for 30 seconds",
+      "Add diced tomatoes and cook until soft (2-3 minutes)",
+      "Pour beaten eggs and gently scramble on medium-low heat",
+      "Garnish with fresh coriander and serve with Greek yogurt",
+      "Perfect with whole grain toast for extra fiber",
+      "Ready in under 10 minutes for busy mornings"
+    ],
+    "baseServings": 2,
+    "nutrition": {
+      "caloriesPerServing": 285,
+      "proteinG": 24,
+      "carbsG": 8,
+      "fatG": 18,
+      "fiberG": 2,
+      "sugarG": 6
+    }
+  },
+  {
+    "id": 13,
+    "name": "Poha with Peanuts",
+    "description": "Light and fluffy beaten rice with curry leaves, peanuts and fresh lime - Maharashtra's beloved breakfast that's quick, nutritious and incredibly satisfying.",
+    "imageUrl": "https://customer-assets.emergentagent.com/job_desi-kitchen-1/artifacts/poha_peanuts.png",
+    "servings": 4,
+    "cookingTime": "20 minutes",
+    "difficulty": "Easy",
+    "cuisine": "Maharashtrian",
+    "category": "breakfast",
+    "tags": [
+      "Breakfast",
+      "Quick",
+      "Light",
+      "Gluten-Free"
+    ],
+    "ingredients": [
+      {
+        "name": "Poha (Beaten Rice)",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Peanuts",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Baking & Desserts"
+      },
+      {
+        "name": "Onion",
+        "quantity": 1,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Green Chilli",
+        "quantity": 2,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 0.5,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Curry Leaves",
+        "quantity": 10,
+        "unit": "leaves",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Mustard Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.25,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      },
+      {
+        "name": "Lemon",
+        "quantity": 1,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Coriander",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Fresh Produce"
+      }
+    ],
+    "instructions": [
+      "Rinse poha gently in water until soft, drain well and set aside",
+      "Heat oil in pan, add mustard seeds and let them splutter",
+      "Add peanuts and roast until lightly golden",
+      "Add curry leaves, green chillies and ginger, sauté for 30 seconds",
+      "Add sliced onions and cook until translucent",
+      "Add turmeric and mix well",
+      "Add drained poha and salt, mix gently to combine",
+      "Cook for 3-4 minutes on low heat, stirring occasionally",
+      "Squeeze fresh lemon juice and garnish with coriander",
+      "Serve immediately while warm and fluffy"
+    ],
+    "baseServings": 4
+  },
+  {
+    "id": 14,
+    "name": "Methi Thepla",
+    "description": "Thin, soft Gujarati flatbread made with fresh fenugreek leaves and spices. Perfect for breakfast or travel food - stays fresh for days and pairs beautifully with yogurt and pickles.",
+    "imageUrl": "https://customer-assets.emergentagent.com/job_desi-kitchen-1/artifacts/methi_thepla.png",
+    "servings": 6,
+    "cookingTime": "40 minutes",
+    "difficulty": "Medium",
+    "cuisine": "Gujarati",
+    "category": "breakfast",
+    "tags": [
+      "Breakfast",
+      "Travel Food",
+      "Healthy",
+      "Traditional"
+    ],
+    "ingredients": [
+      {
+        "name": "Whole Wheat Flour",
+        "quantity": 300,
+        "unit": "g",
+        "category": "Baking & Desserts"
+      },
+      {
+        "name": "Fresh Methi Leaves",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Greek Yogurt",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Green Chilli",
+        "quantity": 2,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 1,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Cumin Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Coriander Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Red Chilli Powder",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      }
+    ],
+    "instructions": [
+      "Wash and finely chop methi leaves, sprinkle salt and let sit 10 minutes",
+      "Squeeze out excess water from methi leaves",
+      "Mix flour with yogurt, chopped methi, ginger-chilli paste and all spices",
+      "Add oil and knead into soft dough, adding water as needed",
+      "Rest dough for 20 minutes covered",
+      "Divide into small portions and roll into thin circles",
+      "Cook on hot griddle with a little oil until golden spots appear",
+      "Stack theplas and cover with cloth to keep soft",
+      "Serve warm with yogurt, pickle and fresh butter",
+      "Can be stored for 2-3 days and eaten at room temperature"
+    ],
+    "baseServings": 6
+  },
+  {
+    "id": 15,
+    "name": "Dhokla",
+    "description": "Spongy, steamed Gujarati snack made from fermented gram flour batter. Light, healthy and incredibly flavorful with mustard seed tempering and fresh coriander garnish.",
+    "imageUrl": "https://customer-assets.emergentagent.com/job_desi-kitchen-1/artifacts/dhokla.png",
+    "servings": 6,
+    "cookingTime": "30 minutes (plus 4 hours fermentation)",
+    "difficulty": "Medium",
+    "cuisine": "Gujarati",
+    "category": "snacks",
+    "tags": [
+      "Snacks",
+      "Steamed",
+      "Healthy",
+      "Fermented"
+    ],
+    "ingredients": [
+      {
+        "name": "Gram Flour (Besan)",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Baking & Desserts"
+      },
+      {
+        "name": "Greek Yogurt",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Green Chilli",
+        "quantity": 2,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 1,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Lemon",
+        "quantity": 1,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Baking Soda",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Baking & Desserts"
+      },
+      {
+        "name": "Mustard Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Sesame Seeds",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Curry Leaves",
+        "quantity": 8,
+        "unit": "leaves",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      },
+      {
+        "name": "Fresh Coriander",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Fresh Produce"
+      }
+    ],
+    "instructions": [
+      "Mix gram flour with yogurt, ginger-chilli paste, lemon juice and turmeric",
+      "Add water to make smooth batter consistency of thick buttermilk",
+      "Cover and ferment for 4-6 hours until bubbly and tangy",
+      "Add salt and baking soda, mix gently and pour into greased steaming tray",
+      "Steam for 15-20 minutes until knife inserted comes out clean",
+      "Cool completely and cut into squares",
+      "For tempering: heat oil, add mustard seeds and sesame seeds",
+      "When they splutter, add curry leaves and immediately pour over dhokla",
+      "Garnish with fresh coriander and grated coconut",
+      "Serve with green chutney and tamarind chutney"
+    ],
+    "baseServings": 6
+  },
+  {
+    "id": 16,
+    "name": "Baked Sweet Potato Chaat",
+    "description": "Nutritious roasted sweet potato topped with yogurt, chutneys and crunchy vegetables. A healthy twist on Indian street food that's ready in 25 minutes!",
+    "imageUrl": "https://customer-assets.emergentagent.com/job_desi-kitchen-1/artifacts/sweet_potato_chaat.png",
+    "servings": 4,
+    "cookingTime": "25 minutes",
+    "difficulty": "Easy",
+    "cuisine": "Indian Fusion",
+    "category": "snacks",
+    "tags": [
+      "Snacks",
+      "Healthy",
+      "Baked",
+      "Nutritious"
+    ],
+    "ingredients": [
+      {
+        "name": "Sweet Potatoes",
+        "quantity": 2,
+        "unit": "large",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Greek Yogurt",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Cucumber",
+        "quantity": 1,
+        "unit": "small",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Tomato",
+        "quantity": 1,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Red Onion",
+        "quantity": 0.5,
+        "unit": "small",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Mint Chutney",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Tamarind Chutney",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Chaat Masala",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Cumin Powder",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Fresh Coriander",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Olive Oil",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      },
+      {
+        "name": "Lemon",
+        "quantity": 1,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      }
+    ],
+    "instructions": [
+      "Preheat oven to 200°C and cube sweet potatoes",
+      "Toss sweet potato cubes with olive oil and roast for 20 minutes until tender",
+      "Meanwhile, dice cucumber, tomato and red onion finely",
+      "Whisk Greek yogurt with a pinch of salt until smooth",
+      "Arrange roasted sweet potatoes in serving bowls",
+      "Top with yogurt, diced vegetables and chutneys",
+      "Sprinkle chaat masala, cumin powder and fresh coriander",
+      "Squeeze lemon juice over each serving",
+      "Serve immediately while sweet potatoes are warm",
+      "Perfect healthy alternative to fried street snacks"
+    ],
+    "baseServings": 4,
+    "nutrition": {
+      "caloriesPerServing": 185,
+      "proteinG": 8,
+      "carbsG": 28,
+      "fatG": 6,
+      "fiberG": 5,
+      "sugarG": 12
+    }
+  },
+  {
+    "id": 17,
+    "name": "Bhel Puri",
+    "description": "Crunchy, tangy Mumbai street food made with puffed rice, sev, chutneys and fresh vegetables. A burst of flavors and textures that captures the spirit of Indian street food.",
+    "imageUrl": "https://customer-assets.emergentagent.com/job_desi-kitchen-1/artifacts/bhel_puri.png",
+    "servings": 4,
+    "cookingTime": "15 minutes",
+    "difficulty": "Easy",
+    "cuisine": "Mumbai Street Food",
+    "category": "snacks",
+    "tags": [
+      "Snacks",
+      "Street Food",
+      "Quick",
+      "Tangy"
+    ],
+    "ingredients": [
+      {
+        "name": "Puffed Rice (Murmura)",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Sev (Chickpea Noodles)",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Onion",
+        "quantity": 1,
+        "unit": "small",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Tomato",
+        "quantity": 1,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Cucumber",
+        "quantity": 1,
+        "unit": "small",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Green Chilli",
+        "quantity": 1,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Tamarind Chutney",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Mint Chutney",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Chaat Masala",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Lemon",
+        "quantity": 1,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Coriander",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Fresh Produce"
+      }
+    ],
+    "instructions": [
+      "Finely chop onions, tomatoes, cucumber and green chillies",
+      "In a large mixing bowl, add puffed rice",
+      "Add all chopped vegetables to the puffed rice",
+      "Add tamarind chutney and mint chutney",
+      "Sprinkle chaat masala and salt",
+      "Mix everything gently but thoroughly",
+      "Squeeze fresh lemon juice over the mixture",
+      "Top generously with sev and chopped coriander",
+      "Serve immediately to maintain crunchiness",
+      "Best enjoyed fresh as a evening snack with tea"
+    ],
+    "baseServings": 4
+  },
+  {
+    "id": 18,
+    "name": "Baked Vegetable Tikki",
+    "description": "Healthy baked vegetable patties made with mixed vegetables and chickpea flour. Crispy outside, soft inside - guilt-free snacking in just 25 minutes!",
+    "imageUrl": "https://customer-assets.emergentagent.com/job_desi-kitchen-1/artifacts/veggie_tikki.png",
+    "servings": 4,
+    "cookingTime": "25 minutes",
+    "difficulty": "Easy",
+    "cuisine": "Indian Fusion",
+    "category": "snacks",
+    "tags": [
+      "Snacks",
+      "Baked",
+      "Healthy",
+      "Low Oil"
+    ],
+    "ingredients": [
+      {
+        "name": "Gram Flour (Besan)",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Baking & Desserts"
+      },
+      {
+        "name": "Sweet Potato",
+        "quantity": 1,
+        "unit": "large",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Carrot",
+        "quantity": 1,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Green Peas",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Spinach",
+        "quantity": 50,
+        "unit": "g",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Green Chilli",
+        "quantity": 2,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 0.5,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Cumin Seeds",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Garam Masala",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.25,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Olive Oil",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      },
+      {
+        "name": "Fresh Coriander",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Fresh Produce"
+      }
+    ],
+    "instructions": [
+      "Preheat oven to 200°C and line baking tray with parchment",
+      "Steam sweet potato and carrot until tender, then mash",
+      "Mix mashed vegetables with peas, chopped spinach and spices",
+      "Add gram flour and chopped coriander to bind the mixture",
+      "Form into 8 small patties using wet hands",
+      "Brush with olive oil and place on prepared baking tray",
+      "Bake for 20 minutes, flipping halfway through",
+      "Serve hot with mint yogurt dip",
+      "Perfect healthy snack with just 2 tbsp oil total",
+      "Great for meal prep - can be frozen for later use"
+    ],
+    "baseServings": 4,
+    "nutrition": {
+      "caloriesPerServing": 165,
+      "proteinG": 8,
+      "carbsG": 24,
+      "fatG": 5,
+      "fiberG": 6,
+      "sugarG": 8
+    }
+  },
+  {
+    "id": 19,
+    "name": "Misal Pav",
+    "description": "Spicy Maharashtrian curry made with sprouted moth beans, topped with onions, sev and served with buttered bread rolls. A fiery street food that's both nutritious and incredibly satisfying.",
+    "imageUrl": "https://customer-assets.emergentagent.com/job_desi-kitchen-1/artifacts/misal_pav.png",
+    "servings": 4,
+    "cookingTime": "45 minutes",
+    "difficulty": "Medium",
+    "cuisine": "Maharashtrian",
+    "category": "snacks",
+    "tags": [
+      "Snacks",
+      "Spicy",
+      "Street Food",
+      "Protein-Rich"
+    ],
+    "ingredients": [
+      {
+        "name": "Mixed Sprouts",
+        "quantity": 200,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Pav Bread",
+        "quantity": 8,
+        "unit": "pieces",
+        "category": "Bakery"
+      },
+      {
+        "name": "Onion",
+        "quantity": 2,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Tomato",
+        "quantity": 2,
+        "unit": "medium",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Garlic",
+        "quantity": 4,
+        "unit": "cloves",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Fresh Ginger",
+        "quantity": 1,
+        "unit": "inch pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Green Chilli",
+        "quantity": 4,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Misal Masala",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Turmeric",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Red Chilli Powder",
+        "quantity": 2,
+        "unit": "tsp",
+        "category": "Herbs & Spices"
+      },
+      {
+        "name": "Sev (Chickpea Noodles)",
+        "quantity": 100,
+        "unit": "g",
+        "category": "Rice & Grains"
+      },
+      {
+        "name": "Vegetable Oil",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Cooking Essentials"
+      },
+      {
+        "name": "Butter",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Dairy & Chilled"
+      },
+      {
+        "name": "Fresh Coriander",
+        "quantity": 3,
+        "unit": "tbsp",
+        "category": "Fresh Produce"
+      },
+      {
+        "name": "Lemon",
+        "quantity": 1,
+        "unit": "pieces",
+        "category": "Fresh Produce"
+      }
+    ],
+    "instructions": [
+      "Pressure cook mixed sprouts with turmeric and salt until tender",
+      "Heat oil, add ginger-garlic paste and green chillies",
+      "Add chopped onions and cook until golden brown",
+      "Add tomatoes and cook until soft and pulpy",
+      "Add misal masala and red chilli powder, cook for 2 minutes",
+      "Add cooked sprouts with cooking liquid and simmer 15 minutes",
+      "Heat pav with butter on griddle until golden",
+      "Serve hot misal in bowls topped with chopped onions",
+      "Garnish generously with sev and fresh coriander",
+      "Squeeze lemon juice and serve with buttered pav",
+      "Adjust spice level according to taste preference"
     ],
     "baseServings": 4
   }

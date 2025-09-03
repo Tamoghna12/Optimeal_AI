@@ -718,6 +718,280 @@ async def get_ingredient_substitutions(ingredient: str):
             "notes": "Try searching for similar ingredients or visit an Indian grocery store"
         }
 
+# Co-pilot Models
+class CopilotQuery(BaseModel):
+    query: str
+    context: Optional[str] = None
+    user_id: Optional[str] = None
+
+class RecipeFromIngredientsRequest(BaseModel):
+    available_ingredients: List[str]
+    cuisine_preference: str = "South Asian"
+    dietary_restrictions: List[str] = []
+    cooking_time_minutes: Optional[int] = None
+    difficulty_level: Optional[str] = None
+
+class CookingGuidanceRequest(BaseModel):
+    recipe_id: Optional[str] = None
+    current_step: Optional[str] = None
+    question: str
+    context: Optional[str] = None
+
+# Co-pilot Functions
+async def get_recipe_suggestions_with_ai(available_ingredients: List[str], cuisine: str, dietary_restrictions: List[str], cooking_time: Optional[int] = None) -> Dict[str, Any]:
+    """Generate recipe suggestions based on available ingredients using LLM"""
+    try:
+        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not api_key:
+            raise HTTPException(status_code=500, detail="LLM API key not configured")
+        
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"recipe-suggestions-{uuid.uuid4()}",
+            system_message=f"""You are Nutrichef AI, an expert culinary AI assistant specializing in {cuisine} cuisine. You help users create delicious recipes from whatever ingredients they have available.
+
+Your expertise includes:
+- Traditional and modern {cuisine} cooking techniques
+- Ingredient substitutions and adaptations
+- Quick cooking methods for busy lifestyles
+- Dietary accommodations and restrictions
+- Step-by-step cooking guidance
+
+When suggesting recipes, consider:
+1. Available ingredients and how to best use them
+2. Cooking time constraints
+3. Dietary restrictions
+4. Skill level and equipment
+5. Flavor balance and authenticity
+
+Return response as JSON with this structure:
+{{
+    "suggested_recipes": [
+        {{
+            "name": "Recipe Name",
+            "description": "Brief description",
+            "ingredients": ["ingredient1", "ingredient2"],
+            "missing_ingredients": ["ingredient3"],
+            "prep_time_minutes": 10,
+            "cook_time_minutes": 20,
+            "difficulty": "easy|medium|hard",
+            "instructions": ["step1", "step2"],
+            "tips": "Helpful cooking tips",
+            "why_this_recipe": "Why this recipe works with available ingredients"
+        }}
+    ],
+    "ingredient_usage": {{
+        "fully_used": ["ingredients that are fully utilized"],
+        "partially_used": ["ingredients used but you might have leftover"],
+        "not_used": ["ingredients not used in any recipe"]
+    }},
+    "shopping_list": ["items you might want to buy"],
+    "general_tips": "General advice for cooking with these ingredients"
+}}"""
+        ).with_model("groq", "llama-3.1-8b-instant")
+        
+        restrictions_text = f" with dietary restrictions: {', '.join(dietary_restrictions)}" if dietary_restrictions else ""
+        time_text = f" in under {cooking_time} minutes" if cooking_time else ""
+        
+        user_message = UserMessage(
+            text=f"I have these ingredients available: {', '.join(available_ingredients)}. Please suggest 3-5 {cuisine} recipes I can make{restrictions_text}{time_text}. Focus on recipes that use most of my available ingredients and provide practical cooking advice."
+        )
+        
+        response = await chat.send_message(user_message)
+        
+        try:
+            response_text = str(response).strip()
+            if response_text.startswith('```json'):
+                response_text = response_text[7:-3].strip()
+            elif response_text.startswith('```'):
+                response_text = response_text[3:-3].strip()
+            
+            suggestions_data = json.loads(response_text)
+            return suggestions_data
+        except json.JSONDecodeError:
+            return {
+                "suggested_recipes": [{
+                    "name": "Quick Mixed Vegetable Curry",
+                    "description": "A versatile curry using available ingredients",
+                    "ingredients": available_ingredients[:5],
+                    "missing_ingredients": ["garam masala", "coconut milk"],
+                    "prep_time_minutes": 10,
+                    "cook_time_minutes": 20,
+                    "difficulty": "easy",
+                    "instructions": ["Heat oil", "Add ingredients", "Cook until done"],
+                    "tips": "Adjust spices to taste",
+                    "why_this_recipe": "Uses most of your available ingredients"
+                }],
+                "ingredient_usage": {
+                    "fully_used": available_ingredients[:3],
+                    "partially_used": [],
+                    "not_used": available_ingredients[3:]
+                },
+                "shopping_list": ["garam masala", "coconut milk"],
+                "general_tips": "Keep spices handy for quick flavor enhancement"
+            }
+    except Exception as e:
+        logging.error(f"Error getting recipe suggestions: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get recipe suggestions: {str(e)}")
+
+async def get_cooking_guidance_with_ai(question: str, recipe_context: Optional[str] = None, step_context: Optional[str] = None) -> str:
+    """Provide cooking guidance and answer questions using LLM"""
+    try:
+        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not api_key:
+            raise HTTPException(status_code=500, detail="LLM API key not configured")
+        
+        context_info = ""
+        if recipe_context:
+            context_info += f"\nRecipe context: {recipe_context}"
+        if step_context:
+            context_info += f"\nCurrent step: {step_context}"
+        
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"cooking-guidance-{uuid.uuid4()}",
+            system_message="""You are Nutrichef AI, an expert cooking assistant specializing in South Asian cuisine. You provide helpful, practical cooking advice in a friendly and encouraging manner.
+
+Your expertise includes:
+- Cooking techniques and troubleshooting
+- Ingredient substitutions and adaptations
+- Timing and temperature guidance
+- Food safety and storage tips
+- Flavor balancing and seasoning advice
+- Equipment usage and alternatives
+
+Always provide:
+1. Clear, actionable advice
+2. Explanation of why something works
+3. Alternative solutions when possible
+4. Encouragement and confidence building
+5. Food safety considerations when relevant
+
+Keep responses conversational but informative, like a knowledgeable friend helping in the kitchen."""
+        ).with_model("groq", "llama-3.1-8b-instant")
+        
+        user_message = UserMessage(
+            text=f"Cooking question: {question}{context_info}\n\nPlease provide helpful cooking guidance."
+        )
+        
+        response = await chat.send_message(user_message)
+        return str(response)
+        
+    except Exception as e:
+        logging.error(f"Error getting cooking guidance: {str(e)}")
+        return "I'm having trouble accessing my knowledge right now, but here's some general advice: Take your time, taste as you go, and don't be afraid to adjust seasonings. Cooking is about learning and having fun!"
+
+# Co-pilot API Routes
+
+@api_router.post("/copilot/recipe-suggestions")
+async def get_recipe_suggestions(request: RecipeFromIngredientsRequest):
+    """Get AI-powered recipe suggestions based on available ingredients"""
+    try:
+        suggestions = await get_recipe_suggestions_with_ai(
+            available_ingredients=request.available_ingredients,
+            cuisine=request.cuisine_preference,
+            dietary_restrictions=request.dietary_restrictions,
+            cooking_time=request.cooking_time_minutes
+        )
+        
+        return {
+            "success": True,
+            "suggestions": suggestions,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        
+    except Exception as e:
+        logging.error(f"Error in recipe suggestions endpoint: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get recipe suggestions: {str(e)}")
+
+@api_router.post("/copilot/cooking-guidance")
+async def get_cooking_guidance(request: CookingGuidanceRequest):
+    """Get AI-powered cooking guidance and answer questions"""
+    try:
+        guidance = await get_cooking_guidance_with_ai(
+            question=request.question,
+            recipe_context=request.context,
+            step_context=request.current_step
+        )
+        
+        return {
+            "success": True,
+            "guidance": guidance,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        
+    except Exception as e:
+        logging.error(f"Error in cooking guidance endpoint: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get cooking guidance: {str(e)}")
+
+@api_router.post("/copilot/chat")
+async def copilot_chat(request: CopilotQuery):
+    """General co-pilot chat for cooking questions and advice"""
+    try:
+        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not api_key:
+            raise HTTPException(status_code=500, detail="LLM API key not configured")
+        
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"copilot-chat-{uuid.uuid4()}",
+            system_message="""You are Nutrichef AI, a friendly and knowledgeable AI cooking assistant specializing in South Asian cuisine.
+
+CRITICAL FORMATTING RULES:
+- Use **bold text** for section headers only (e.g., **Ingredients** or **Steps**)
+- Use bullet points (• or -) for lists
+- Use numbered lists (1. 2. 3.) for sequential steps
+- Keep responses concise and well-organized
+- No excessive text - focus on practical, actionable advice
+- Maximum 200-300 words per response unless specifically asked for detailed recipes
+
+RESPONSE STRUCTURE:
+1. Brief welcome/context (1-2 lines)
+2. Main sections with **headers**
+3. Bullet points or numbered lists
+4. Quick tip or encouragement at the end
+
+EXAMPLE FORMAT:
+**Ingredients**
+• 1 cup basmati rice
+• 2 cups water
+• 1 tsp salt
+
+**Steps**
+1. Rinse rice until water runs clear
+2. Boil water with salt
+3. Add rice and simmer for 15 minutes
+
+**Pro Tip**
+Let it rest for 5 minutes before serving for perfectly fluffy rice!
+
+PERSONALITY:
+- Warm but concise
+- Practical and solution-focused
+- Encouraging without being wordy
+- Authentic to South Asian cooking traditions
+
+Keep responses structured, scannable, and immediately useful. Avoid long explanations unless specifically requested."""
+        ).with_model("groq", "llama-3.1-8b-instant")
+        
+        context_text = f"\nContext: {request.context}" if request.context else ""
+        
+        user_message = UserMessage(
+            text=f"{request.query}{context_text}"
+        )
+        
+        response = await chat.send_message(user_message)
+        
+        return {
+            "success": True,
+            "response": str(response),
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        
+    except Exception as e:
+        logging.error(f"Error in copilot chat: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get response: {str(e)}")
+
 # Include the router in the main app
 app.include_router(api_router)
 

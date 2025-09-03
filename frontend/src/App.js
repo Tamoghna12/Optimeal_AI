@@ -4,6 +4,29 @@ import { BrowserRouter as Router, Routes, Route, useNavigate, useParams } from '
 import recipesData from './data/recipes.json';
 import ingredientsPricing from './data/ingredients_pricing.json';
 
+// Utility Functions
+const calculateNutritionForServings = (nutrition, baseServings, desiredServings) => {
+  if (!nutrition || !baseServings || !desiredServings) return nutrition;
+  
+  const multiplier = desiredServings / baseServings;
+  return {
+    caloriesPerServing: Math.round((nutrition.caloriesPerServing || 0) * multiplier),
+    proteinG: Math.round((nutrition.proteinG || 0) * multiplier * 10) / 10,
+    carbsG: Math.round((nutrition.carbsG || 0) * multiplier * 10) / 10,
+    fatG: Math.round((nutrition.fatG || 0) * multiplier * 10) / 10,
+    fiberG: Math.round((nutrition.fiberG || 0) * multiplier * 10) / 10,
+    sugarG: Math.round((nutrition.sugarG || 0) * multiplier * 10) / 10
+  };
+};
+
+const calculateCaloriesPerActualServing = (recipe, desiredServings) => {
+  if (!recipe.nutrition || !recipe.baseServings) return recipe.nutrition?.caloriesPerServing || 0;
+  
+  // Calculate calories per actual serving when different from base
+  const totalCalories = recipe.nutrition.caloriesPerServing * recipe.baseServings;
+  return Math.round(totalCalories / desiredServings);
+};
+
 // Context for Global State Management
 const MealTrayContext = React.createContext();
 
@@ -16,19 +39,34 @@ export const useMealTray = () => {
 };
 
 const MealTrayProvider = ({ children }) => {
+  // Change from array of IDs to array of objects with {id, servings}
   const [selectedRecipes, setSelectedRecipes] = useState([]);
   const [estimatedCost, setEstimatedCost] = useState(0);
 
-  const addRecipe = (recipeId) => {
-    if (!selectedRecipes.includes(recipeId)) {
-      const newRecipes = [...selectedRecipes, recipeId];
+  const addRecipe = (recipeId, servings = null) => {
+    // Find recipe to get default servings
+    const allRecipes = [...recipesData, ...loadUserCookbook()];
+    const recipe = allRecipes.find(r => r.id === recipeId);
+    const defaultServings = servings || (recipe ? recipe.baseServings || recipe.servings : 4);
+    
+    const existingIndex = selectedRecipes.findIndex(item => item.id === recipeId);
+    if (existingIndex === -1) {
+      const newRecipes = [...selectedRecipes, { id: recipeId, servings: defaultServings }];
       setSelectedRecipes(newRecipes);
       calculateCost(newRecipes);
     }
   };
 
   const removeRecipe = (recipeId) => {
-    const newRecipes = selectedRecipes.filter(id => id !== recipeId);
+    const newRecipes = selectedRecipes.filter(item => item.id !== recipeId);
+    setSelectedRecipes(newRecipes);
+    calculateCost(newRecipes);
+  };
+
+  const updateRecipeServings = (recipeId, newServings) => {
+    const newRecipes = selectedRecipes.map(item => 
+      item.id === recipeId ? { ...item, servings: newServings } : item
+    );
     setSelectedRecipes(newRecipes);
     calculateCost(newRecipes);
   };
@@ -40,18 +78,23 @@ const MealTrayProvider = ({ children }) => {
     // Get all recipes including user-generated ones
     const allRecipes = [...recipesData, ...loadUserCookbook()];
 
-    // Consolidate ingredients from all selected recipes
-    recipes.forEach(recipeId => {
-      const recipe = allRecipes.find(r => r.id === recipeId);
+    // Consolidate ingredients from all selected recipes with serving adjustments
+    recipes.forEach(recipeItem => {
+      const recipe = allRecipes.find(r => r.id === recipeItem.id);
       if (recipe) {
+        const baseServings = recipe.baseServings || recipe.servings || 4;
+        const selectedServings = recipeItem.servings || baseServings;
+        const servingMultiplier = selectedServings / baseServings;
+
         recipe.ingredients.forEach(ingredient => {
           const key = ingredient.name;
           if (!ingredientTotals[key]) {
             ingredientTotals[key] = 0;
           }
-          // Simple quantity parsing (could be more sophisticated)
-          const quantity = parseFloat(ingredient.quantity) || 1;
-          ingredientTotals[key] += quantity;
+          // Simple quantity parsing with serving adjustment
+          const baseQuantity = parseFloat(ingredient.quantity) || 1;
+          const adjustedQuantity = baseQuantity * servingMultiplier;
+          ingredientTotals[key] += adjustedQuantity;
         });
       }
     });
@@ -75,7 +118,25 @@ const MealTrayProvider = ({ children }) => {
 
   const getSelectedRecipesData = () => {
     const allRecipes = [...recipesData, ...loadUserCookbook()];
-    return selectedRecipes.map(id => allRecipes.find(r => r.id === id)).filter(Boolean);
+    return selectedRecipes.map(item => {
+      const recipe = allRecipes.find(r => r.id === item.id);
+      return recipe ? { ...recipe, selectedServings: item.servings } : null;
+    }).filter(Boolean);
+  };
+
+  const getTotalCalories = () => {
+    const selectedRecipesData = getSelectedRecipesData();
+    let totalCalories = 0;
+    
+    selectedRecipesData.forEach(recipe => {
+      if (recipe.nutrition && recipe.nutrition.caloriesPerServing) {
+        // Calculate total calories for this recipe based on selected servings
+        const recipeCalories = calculateCaloriesPerActualServing(recipe, recipe.selectedServings) * recipe.selectedServings;
+        totalCalories += recipeCalories;
+      }
+    });
+    
+    return Math.round(totalCalories);
   };
 
   return (
@@ -84,8 +145,10 @@ const MealTrayProvider = ({ children }) => {
       estimatedCost,
       addRecipe,
       removeRecipe,
+      updateRecipeServings,
       clearTray,
-      getSelectedRecipesData
+      getSelectedRecipesData,
+      getTotalCalories
     }}>
       {children}
     </MealTrayContext.Provider>
@@ -121,6 +184,13 @@ const Header = () => {
             >
               <span className="mr-1">📖</span>
               My Cookbook
+            </button>
+            <button 
+              onClick={() => navigate('/copilot')}
+              className={`text-gray-600 hover:text-primary transition-colors flex items-center ${location.pathname === '/copilot' ? 'text-primary font-medium' : ''}`}
+            >
+              <span className="mr-1">🤖</span>
+              Co-pilot
             </button>
             <button 
               onClick={() => navigate('/about')}
@@ -535,10 +605,20 @@ const EnhancedShoppingItem = ({ ingredient, index, onOptimizeItem }) => {
             
             <div className="text-sm text-gray-800 mt-1">
               <span className="font-medium text-gray-900">{ingredient.totalQuantity}</span>
+              {ingredient.recipes.length === 1 && (
+                <div className="text-xs text-gray-600 mt-1">
+                  For: {ingredient.recipes[0]}
+                </div>
+              )}
               {ingredient.recipes.length > 1 && (
-                <span className="ml-2 text-xs bg-blue-100 text-blue-900 px-2 py-1 rounded-full font-medium">
-                  Used in {ingredient.recipes.length} recipes
-                </span>
+                <div className="mt-1">
+                  <span className="text-xs bg-blue-100 text-blue-900 px-2 py-1 rounded-full font-medium">
+                    Used in {ingredient.recipes.length} recipes
+                  </span>
+                  <div className="text-xs text-gray-600 mt-1">
+                    {ingredient.recipes.join(', ')}
+                  </div>
+                </div>
               )}
               {ingredient.swapReason && (
                 <div className="text-xs text-green-800 mt-1 font-medium">
@@ -888,7 +968,7 @@ const GamificationDashboard = ({ userId }) => {
 // Enhanced Recipe Components with Better Contrast
 const EnhancedRecipeCard = ({ recipe, onViewRecipe }) => {
   const { selectedRecipes } = useMealTray();
-  const isSelected = selectedRecipes.includes(recipe.id);
+  const isSelected = selectedRecipes.some(item => item.id === recipe.id);
 
   const getDifficultyColor = (difficulty) => {
     switch(difficulty.toLowerCase()) {
@@ -896,6 +976,14 @@ const EnhancedRecipeCard = ({ recipe, onViewRecipe }) => {
       case 'medium': return 'text-yellow-700 bg-yellow-100';
       case 'hard': return 'text-red-700 bg-red-100';
       default: return 'text-gray-700 bg-gray-100';
+    }
+  };
+
+  const getCategoryInfo = (category) => {
+    switch(category) {
+      case 'breakfast': return { icon: '🌅', label: 'Breakfast', color: 'text-blue-700 bg-blue-100' };
+      case 'snacks': return { icon: '🥨', label: 'Snacks', color: 'text-purple-700 bg-purple-100' };
+      default: return { icon: '🍛', label: 'Main Course', color: 'text-orange-700 bg-orange-100' };
     }
   };
 
@@ -947,6 +1035,12 @@ const EnhancedRecipeCard = ({ recipe, onViewRecipe }) => {
               <span className="mr-1">📍</span>
               {recipe.cuisine}
             </span>
+            {recipe.nutrition?.caloriesPerServing && (
+              <span className="flex items-center font-semibold text-orange-600">
+                <span className="mr-1">🔥</span>
+                {recipe.nutrition.caloriesPerServing} cal
+              </span>
+            )}
             <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(recipe.difficulty)}`}>
               {recipe.difficulty}
             </span>
@@ -954,10 +1048,18 @@ const EnhancedRecipeCard = ({ recipe, onViewRecipe }) => {
         </div>
 
         <div className="flex flex-wrap gap-1 mb-4">
-          {recipe.tags.slice(0, 2).map((tag, index) => (
+          {/* Category Badge */}
+          {recipe.category && (
+            <span className={`text-xs px-2 py-1 rounded-full font-medium ${getCategoryInfo(recipe.category).color}`}>
+              {getCategoryInfo(recipe.category).icon} {getCategoryInfo(recipe.category).label}
+            </span>
+          )}
+          
+          {/* Tags */}
+          {recipe.tags.slice(0, recipe.category ? 1 : 2).map((tag, index) => (
             <span
               key={index}
-              className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full font-medium"
+              className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full font-medium"
             >
               {tag}
             </span>
@@ -1394,7 +1496,7 @@ const PersonalCookbookView = () => {
                           : 'bg-primary hover:bg-primary-dark text-white'
                       }`}
                     >
-                      {selectedRecipes.includes(recipe.id) ? 'In Tray ✓' : 'Add to Tray'}
+                      {selectedRecipes.some(item => item.id === recipe.id) ? 'In Tray ✓' : 'Add to Tray'}
                     </button>
                   </div>
 
@@ -1596,14 +1698,22 @@ const HomeView = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCuisine, setSelectedCuisine] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   const cuisines = ['All', ...new Set(recipesData.map(recipe => recipe.cuisine))];
+  const categories = ['All', 'Breakfast', 'Main Course', 'Snacks'];
   
   const filteredRecipes = recipesData.filter(recipe => {
     const matchesSearch = recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          recipe.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCuisine = selectedCuisine === 'All' || recipe.cuisine === selectedCuisine;
-    return matchesSearch && matchesCuisine;
+    
+    // Map recipe categories to display categories
+    const recipeCategory = recipe.category === 'breakfast' ? 'Breakfast' : 
+                          recipe.category === 'snacks' ? 'Snacks' : 'Main Course';
+    const matchesCategory = selectedCategory === 'All' || recipeCategory === selectedCategory;
+    
+    return matchesSearch && matchesCuisine && matchesCategory;
   });
 
   const handleViewRecipe = (recipeId) => {
@@ -1625,17 +1735,17 @@ const HomeView = () => {
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
         <div className="relative container mx-auto px-4 text-center text-white">
-          <h1 className="text-heading mb-6">
+          <h1 className="text-heading mb-6 hero-white-text">
             Let's cook the food you miss from home
           </h1>
-          <p className="text-body text-gray-200 mb-12 max-w-2xl mx-auto">
+          <p className="text-body mb-12 max-w-2xl mx-auto hero-white-text">
             I'll help you make authentic dishes with ingredients from your local Tesco. 
             Perfect for busy students and professionals who want a taste of home! 🏡
           </p>
           
           {/* Search and Filter */}
-          <div className="max-w-2xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-col lg:flex-row gap-4 mb-6">
               <div className="flex-1">
                 <input
                   type="text"
@@ -1645,15 +1755,32 @@ const HomeView = () => {
                   className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
               </div>
-              <select
-                value={selectedCuisine}
-                onChange={(e) => setSelectedCuisine(e.target.value)}
-                className="px-4 py-3 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary bg-white text-gray-800 font-medium shadow-sm"
-              >
-                {cuisines.map(cuisine => (
-                  <option key={cuisine} value={cuisine} className="text-gray-800 font-medium">{cuisine}</option>
-                ))}
-              </select>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="px-4 py-3 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary bg-white text-gray-800 font-medium shadow-sm"
+                >
+                  {categories.map(category => (
+                    <option key={category} value={category} className="text-gray-800 font-medium">
+                      {category === 'All' ? '🍽️ All Meals' : 
+                       category === 'Breakfast' ? '🌅 Breakfast' :
+                       category === 'Snacks' ? '🥨 Snacks' : '🍛 Main Course'}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  value={selectedCuisine}
+                  onChange={(e) => setSelectedCuisine(e.target.value)}
+                  className="px-4 py-3 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary bg-white text-gray-800 font-medium shadow-sm"
+                >
+                  {cuisines.map(cuisine => (
+                    <option key={cuisine} value={cuisine} className="text-gray-800 font-medium">
+                      {cuisine === 'All' ? '🌍 All Cuisines' : cuisine}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -1731,7 +1858,7 @@ const ServingSizeStepper = ({ currentServings, baseServings, onServingChange }) 
 const RecipeDetailView = () => {
   const { recipeId } = useParams();
   const navigate = useNavigate();
-  const { addRecipe, removeRecipe, selectedRecipes } = useMealTray();
+  const { addRecipe, removeRecipe, selectedRecipes, updateRecipeServings } = useMealTray();
   const [healthierVersion, setHealthierVersion] = useState(null);
   const [isHealthifying, setIsHealthifying] = useState(false);
   const [showSubstitutes, setShowSubstitutes] = useState(false);
@@ -1739,10 +1866,26 @@ const RecipeDetailView = () => {
   // Get recipe from both curated and user recipes
   const allRecipes = [...recipesData, ...loadUserCookbook()];
   const recipe = allRecipes.find(r => r.id === parseInt(recipeId));
-  const isInTray = selectedRecipes.includes(parseInt(recipeId));
+  const selectedRecipe = selectedRecipes.find(item => item.id === parseInt(recipeId));
+  const isInTray = !!selectedRecipe;
   
-  // Dynamic serving size state
-  const [desiredServings, setDesiredServings] = useState(recipe?.baseServings || recipe?.servings || 4);
+  // Dynamic serving size state - use tray servings if recipe is in tray
+  const [desiredServings, setDesiredServings] = useState(
+    selectedRecipe?.servings || recipe?.baseServings || recipe?.servings || 4
+  );
+
+  // Update serving size in tray when changed
+  const handleServingChange = (newServings) => {
+    setDesiredServings(newServings);
+    if (isInTray) {
+      updateRecipeServings(parseInt(recipeId), newServings);
+    }
+  };
+
+  // Add recipe with current serving size
+  const handleAddToTray = () => {
+    addRecipe(parseInt(recipeId), desiredServings);
+  };
   
   // Helper function to calculate display quantity
   const calculateDisplayQuantity = (ingredient, baseServings, desiredServings) => {
@@ -1842,17 +1985,23 @@ const RecipeDetailView = () => {
               <ServingSizeStepper
                 currentServings={desiredServings}
                 baseServings={recipe.baseServings || recipe.servings}
-                onServingChange={setDesiredServings}
+                onServingChange={handleServingChange}
               />
               
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">{recipe.servings}</div>
+                  <div className="text-2xl font-bold text-primary">{desiredServings}</div>
                   <div className="text-sm text-gray-600">Servings</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-primary">{recipe.cookingTime}</div>
                   <div className="text-sm text-gray-600">Cook Time</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-orange-600">
+                    {recipe.nutrition ? calculateCaloriesPerActualServing(recipe, desiredServings) : '—'}
+                  </div>
+                  <div className="text-sm text-gray-600">Calories/serving</div>
                 </div>
                 <div className="text-center">
                   <div className={`text-2xl font-bold ${
@@ -1923,7 +2072,7 @@ const RecipeDetailView = () => {
                 </button>
                 
                 <button
-                  onClick={() => isInTray ? removeRecipe(parseInt(recipeId)) : addRecipe(parseInt(recipeId))}
+                  onClick={() => isInTray ? removeRecipe(parseInt(recipeId)) : handleAddToTray()}
                   className={`flex-1 py-3 px-6 rounded-lg font-medium transition-colors ${
                     isInTray 
                       ? 'bg-red-500 hover:bg-red-600 text-white' 
@@ -1934,6 +2083,59 @@ const RecipeDetailView = () => {
                 </button>
               </div>
             </div>
+
+            {/* Nutrition Facts */}
+            {recipe.nutrition && (
+              <div className="bg-white rounded-xl p-6 mb-6 shadow-sm border border-gray-200">
+                <h3 className="text-xl font-semibold mb-4 font-lora">📊 Nutrition Facts</h3>
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="text-center mb-4">
+                    <div className="text-2xl font-bold text-orange-600">
+                      {calculateCaloriesPerActualServing(recipe, desiredServings)} calories
+                    </div>
+                    <div className="text-sm text-gray-600">per serving ({desiredServings} servings total)</div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="text-center">
+                      <div className="text-lg font-semibold text-blue-600">
+                        {Math.round(recipe.nutrition.proteinG * desiredServings / (recipe.baseServings || recipe.servings))}g
+                      </div>
+                      <div className="text-xs text-gray-600">Protein</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg font-semibold text-green-600">
+                        {Math.round(recipe.nutrition.carbsG * desiredServings / (recipe.baseServings || recipe.servings))}g
+                      </div>
+                      <div className="text-xs text-gray-600">Carbs</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg font-semibold text-yellow-600">
+                        {Math.round(recipe.nutrition.fatG * desiredServings / (recipe.baseServings || recipe.servings))}g
+                      </div>
+                      <div className="text-xs text-gray-600">Fat</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg font-semibold text-purple-600">
+                        {Math.round(recipe.nutrition.fiberG * desiredServings / (recipe.baseServings || recipe.servings))}g
+                      </div>
+                      <div className="text-xs text-gray-600">Fiber</div>
+                    </div>
+                  </div>
+                  
+                  {recipe.nutrition.sugarG && (
+                    <div className="mt-3 pt-3 border-t border-gray-200">
+                      <div className="text-center">
+                        <span className="text-sm text-gray-600">Sugar: </span>
+                        <span className="text-sm font-medium text-pink-600">
+                          {Math.round(recipe.nutrition.sugarG * desiredServings / (recipe.baseServings || recipe.servings))}g
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* UK Substitutes */}
             {showSubstitutes && (
@@ -2035,7 +2237,7 @@ const RecipeDetailView = () => {
 
 const ShoppingListView = () => {
   const navigate = useNavigate();
-  const { selectedRecipes, getSelectedRecipesData, clearTray } = useMealTray();
+  const { selectedRecipes, getSelectedRecipesData, clearTray, getTotalCalories } = useMealTray();
   const [shoppingList, setShoppingList] = useState(null);
   const [isOptimized, setIsOptimized] = useState(false);
   const [isGenerating, setIsGenerating] = useState(true);
@@ -2059,23 +2261,44 @@ const ShoppingListView = () => {
       const consolidatedIngredients = {};
       let totalCost = 0;
 
-      // Consolidate ingredients
+      // Consolidate ingredients with proper serving size scaling
       selectedRecipesData.forEach(recipe => {
+        const baseServings = recipe.baseServings || recipe.servings;
+        const selectedServings = recipe.selectedServings;
+        
         recipe.ingredients.forEach(ingredient => {
           const key = ingredient.name;
+          
+          // Calculate scaled quantity for this recipe's selected serving size
+          let scaledQuantity;
+          if (ingredient.quantity === null || ingredient.quantity === undefined) {
+            scaledQuantity = ingredient.unit; // "to taste" items
+          } else {
+            const multiplier = selectedServings / baseServings;
+            const rawScaledQuantity = ingredient.quantity * multiplier;
+            const roundedQuantity = Math.round(rawScaledQuantity * 10) / 10;
+            
+            // Convert decimals to fractions for display
+            if (roundedQuantity === 0.5) scaledQuantity = `½ ${ingredient.unit}`;
+            else if (roundedQuantity === 0.25) scaledQuantity = `¼ ${ingredient.unit}`;
+            else if (roundedQuantity === 0.75) scaledQuantity = `¾ ${ingredient.unit}`;
+            else if (roundedQuantity === 1.5) scaledQuantity = `1½ ${ingredient.unit}`;
+            else scaledQuantity = `${roundedQuantity} ${ingredient.unit}`;
+          }
+          
           if (!consolidatedIngredients[key]) {
             consolidatedIngredients[key] = {
               name: ingredient.name,
               category: ingredient.category || 'User Added',
-              totalQuantity: ingredient.quantity,
-              recipes: [recipe.name],
+              totalQuantity: scaledQuantity,
+              recipes: [`${recipe.name} (${selectedServings} servings)`],
               price: ingredientsPricing[ingredient.name]?.price || 0,
               unit: ingredientsPricing[ingredient.name]?.unit || 'item'
             };
           } else {
-            consolidatedIngredients[key].recipes.push(recipe.name);
-            // In a real app, we'd properly add quantities with unit conversion
-            consolidatedIngredients[key].totalQuantity += ` + ${ingredient.quantity}`;
+            consolidatedIngredients[key].recipes.push(`${recipe.name} (${selectedServings} servings)`);
+            // Add the scaled quantities - in a real app, we'd properly convert and sum units
+            consolidatedIngredients[key].totalQuantity += ` + ${scaledQuantity}`;
           }
         });
       });
@@ -2152,6 +2375,11 @@ const ShoppingListView = () => {
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-4 font-lora">Here's everything you need!</h1>
             <p className="text-gray-700">I've organized this perfectly for your next Tesco run 🛒</p>
+            <div className="mt-3 inline-block bg-blue-50 border border-blue-200 rounded-lg px-4 py-2">
+              <p className="text-sm text-blue-800">
+                <span className="font-medium">✓ Smart quantities:</span> All amounts are calculated based on your selected serving sizes
+              </p>
+            </div>
           </div>
 
           {isGenerating ? (
@@ -2164,7 +2392,7 @@ const ShoppingListView = () => {
             <>
               {/* Summary */}
               <div className="bg-white rounded-xl p-6 shadow-sm mb-8 border border-gray-200">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-6 text-center">
                   <div>
                     <div className="text-2xl font-bold text-primary">{shoppingList.recipes.length}</div>
                     <div className="text-sm text-gray-600">Recipes</div>
@@ -2172,6 +2400,10 @@ const ShoppingListView = () => {
                   <div>
                     <div className="text-2xl font-bold text-primary">{shoppingList.totalItems}</div>
                     <div className="text-sm text-gray-600">Ingredients</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-orange-600">{getTotalCalories()}</div>
+                    <div className="text-sm text-gray-600">Total calories</div>
                   </div>
                   <div>
                     <div className={`text-2xl font-bold ${isOptimized ? 'text-green-600' : 'text-primary'}`}>
@@ -2470,6 +2702,656 @@ const AboutView = () => {
   );
 };
 
+// AI Message Formatter
+const formatAIMessage = (message) => {
+  const sections = [];
+  let currentSection = "";
+  let currentType = "text";
+  
+  const lines = message.split('\n');
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    
+    // Skip empty lines
+    if (!line) {
+      if (currentSection) {
+        sections.push({ type: currentType, content: currentSection.trim() });
+        currentSection = "";
+      }
+      continue;
+    }
+    
+    // Check if line starts with **text**: or **text** (header)
+    if (line.match(/^\*\*(.*?)\*\*:?\s*$/)) {
+      // Save previous section
+      if (currentSection) {
+        sections.push({ type: currentType, content: currentSection.trim() });
+      }
+      
+      // Start new header section
+      const headerText = line.replace(/^\*\*(.*?)\*\*:?\s*$/, '$1');
+      sections.push({ type: "header", content: headerText });
+      currentSection = "";
+      currentType = "text";
+      continue;
+    }
+    
+    // Check if line starts with bullet point
+    if (line.match(/^[•\-*]\s+/) || line.match(/^\d+\.\s+/)) {
+      // If we were building text, save it first
+      if (currentType !== "list" && currentSection) {
+        sections.push({ type: currentType, content: currentSection.trim() });
+        currentSection = "";
+      }
+      currentType = "list";
+      currentSection += line + '\n';
+      continue;
+    }
+    
+    // Regular text
+    if (currentType !== "text" && currentSection) {
+      sections.push({ type: currentType, content: currentSection.trim() });
+      currentSection = "";
+      currentType = "text";
+    }
+    
+    currentSection += line + '\n';
+  }
+  
+  // Add final section
+  if (currentSection) {
+    sections.push({ type: currentType, content: currentSection.trim() });
+  }
+  
+  // Render sections
+  return sections.map((section, index) => {
+    switch (section.type) {
+      case "header":
+        return (
+          <h3 key={index} className="text-lg font-semibold text-gray-900 mb-2 mt-4 first:mt-0">
+            {section.content}
+          </h3>
+        );
+      
+      case "list":
+        const listItems = section.content.split('\n').filter(item => item.trim());
+        return (
+          <ul key={index} className="space-y-2 ml-4 mb-4">
+            {listItems.map((item, itemIndex) => {
+              const cleanItem = item.replace(/^[•\-*]\s+/, '').replace(/^\d+\.\s+/, '');
+              return (
+                <li key={itemIndex} className="flex items-start gap-3">
+                  <span className="text-orange-500 mt-1 flex-shrink-0">•</span>
+                  <span className="text-gray-800 leading-relaxed">{cleanItem}</span>
+                </li>
+              );
+            })}
+          </ul>
+        );
+      
+      case "text":
+        // Split by double newlines for paragraphs
+        const paragraphs = section.content.split('\n\n').filter(p => p.trim());
+        return paragraphs.map((paragraph, pIndex) => (
+          <p key={`${index}-${pIndex}`} className="text-gray-800 leading-relaxed mb-3">
+            {paragraph.trim()}
+          </p>
+        ));
+      
+      default:
+        return (
+          <p key={index} className="text-gray-800 leading-relaxed mb-3">
+            {section.content}
+          </p>
+        );
+    }
+  });
+};
+
+// Co-pilot View Component
+const CopilotView = () => {
+  const [activeMode, setActiveMode] = useState('chat');
+  
+  // Load chat history from localStorage or default welcome message
+  const [chatMessages, setChatMessages] = useState(() => {
+    const savedMessages = localStorage.getItem('copilot_chat_history');
+    if (savedMessages) {
+      try {
+        return JSON.parse(savedMessages).map(msg => ({
+          ...msg,
+          timestamp: new Date(msg.timestamp)
+        }));
+      } catch (e) {
+        console.warn('Failed to parse saved chat history');
+      }
+    }
+    return [
+      {
+        type: 'ai',
+        message: `👋 Welcome to Nutrichef AI! Your AI sous chef for South Asian cuisine.
+
+**I can help you with**
+• Recipe suggestions from your ingredients
+• Step-by-step cooking guidance
+• Ingredient substitutions
+• Traditional techniques and shortcuts
+• Spice blending and flavor tips
+**Ready to cook?**
+Ask me anything about South Asian dishes!`,
+        timestamp: new Date()
+      }
+    ];
+  });
+  const [inputMessage, setInputMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [availableIngredients, setAvailableIngredients] = useState('');
+  const [recipeSuggestions, setRecipeSuggestions] = useState(null);
+  const [dietaryRestrictions, setDietaryRestrictions] = useState([]);
+  const [cookingTime, setCookingTime] = useState('');
+  const { getSelectedRecipesData } = useMealTray();
+  const selectedRecipesData = getSelectedRecipesData();
+  
+  // Save chat history to localStorage whenever messages change
+  useEffect(() => {
+    localStorage.setItem('copilot_chat_history', JSON.stringify(chatMessages));
+  }, [chatMessages]);
+
+  const clearChatHistory = () => {
+    const confirmClear = window.confirm('Are you sure you want to clear your chat history? This cannot be undone.');
+    if (confirmClear) {
+      setChatMessages([
+        {
+          type: 'ai',
+          message: `👋 Welcome back to Nutrichef AI! How can I help you today?`,
+          timestamp: new Date()
+        }
+      ]);
+    }
+  };
+
+  const exportChatHistory = () => {
+    const chatText = chatMessages.map(msg => {
+      const timestamp = formatTime(msg.timestamp);
+      const sender = msg.type === 'user' ? 'You' : 'Nutrichef AI';
+      return `[${timestamp}] ${sender}: ${msg.message}`;
+    }).join('\n\n');
+    
+    const blob = new Blob([chatText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `desi-kitchen-copilot-chat-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const sendMessage = async () => {
+    if (!inputMessage.trim()) return;
+
+    const userMessage = {
+      type: 'user',
+      message: inputMessage,
+      timestamp: new Date()
+    };
+
+    setChatMessages(prev => [...prev, userMessage]);
+    setInputMessage('');
+    setIsLoading(true);
+
+    try {
+      // Add recipe context if user has selected recipes
+      let contextMessage = chatMessages.length > 0 ? chatMessages[chatMessages.length - 1].message : "";
+      if (selectedRecipesData.length > 0) {
+        const mealTrayInfo = `User's current meal tray contains: ${selectedRecipesData.map(r => r.name).join(', ')}`;
+        contextMessage = contextMessage ? `${contextMessage}\n\n${mealTrayInfo}` : mealTrayInfo;
+      }
+      
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/copilot/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          query: inputMessage,
+          context: selectedRecipesData.length > 0 ? `User has ${selectedRecipesData.length} recipes in meal tray: ${selectedRecipesData.map(r => r.name).join(', ')}` : null
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        const aiMessage = {
+          type: 'ai',
+          message: data.response || "I'm here to help with your cooking questions!",
+          timestamp: new Date()
+        };
+        setChatMessages(prev => [...prev, aiMessage]);
+      } else {
+        throw new Error('Failed to get response');
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      let errorMsg = "Sorry, I'm having trouble right now. Please try again in a moment!";
+      
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        errorMsg = "🔌 Connection issue! Please check your internet connection and try again.";
+      } else if (error.message.includes('500')) {
+        errorMsg = "🤖 My circuits are a bit scrambled right now. The kitchen tech team is on it!";
+      } else if (error.message.includes('404')) {
+        errorMsg = "🔍 Hmm, I can't find that cooking endpoint. Let me check my recipe database...";
+      }
+      
+      const errorMessage = {
+        type: 'ai',
+        message: errorMsg,
+        timestamp: new Date()
+      };
+      setChatMessages(prev => [...prev, errorMessage]);
+    }
+
+    setIsLoading(false);
+  };
+
+  const getRecipeSuggestions = async () => {
+    if (!availableIngredients.trim()) return;
+
+    setIsLoading(true);
+    try {
+      const ingredientsList = availableIngredients.split(',').map(i => i.trim()).filter(i => i);
+      
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/copilot/recipe-suggestions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          available_ingredients: ingredientsList,
+          cuisine_preference: "South Asian",
+          dietary_restrictions: dietaryRestrictions,
+          cooking_time_minutes: cookingTime ? parseInt(cookingTime) : null
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        setRecipeSuggestions(data.suggestions);
+      } else {
+        throw new Error('Failed to get recipe suggestions');
+      }
+    } catch (error) {
+      console.error('Error getting recipe suggestions:', error);
+      
+      let errorMsg = 'Sorry, I couldn\'t get recipe suggestions right now. Please try again!';
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        errorMsg = 'Connection issue! Please check your internet connection and try again.';
+      } else if (error.message.includes('500')) {
+        errorMsg = 'My recipe database is taking a little break. Please try again in a moment!';
+      }
+      
+      alert(`🍳 ${errorMsg}`);
+    }
+
+    setIsLoading(false);
+  };
+
+  const toggleDietaryRestriction = (restriction) => {
+    setDietaryRestrictions(prev => 
+      prev.includes(restriction) 
+        ? prev.filter(r => r !== restriction)
+        : [...prev, restriction]
+    );
+  };
+
+  const formatTime = (timestamp) => {
+    return new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      
+      <main className="max-w-6xl mx-auto px-4 py-8">
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+            🤖 Nutrichef AI
+          </h1>
+          <p className="text-gray-600 mb-4">
+            Your AI-powered cooking assistant for South Asian cuisine. Get personalized recipe suggestions, cooking guidance, and culinary advice!
+          </p>
+          
+          {selectedRecipesData.length > 0 && (
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-6">
+              <p className="text-sm text-orange-800">
+                <span className="font-medium">🍽️ Meal Context:</span> I can see you have {selectedRecipesData.length} recipe{selectedRecipesData.length > 1 ? 's' : ''} in your tray: {selectedRecipesData.map(r => r.name).join(', ')}. I can provide specific guidance for these dishes!
+              </p>
+            </div>
+          )}
+
+          {/* Mode Selection */}
+          <div className="flex space-x-4 mb-6 border-b">
+            <button
+              onClick={() => setActiveMode('chat')}
+              className={`pb-2 px-1 font-medium transition-colors ${
+                activeMode === 'chat' ? 'border-b-2 border-orange-500 text-orange-600' : 'text-gray-500'
+              }`}
+            >
+              💬 Chat Assistant
+            </button>
+            <button
+              onClick={() => setActiveMode('recipe-suggestions')}
+              className={`pb-2 px-1 font-medium transition-colors ${
+                activeMode === 'recipe-suggestions' ? 'border-b-2 border-orange-500 text-orange-600' : 'text-gray-500'
+              }`}
+            >
+              🍳 Recipe Suggestions
+            </button>
+          </div>
+
+          {activeMode === 'chat' && (
+            <div className="h-full flex flex-col">
+              {/* Chat Container */}
+              <div className="flex-1 min-h-[600px] bg-white border border-gray-200 rounded-xl overflow-hidden flex flex-col">
+                
+                {/* Chat Messages */}
+                <div className="flex-1 overflow-y-auto" style={{minHeight: '500px'}}>
+                  {chatMessages.map((msg, index) => (
+                    <div key={index} className={`border-b border-gray-200 ${
+                      msg.type === 'user' ? 'bg-white' : 'bg-gray-50'
+                    }`}>
+                      <div className="max-w-4xl mx-auto px-6 py-6">
+                        <div className="flex gap-4">
+                          {/* Avatar */}
+                          <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                            msg.type === 'user' 
+                              ? 'bg-blue-600 text-white' 
+                              : 'bg-orange-600 text-white'
+                          }`}>
+                            {msg.type === 'user' ? 'U' : '🤖'}
+                          </div>
+                          
+                          {/* Message Content */}
+                          <div className="flex-1 space-y-2">
+                            <div className="flex items-center gap-2">
+                              <span className="font-semibold text-gray-900">
+                                {msg.type === 'user' ? 'You' : 'Nutrichef AI'}
+                              </span>
+                              <span className="text-xs text-gray-500">
+                                {formatTime(msg.timestamp)}
+                              </span>
+                            </div>
+                            
+                            <div className={`prose prose-sm max-w-none ${
+                              msg.type === 'user' ? 'text-gray-900' : 'text-gray-900'
+                            }`}>
+                              {msg.type === 'ai' ? (
+                                <div className="space-y-4">
+                                  {formatAIMessage(msg.message)}
+                                </div>
+                              ) : (
+                                <p className="leading-relaxed">{msg.message}</p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  {isLoading && (
+                    <div className="bg-gray-50 border-b border-gray-100">
+                      <div className="max-w-4xl mx-auto px-6 py-6">
+                        <div className="flex gap-4">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center text-sm font-semibold">
+                            🤖
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="font-semibold text-gray-900">Nutrichef AI</span>
+                              <span className="text-xs text-gray-500">thinking...</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce"></div>
+                              <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                              <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Input Section */}
+                <div className="border-t border-gray-200 bg-white">
+                  <div className="max-w-4xl mx-auto p-4">
+                    
+                    {/* Chat Actions */}
+                    <div className="flex justify-between items-center mb-3">
+                      <div className="flex gap-2">
+                        <button
+                          onClick={clearChatHistory}
+                          className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-600 px-2 py-1 rounded transition-colors"
+                          title="Clear chat history"
+                        >
+                          🗑️ Clear
+                        </button>
+                        <button
+                          onClick={exportChatHistory}
+                          className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-600 px-2 py-1 rounded transition-colors"
+                          title="Export chat as text file"
+                        >
+                          📄 Export
+                        </button>
+                      </div>
+                      <span className="text-xs text-gray-500">
+                        {chatMessages.length - 1} message{chatMessages.length !== 2 ? 's' : ''} saved
+                      </span>
+                    </div>
+                    {/* Quick Questions */}
+                    <div className="mb-4">
+                      <div className="flex flex-wrap gap-2">
+                        {(() => {
+                          const hasRecipes = selectedRecipesData.length > 0;
+                          const firstRecipe = hasRecipes ? selectedRecipesData[0] : null;
+                          const recipeName = firstRecipe?.name || "your recipe";
+                          
+                          const questions = hasRecipes ? [
+                            `How do I cook ${recipeName} perfectly?`,
+                            `What sides pair well with ${recipeName}?`,
+                            "Tips for meal prep with my selected recipes",
+                            "How to adjust quantities for more servings?"
+                          ] : [
+                            "How to make perfect basmati rice?",
+                            "What can I substitute for garam masala?",
+                            "Quick 30-minute dinner ideas",
+                            "How to adjust spice levels in curry?",
+                            "Tips for making soft rotis",
+                            "Best dal recipe for beginners"
+                          ];
+                          
+                          return questions.map((questionText, index) => (
+                            <button
+                              key={index}
+                              onClick={() => setInputMessage(questionText)}
+                              className="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg transition-colors border border-gray-200"
+                            >
+                              {questionText}
+                            </button>
+                          ));
+                        })()}
+                      </div>
+                    </div>
+                    
+                    {/* Chat Input */}
+                    <div className="flex gap-3 items-end">
+                      <div className="flex-1 relative">
+                        <textarea
+                          value={inputMessage}
+                          onChange={(e) => setInputMessage(e.target.value)}
+                          onKeyPress={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                              e.preventDefault();
+                              sendMessage();
+                            }
+                          }}
+                          placeholder={selectedRecipesData.length > 0 
+                            ? `Ask me about ${selectedRecipesData.map(r => r.name).join(', ')} or any cooking question...`
+                            : "Ask me anything about South Asian cooking..."
+                          }
+                          className="w-full p-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none text-gray-900 placeholder-gray-500 sm:text-base text-sm"
+                          disabled={isLoading}
+                          rows={1}
+                          style={{minHeight: '48px', maxHeight: '120px'}}
+                          onInput={(e) => {
+                            e.target.style.height = 'auto';
+                            e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
+                          }}
+                        />
+                        <button
+                          onClick={sendMessage}
+                          disabled={isLoading || !inputMessage.trim()}
+                          className="absolute right-2 bottom-2 p-2 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 text-white rounded-lg transition-colors"
+                        >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center mt-2">
+                      <p className="text-xs text-gray-500">
+                        Press Enter to send, Shift+Enter for new line
+                      </p>
+                      {selectedRecipesData.length > 0 && (
+                        <p className="text-xs text-orange-600">
+                          💡 Context-aware suggestions available
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeMode === 'recipe-suggestions' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Ingredient Input */}
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Available Ingredients (comma-separated)
+                    </label>
+                    <textarea
+                      value={availableIngredients}
+                      onChange={(e) => setAvailableIngredients(e.target.value)}
+                      placeholder="e.g., onions, tomatoes, chicken, rice, cumin, garam masala..."
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      rows={3}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Cooking Time (minutes)
+                    </label>
+                    <input
+                      type="number"
+                      value={cookingTime}
+                      onChange={(e) => setCookingTime(e.target.value)}
+                      placeholder="30"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Dietary Restrictions
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {['vegetarian', 'vegan', 'gluten-free', 'dairy-free', 'low-sodium'].map((restriction) => (
+                        <button
+                          key={restriction}
+                          onClick={() => toggleDietaryRestriction(restriction)}
+                          className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                            dietaryRestrictions.includes(restriction)
+                              ? 'bg-orange-500 text-white'
+                              : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                          }`}
+                        >
+                          {restriction}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={getRecipeSuggestions}
+                    disabled={isLoading || !availableIngredients.trim()}
+                    className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                  >
+                    {isLoading ? 'Getting Suggestions...' : 'Get Recipe Suggestions'}
+                  </button>
+                </div>
+
+                {/* Recipe Suggestions Display */}
+                <div>
+                  {recipeSuggestions && (
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold text-gray-800">Suggested Recipes</h3>
+                      
+                      {recipeSuggestions.suggested_recipes?.map((recipe, index) => (
+                        <div key={index} className="bg-gray-50 rounded-lg p-4">
+                          <h4 className="font-semibold text-gray-800 mb-2">{recipe.name}</h4>
+                          <p className="text-sm text-gray-600 mb-2">{recipe.description}</p>
+                          
+                          <div className="grid grid-cols-3 gap-2 text-xs text-gray-500 mb-2">
+                            <span>⏱️ {recipe.prep_time_minutes + recipe.cook_time_minutes}min</span>
+                            <span>👨‍🍳 {recipe.difficulty}</span>
+                            <span>🥘 {recipe.ingredients?.length} ingredients</span>
+                          </div>
+
+                          {recipe.missing_ingredients?.length > 0 && (
+                            <div className="mb-2">
+                              <span className="text-xs font-medium text-red-600">Missing: </span>
+                              <span className="text-xs text-red-500">
+                                {recipe.missing_ingredients.join(', ')}
+                              </span>
+                            </div>
+                          )}
+
+                          <p className="text-xs text-orange-600 mb-2">💡 {recipe.why_this_recipe}</p>
+                          
+                          {recipe.tips && (
+                            <p className="text-xs text-gray-500">💭 {recipe.tips}</p>
+                          )}
+                        </div>
+                      ))}
+
+                      {recipeSuggestions.general_tips && (
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                          <h4 className="font-semibold text-blue-800 mb-2">💡 General Tips</h4>
+                          <p className="text-sm text-blue-700">{recipeSuggestions.general_tips}</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+};
+
 function App() {
   return (
     <MealTrayProvider>
@@ -2479,6 +3361,7 @@ function App() {
             <Route path="/" element={<HomeView />} />
             <Route path="/recipe/:recipeId" element={<RecipeDetailView />} />
             <Route path="/cookbook" element={<PersonalCookbookView />} />
+            <Route path="/copilot" element={<CopilotView />} />
             <Route path="/about" element={<AboutView />} />
             <Route path="/shopping-list" element={<ShoppingListView />} />
           </Routes>

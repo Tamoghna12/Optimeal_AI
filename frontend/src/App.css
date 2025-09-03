@@ -410,6 +410,27 @@ a:focus-visible {
   }
 }
 
+/* Force hide any emergent badges */
+#emergent-badge,
+[id*="emergent"],
+[class*="emergent"],
+a[href*="emergent"],
+*[style*="Made with"],
+*:contains("Made with Emergent") {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Force white text for hero section */
+.hero-white-text {
+  color: #ffffff !important;
+}
+
 /* Dark Mode Support (Future Enhancement) */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -640,6 +661,165 @@ a:focus-visible {
 .copilot-option.selected {
   background: rgba(255, 255, 255, 0.25);
   border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Co-Pilot Chat Interface Mobile Responsiveness */
+@media (max-width: 768px) {
+  .copilot-chat-container {
+    min-height: calc(100vh - 180px);
+    margin: 0.5rem;
+  }
+  
+  .copilot-messages {
+    padding: 0.75rem;
+    max-height: calc(100vh - 280px);
+  }
+  
+  .copilot-message-bubble {
+    max-width: 95%;
+    padding: 0.75rem;
+  }
+  
+  .copilot-input-section {
+    padding: 0.75rem;
+  }
+  
+  .copilot-quick-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .copilot-quick-action {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    width: 100%;
+  }
+  
+  .copilot-export-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  
+  .copilot-export-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .copilot-textarea {
+    font-size: 16px !important; /* Prevent iOS zoom */
+    min-height: 44px; /* iOS minimum tap target */
+  }
+  
+  .copilot-context-banner {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+  
+  .copilot-mode-tabs {
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .copilot-mode-tab {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    flex: 1;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .copilot-header {
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .copilot-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .copilot-avatar {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+  
+  .copilot-message-content {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  .copilot-timestamp {
+    font-size: 0.7rem;
+  }
+  
+  .copilot-send-button {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+  
+  .copilot-recipe-suggestions {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .copilot-suggestion-card {
+    padding: 1rem;
+  }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+  .copilot-quick-action:hover,
+  .copilot-option:hover {
+    background-color: initial;
+    transform: none;
+  }
+  
+  .copilot-quick-action:active,
+  .copilot-option:active {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(0.98);
+  }
+}
+
+/* Dark mode specific copilot styles */
+@media (prefers-color-scheme: dark) {
+  .copilot-chat-container {
+    background-color: #2d2d2d;
+    border-color: #404040;
+  }
+  
+  .copilot-message-bubble.user {
+    background-color: #374151;
+    color: #e5e7eb;
+  }
+  
+  .copilot-message-bubble.ai {
+    background-color: #1f2937;
+    color: #f3f4f6;
+  }
+  
+  .copilot-input-section {
+    background-color: #1f2937;
+    border-color: #374151;
+  }
+  
+  .copilot-textarea {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #f3f4f6;
+  }
+  
+  .copilot-textarea::placeholder {
+    color: #9ca3af;
+  }
 }
 
 /* Loading States */
