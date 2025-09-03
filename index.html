@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutrichef AI - Transform Your South Asian Cooking with AI</title>
-    <meta name="description" content="Your AI cooking assistant for authentic South Asian cuisine. Get instant recipe suggestions, nutritional analysis, and cooking guidance from ingredients you have.">
-    <meta name="keywords" content="AI cooking, South Asian recipes, Indian recipes, nutrition analysis, recipe suggestions, cooking assistant">
+    <title>NutriChef AI - Uber for Grocery Delivery + AI Health Cooking</title>
+    <meta name="description" content="Get groceries delivered like Uber + AI-powered meal planning for PCOS, diabetes, and blood pressure. Save recipes, track nutrition, and budget your meals.">
+    <meta name="keywords" content="grocery delivery, meal planning, PCOS recipes, diabetes food, AI nutrition, South Asian health cooking, food budgeting">
     
     <!-- Open Graph for social sharing -->
-    <meta property="og:title" content="Nutrichef AI - Your AI Cooking Assistant">
-    <meta property="og:description" content="Transform your South Asian cooking with AI. Get instant recipe ideas, nutritional analysis, and smart cooking guidance.">
+    <meta property="og:title" content="NutriChef AI - Uber for Grocery Delivery + AI Health Cooking">
+    <meta property="og:description" content="Get groceries delivered + AI meal planning for PCOS, diabetes & blood pressure. Your health-focused cooking companion.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://your-username.github.io/homeland_meals">
     
@@ -50,9 +50,9 @@
             </div>
             <div class="nav-menu">
                 <a href="#features" class="nav-link">Features</a>
-                <a href="#demo" class="nav-link">Try Demo</a>
-                <a href="#about" class="nav-link">About</a>
-                <button class="cta-button nav-cta" onclick="scrollToDemo()">Try Now</button>
+                <a href="#demo" class="nav-link">Recipe Analyzer</a>
+                <a href="#testimonials" class="nav-link">Reviews</a>
+                <button class="cta-button nav-cta" onclick="trackEvent('nav_cta_clicked'); alert('App launching soon! Join our waitlist.')">Get Started</button>
             </div>
             <div class="mobile-menu-toggle">
                 <span></span>
@@ -76,41 +76,40 @@
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    Transform Your 
-                    <span class="gradient-text">South Asian Cooking</span> 
-                    with AI
+                    <span class="gradient-text">Uber for Groceries</span> 
+                    + AI Health Cooking
                 </h1>
                 <p class="hero-subtitle">
-                    From traditional recipes to quick meals - your AI sous chef understands your heritage, 
-                    your ingredients, and your busy lifestyle.
+                    Get groceries delivered instantly + AI-powered meal planning for PCOS, diabetes, and blood pressure. 
+                    Your complete health-focused cooking companion.
                 </p>
                 
                 <div class="hero-stats">
                     <div class="stat">
-                        <span class="stat-number">10K+</span>
-                        <span class="stat-label">Recipes Analyzed</span>
+                        <span class="stat-number">30min</span>
+                        <span class="stat-label">Avg Delivery Time</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-number">50+</span>
-                        <span class="stat-label">Cuisines Supported</span>
+                        <span class="stat-number">5000+</span>
+                        <span class="stat-label">Health Recipes</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-number">95%</span>
-                        <span class="stat-label">Accuracy Rate</span>
+                        <span class="stat-number">85%</span>
+                        <span class="stat-label">Health Improvement</span>
                     </div>
                 </div>
                 
                 <div class="hero-ctas">
-                    <button class="cta-button primary" onclick="scrollToDemo()">
-                        📸 Try Free Food Analysis
+                    <button class="cta-button primary" onclick="trackEvent('get_started_clicked'); alert('App launching soon! Join our waitlist.')">
+                        🛒 Order Groceries Now
                     </button>
-                    <button class="cta-button secondary" onclick="trackEvent('view_app_clicked'); window.open('#app', '_blank')">
-                        🚀 Launch App
+                    <button class="cta-button secondary" onclick="scrollToDemo()">
+                        📝 Try Recipe Analyzer
                     </button>
                 </div>
                 
                 <div class="hero-trust">
-                    <p>✨ No signup required for demo • 🔒 Your data stays private • 🆓 Always free to try</p>
+                    <p>🚚 Free delivery on first order • 🏥 Health-focused recipes • 💰 Budget-friendly meal plans</p>
                 </div>
             </div>
             
@@ -119,10 +118,10 @@
                     <div class="phone-screen">
                         <div class="app-interface">
                             <div class="chat-bubble ai">
-                                🤖 I see you have onions, tomatoes, and garam masala. How about making a quick Bhuna Gosht? I can walk you through it step by step!
+                                🤖 I've created a PCOS-friendly meal plan for this week. Would you like me to order the ingredients? Delivery in 25 minutes!
                             </div>
                             <div class="chat-bubble user">
-                                Perfect! How long will it take?
+                                Yes! Add my diabetes-friendly snacks too
                             </div>
                             <div class="typing-indicator">
                                 <div class="dot"></div>
@@ -136,99 +135,119 @@
         </div>
     </section>
 
-    <!-- Interactive Demo Section (Surprise Element) -->
+    <!-- Recipe Analyzer Demo Section -->
     <section id="demo" class="demo-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">🎯 Experience AI Food Analysis</h2>
+                <h2 class="section-title">🍽️ AI Recipe Analyzer</h2>
                 <p class="section-subtitle">
-                    Upload any food photo and watch our AI instantly analyze nutrition, ingredients, and cultural context
+                    Paste any recipe and get instant health analysis, nutritional breakdown, and modifications for your health conditions
                 </p>
             </div>
             
             <div class="demo-container">
-                <div class="demo-upload" id="demoUpload">
-                    <div class="upload-zone" id="uploadZone">
-                        <div class="upload-icon">📸</div>
-                        <h3>Drop your food photo here</h3>
-                        <p>Or click to select an image</p>
-                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
-                        <button class="upload-button" onclick="document.getElementById('fileInput').click()">
-                            Choose Photo
+                <div class="demo-input-section">
+                    <div class="recipe-input-zone">
+                        <h3>📝 Paste Your Recipe Here</h3>
+                        <textarea 
+                            id="recipeInput" 
+                            placeholder="Paste any recipe... for example:
+
+Chicken Biryani
+Ingredients: 2 cups basmati rice, 1 lb chicken, 1 onion, 2 tbsp ghee, spices...
+Instructions: 1. Soak rice for 30 mins, 2. Marinate chicken with yogurt..."
+                            rows="8"
+                        ></textarea>
+                        <button class="analyze-button" onclick="analyzeRecipe()">
+                            🧠 Analyze Recipe with AI
                         </button>
+                    </div>
+                    
+                    <div class="sample-recipes">
+                        <p class="examples-header">Try these sample recipes:</p>
+                        <div class="sample-buttons">
+                            <button class="sample-btn" onclick="loadSampleRecipe('biryani')">🍚 Biryani</button>
+                            <button class="sample-btn" onclick="loadSampleRecipe('dal')">🥄 Dal Curry</button>
+                            <button class="sample-btn" onclick="loadSampleRecipe('curry')">🍛 Chicken Curry</button>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="demo-results" id="demoResults" style="display: none;">
-                    <div class="result-header">
-                        <h3>🧠 AI Analysis Results</h3>
-                        <button class="try-again-btn" onclick="resetDemo()">Try Another Photo</button>
+                <div class="demo-results-section" id="analyzerResults" style="display: none;">
+                    <div class="results-header">
+                        <h3>🎯 AI Analysis Results</h3>
+                        <button class="clear-btn" onclick="clearAnalysis()">Clear & Try Another</button>
                     </div>
                     
-                    <div class="analysis-grid">
-                        <div class="analysis-card nutrition">
-                            <h4>📊 Nutrition Facts</h4>
-                            <div id="nutritionData">
-                                <div class="nutrition-item">
-                                    <span>Calories:</span>
-                                    <span id="calories">Loading...</span>
-                                </div>
-                                <div class="nutrition-item">
-                                    <span>Protein:</span>
-                                    <span id="protein">Loading...</span>
-                                </div>
-                                <div class="nutrition-item">
-                                    <span>Carbs:</span>
-                                    <span id="carbs">Loading...</span>
-                                </div>
-                                <div class="nutrition-item">
-                                    <span>Fat:</span>
-                                    <span id="fat">Loading...</span>
-                                </div>
+                    <div class="analysis-tabs">
+                        <button class="tab-btn active" onclick="showTab('nutrition')">📊 Nutrition</button>
+                        <button class="tab-btn" onclick="showTab('health')">🏥 Health Impact</button>
+                        <button class="tab-btn" onclick="showTab('modifications')">⚕️ Modifications</button>
+                        <button class="tab-btn" onclick="showTab('budget')">💰 Cost Analysis</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="nutrition-tab">
+                        <div class="nutrition-grid">
+                            <div class="nutrition-card">
+                                <h4>Per Serving</h4>
+                                <div id="nutritionFacts">Loading...</div>
+                            </div>
+                            <div class="nutrition-card">
+                                <h4>Macros Breakdown</h4>
+                                <div id="macroBreakdown">Loading...</div>
                             </div>
                         </div>
-                        
-                        <div class="analysis-card ingredients">
-                            <h4>🧄 Detected Ingredients</h4>
-                            <div id="ingredientsList">
-                                <div class="loading-skeleton"></div>
+                    </div>
+                    
+                    <div class="tab-content" id="health-tab">
+                        <div class="health-analysis">
+                            <div class="health-card">
+                                <h4>🩺 Health Conditions Impact</h4>
+                                <div id="healthImpact">Loading...</div>
+                            </div>
+                            <div class="health-card">
+                                <h4>⚠️ Dietary Warnings</h4>
+                                <div id="dietaryWarnings">Loading...</div>
                             </div>
                         </div>
-                        
-                        <div class="analysis-card cultural">
-                            <h4>🌍 Cultural Context</h4>
-                            <div id="culturalContext">
-                                <div class="loading-skeleton"></div>
+                    </div>
+                    
+                    <div class="tab-content" id="modifications-tab">
+                        <div class="modifications-list">
+                            <h4>🔄 Suggested Modifications</h4>
+                            <div id="modifications">Loading...</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="budget-tab">
+                        <div class="budget-analysis">
+                            <div class="cost-breakdown">
+                                <h4>💳 Cost Breakdown</h4>
+                                <div id="costAnalysis">Loading...</div>
+                            </div>
+                            <div class="shopping-list">
+                                <h4>🛒 Shopping List</h4>
+                                <div id="shoppingList">Loading...</div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="demo-cta">
-                        <p>🚀 Want personalized recipes and cooking guidance?</p>
-                        <button class="cta-button primary" onclick="trackEvent('demo_conversion'); alert('App launching soon! Join our waitlist.')">
-                            Get Full Access
+                        <p>🚀 Want to save this analysis and get personalized meal plans?</p>
+                        <button class="cta-button primary" onclick="trackEvent('analyzer_conversion'); alert('Join our waitlist for full access!')">
+                            💾 Save to My Cookbook
                         </button>
                     </div>
                 </div>
                 
-                <div class="demo-loading" id="demoLoading" style="display: none;">
+                <div class="demo-loading" id="analyzerLoading" style="display: none;">
                     <div class="loading-animation">
-                        <div class="cooking-pot">🍲</div>
+                        <div class="analyzing-icon">🧠</div>
                         <div class="loading-text">
-                            <h3>AI is analyzing your food...</h3>
-                            <p id="loadingSteps">Identifying ingredients...</p>
+                            <h3>AI is analyzing your recipe...</h3>
+                            <p id="loadingSteps">Breaking down ingredients...</p>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <div class="demo-examples">
-                <p class="examples-header">Try these sample photos:</p>
-                <div class="example-images">
-                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=100&h=100&fit=crop" alt="Indian curry" class="example-img" onclick="loadSampleAnalysis('curry')">
-                    <img src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=100&h=100&fit=crop" alt="Biryani" class="example-img" onclick="loadSampleAnalysis('biryani')">
-                    <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=100&h=100&fit=crop" alt="Dal" class="example-img" onclick="loadSampleAnalysis('dal')">
-                    <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=100&h=100&fit=crop" alt="Samosa" class="example-img" onclick="loadSampleAnalysis('samosa')">
                 </div>
             </div>
         </div>
@@ -238,76 +257,76 @@
     <section id="features" class="features-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">🌟 Your AI Cooking Superpowers</h2>
+                <h2 class="section-title">🌟 Complete Health & Grocery Solution</h2>
                 <p class="section-subtitle">
-                    Everything you need to cook authentic, healthy, and budget-friendly South Asian meals
+                    Grocery delivery + AI-powered meal planning for your health conditions and budget
                 </p>
             </div>
             
             <div class="features-grid">
-                <div class="feature-card" data-feature="recipes">
-                    <div class="feature-icon">🤖</div>
-                    <h3>AI Recipe Magic</h3>
-                    <p>Got random ingredients? Get instant, authentic recipe suggestions that actually work with what you have.</p>
+                <div class="feature-card" data-feature="delivery">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Uber-Style Grocery Delivery</h3>
+                    <p>Order fresh groceries and get them delivered in 30 minutes. Track your delivery driver in real-time.</p>
                     <div class="feature-demo">
-                        <div class="demo-input">"I have leftover rice, onions, and curry leaves"</div>
+                        <div class="demo-input">"I need vegetables for tonight's dinner"</div>
                         <div class="demo-arrow">→</div>
-                        <div class="demo-output">"Perfect for Coconut Rice! Here's how..."</div>
+                        <div class="demo-output">"Driver arriving in 25 mins with your order"</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-feature="cookbook">
+                    <div class="feature-icon">📚</div>
+                    <h3>Personal Digital Cookbook</h3>
+                    <p>Save your favorite recipes, family secrets, and AI-generated meals. Access your cookbook anywhere, anytime.</p>
+                    <div class="feature-demo">
+                        <div class="demo-input">"Save this PCOS-friendly curry recipe"</div>
+                        <div class="demo-arrow">→</div>
+                        <div class="demo-output">"Saved to your Health Recipes collection"</div>
                     </div>
                 </div>
                 
                 <div class="feature-card" data-feature="nutrition">
                     <div class="feature-icon">📊</div>
-                    <h3>Smart Nutrition Analysis</h3>
-                    <p>Upload any food photo and get detailed nutritional breakdown, portion sizes, and health insights.</p>
+                    <h3>Advanced Nutrition Tracker</h3>
+                    <p>Track calories, macros, and micronutrients specifically for your health conditions. Get daily insights and progress reports.</p>
                     <div class="feature-demo">
-                        <div class="demo-input">📸 Photo of your plate</div>
+                        <div class="demo-input">"Log my diabetes-friendly breakfast"</div>
                         <div class="demo-arrow">→</div>
-                        <div class="demo-output">🎯 Complete nutrition facts</div>
+                        <div class="demo-output">"Blood sugar impact: Low. Great choice!"</div>
                     </div>
                 </div>
                 
-                <div class="feature-card" data-feature="substitutions">
-                    <div class="feature-icon">🔄</div>
-                    <h3>Cultural Bridge</h3>
-                    <p>Find perfect Western grocery alternatives for traditional ingredients. No more hunting in specialty stores!</p>
+                <div class="feature-card" data-feature="planning">
+                    <div class="feature-icon">📅</div>
+                    <h3>AI Meal Planning</h3>
+                    <p>Get personalized weekly meal plans based on your health conditions, preferences, and dietary restrictions.</p>
                     <div class="feature-demo">
-                        <div class="demo-input">"Where can I find methi?"</div>
+                        <div class="demo-input">"Plan PCOS-friendly meals for next week"</div>
                         <div class="demo-arrow">→</div>
-                        <div class="demo-output">"Try fenugreek leaves in the organic section"</div>
+                        <div class="demo-output">"7-day anti-inflammatory plan ready!"</div>
                     </div>
                 </div>
                 
                 <div class="feature-card" data-feature="budget">
                     <div class="feature-icon">💰</div>
-                    <h3>Budget Planning</h3>
-                    <p>Plan authentic weekly meals that fit your budget. Get cost estimates and smart shopping lists.</p>
+                    <h3>Weekly Food Budgeting</h3>
+                    <p>Set weekly grocery budgets, track spending, and get alerts when you're approaching limits. Save money while eating healthy.</p>
                     <div class="feature-demo">
-                        <div class="demo-input">Budget: $40/week</div>
+                        <div class="demo-input">"My weekly budget is $80"</div>
                         <div class="demo-arrow">→</div>
-                        <div class="demo-output">7 days of authentic meals planned!</div>
+                        <div class="demo-output">"Current spending: $65. $15 remaining"</div>
                     </div>
                 </div>
                 
-                <div class="feature-card" data-feature="guidance">
-                    <div class="feature-icon">👨‍🍳</div>
-                    <h3>Step-by-Step Guidance</h3>
-                    <p>Never wonder "what next?" again. Get real-time cooking guidance that adapts to your pace.</p>
+                <div class="feature-card" data-feature="health">
+                    <div class="feature-icon">🏥</div>
+                    <h3>Food as Medicine</h3>
+                    <p>Get personalized recipes for PCOS, diabetes, pre-diabetes, and high blood pressure. Turn your kitchen into a pharmacy.</p>
                     <div class="feature-demo">
-                        <div class="demo-input">"How do I know when dal is ready?"</div>
+                        <div class="demo-input">"I have high blood pressure"</div>
                         <div class="demo-arrow">→</div>
-                        <div class="demo-output">"Look for this texture..." [with photo]</div>
-                    </div>
-                </div>
-                
-                <div class="feature-card" data-feature="heritage">
-                    <div class="feature-icon">🏠</div>
-                    <h3>Taste of Home</h3>
-                    <p>Recreate your family's traditional recipes with modern shortcuts. Keep the heritage, save the time.</p>
-                    <div class="feature-demo">
-                        <div class="demo-input">"My grandmother's biryani recipe"</div>
-                        <div class="demo-arrow">→</div>
-                        <div class="demo-output">30-min version with authentic taste</div>
+                        <div class="demo-output">"Here are 12 heart-healthy recipes for you"</div>
                     </div>
                 </div>
             </div>
@@ -315,7 +334,7 @@
     </section>
 
     <!-- Social Proof Section -->
-    <section class="social-proof">
+    <section id="testimonials" class="social-proof">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">💝 Loved by the Diaspora Community</h2>
@@ -324,39 +343,39 @@
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="testimonial-content">
-                        <p>"Finally, an AI that understands that 'a pinch of this' and 'cook until it looks right' are valid measurements! 😂"</p>
+                        <p>"My PCOS symptoms improved dramatically after following their personalized meal plans. The grocery delivery saves me hours each week!"</p>
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">👩</div>
                         <div class="author-info">
                             <div class="author-name">Priya S.</div>
-                            <div class="author-title">Software Engineer, California</div>
+                            <div class="author-title">Teacher, California • PCOS Warrior</div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="testimonial-card">
                     <div class="testimonial-content">
-                        <p>"As a busy grad student, this is a lifesaver. I can finally make authentic food without calling my mom every time!"</p>
+                        <p>"As a pre-diabetic, the recipe analyzer is a game-changer. I know exactly what I'm eating and how it affects my blood sugar!"</p>
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">👨</div>
                         <div class="author-info">
                             <div class="author-name">Arjun M.</div>
-                            <div class="author-title">PhD Student, Boston</div>
+                            <div class="author-title">Software Developer, Austin • Pre-Diabetes</div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="testimonial-card">
                     <div class="testimonial-content">
-                        <p>"The ingredient substitutions are spot-on. Found perfect alternatives at my local Kroger!"</p>
+                        <p>"The blood pressure-friendly recipes helped me reduce my medication. Plus groceries arrive faster than Uber Eats!"</p>
                     </div>
                     <div class="testimonial-author">
                         <div class="author-avatar">👩</div>
                         <div class="author-info">
                             <div class="author-name">Kavya R.</div>
-                            <div class="author-title">Marketing Manager, Texas</div>
+                            <div class="author-title">Marketing Manager, Texas • Hypertension</div>
                         </div>
                     </div>
                 </div>
@@ -364,20 +383,20 @@
             
             <div class="stats-bar">
                 <div class="stat-item">
-                    <div class="stat-number">4.9★</div>
-                    <div class="stat-label">Average Rating</div>
+                    <div class="stat-number">25min</div>
+                    <div class="stat-label">Avg Delivery Time</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">10K+</div>
-                    <div class="stat-label">Happy Cooks</div>
+                    <div class="stat-number">15K+</div>
+                    <div class="stat-label">Health Recipes</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">50K+</div>
-                    <div class="stat-label">Recipes Created</div>
+                    <div class="stat-number">3000+</div>
+                    <div class="stat-label">Health Improvements</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">95%</div>
-                    <div class="stat-label">Success Rate</div>
+                    <div class="stat-number">$2.8M</div>
+                    <div class="stat-label">Grocery Orders</div>
                 </div>
             </div>
         </div>
@@ -394,8 +413,8 @@
                     <button class="cta-button primary large" onclick="trackEvent('final_cta_clicked'); alert('App launching soon! Join our waitlist.')">
                         🚀 Start Cooking Smarter
                     </button>
-                    <button class="cta-button secondary large" onclick="scrollToDemo()">
-                        📸 Try Demo First
+                    <button class="cta-button secondary large" onclick="scrollToFeatures()">
+                        🌟 View Features
                     </button>
                 </div>
                 
@@ -422,7 +441,7 @@
                     <div class="footer-section">
                         <h4>Product</h4>
                         <a href="#features">Features</a>
-                        <a href="#demo">Try Demo</a>
+                        <a href="#testimonials">Reviews</a>
                         <a href="#pricing">Pricing</a>
                         <a href="#api">API</a>
                     </div>

@@ -1,13 +1,11 @@
 // Nutrichef AI Landing Page JavaScript
-// Interactive elements, demo functionality, and analytics
+// Interactive elements and analytics
 
 (function() {
     'use strict';
     
     // Global state management
     const state = {
-        demoActive: false,
-        currentAnalysis: null,
         scrollPosition: 0
     };
     
@@ -44,6 +42,11 @@
     }
     
     // Global scroll function for buttons
+    window.scrollToFeatures = function() {
+        smoothScrollTo('features', 80);
+        trackEvent('cta_scroll_to_features');
+    };
+    
     window.scrollToDemo = function() {
         smoothScrollTo('demo', 80);
         trackEvent('cta_scroll_to_demo');
@@ -102,322 +105,6 @@
         // Observe sections for animation
         const sections = document.querySelectorAll('section, .feature-card, .testimonial-card');
         sections.forEach(section => observer.observe(section));
-    }
-    
-    // Demo functionality
-    function initDemo() {
-        const fileInput = document.getElementById('fileInput');
-        const uploadZone = document.getElementById('uploadZone');
-        const demoUpload = document.getElementById('demoUpload');
-        const demoResults = document.getElementById('demoResults');
-        const demoLoading = document.getElementById('demoLoading');
-        
-        if (!fileInput || !uploadZone) return;
-        
-        // File input change handler
-        fileInput.addEventListener('change', handleFileSelect);
-        
-        // Drag and drop handlers
-        uploadZone.addEventListener('dragover', handleDragOver);
-        uploadZone.addEventListener('drop', handleFileDrop);
-        uploadZone.addEventListener('dragleave', handleDragLeave);
-        
-        // Click handler for upload zone
-        uploadZone.addEventListener('click', function() {
-            fileInput.click();
-            trackEvent('demo_upload_zone_clicked');
-        });
-    }
-    
-    function handleFileSelect(event) {
-        const file = event.target.files[0];
-        if (file && file.type.startsWith('image/')) {
-            processFile(file);
-            trackEvent('demo_file_selected', { 
-                fileType: file.type,
-                fileSize: file.size 
-            });
-        } else {
-            showError('Please select a valid image file.');
-        }
-    }
-    
-    function handleDragOver(event) {
-        event.preventDefault();
-        event.currentTarget.classList.add('drag-over');
-    }
-    
-    function handleDragLeave(event) {
-        event.currentTarget.classList.remove('drag-over');
-    }
-    
-    function handleFileDrop(event) {
-        event.preventDefault();
-        event.currentTarget.classList.remove('drag-over');
-        
-        const files = event.dataTransfer.files;
-        if (files.length > 0 && files[0].type.startsWith('image/')) {
-            processFile(files[0]);
-            trackEvent('demo_file_dropped', { 
-                fileType: files[0].type,
-                fileSize: files[0].size 
-            });
-        } else {
-            showError('Please drop a valid image file.');
-        }
-    }
-    
-    function processFile(file) {
-        if (state.demoActive) return;
-        
-        state.demoActive = true;
-        showLoading();
-        
-        // Create a FileReader to read the image
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            // Simulate API call with realistic delay
-            simulateAnalysis(event.target.result);
-        };
-        reader.readAsDataURL(file);
-    }
-    
-    function showLoading() {
-        const demoUpload = document.getElementById('demoUpload');
-        const demoLoading = document.getElementById('demoLoading');
-        
-        if (demoUpload && demoLoading) {
-            demoUpload.style.display = 'none';
-            demoLoading.style.display = 'block';
-            
-            // Animated loading steps
-            const steps = [
-                'Identifying ingredients...',
-                'Analyzing nutritional content...',
-                'Detecting cultural context...',
-                'Generating insights...',
-                'Finalizing results...'
-            ];
-            
-            let stepIndex = 0;
-            const stepElement = document.getElementById('loadingSteps');
-            
-            const stepInterval = setInterval(() => {
-                if (stepElement && stepIndex < steps.length) {
-                    stepElement.textContent = steps[stepIndex];
-                    stepIndex++;
-                } else {
-                    clearInterval(stepInterval);
-                }
-            }, 800);
-        }
-    }
-    
-    function simulateAnalysis(imageData) {
-        // Simulate realistic API delay
-        setTimeout(() => {
-            const mockAnalysis = generateMockAnalysis();
-            showResults(mockAnalysis, imageData);
-            state.currentAnalysis = mockAnalysis;
-            state.demoActive = false;
-            
-            trackEvent('demo_analysis_completed', {
-                calories: mockAnalysis.nutrition.calories,
-                cuisine: mockAnalysis.cultural.cuisine
-            });
-        }, 4000);
-    }
-    
-    function generateMockAnalysis() {
-        const analyses = [
-            {
-                nutrition: {
-                    calories: 285,
-                    protein: '12g',
-                    carbs: '45g',
-                    fat: '8g'
-                },
-                ingredients: [
-                    'Basmati Rice', 'Turmeric', 'Cumin Seeds', 
-                    'Onions', 'Garlic', 'Ginger', 'Ghee'
-                ],
-                cultural: {
-                    cuisine: 'North Indian',
-                    dish: 'Jeera Rice (Cumin Rice)',
-                    region: 'Punjab/Rajasthan',
-                    context: 'A simple yet flavorful rice dish, commonly served as a side with dal and vegetables. The aromatic cumin and turmeric give it its distinctive taste and golden color.'
-                }
-            },
-            {
-                nutrition: {
-                    calories: 340,
-                    protein: '18g',
-                    carbs: '28g',
-                    fat: '15g'
-                },
-                ingredients: [
-                    'Lentils (Dal)', 'Tomatoes', 'Onions', 
-                    'Garlic', 'Ginger', 'Coriander', 'Chili Powder'
-                ],
-                cultural: {
-                    cuisine: 'South Indian',
-                    dish: 'Sambar',
-                    region: 'Tamil Nadu/Karnataka',
-                    context: 'A nutritious lentil-based stew that is a staple in South Indian cuisine. Rich in protein and fiber, often served with rice or idli.'
-                }
-            },
-            {
-                nutrition: {
-                    calories: 420,
-                    protein: '22g',
-                    carbs: '35g',
-                    fat: '18g'
-                },
-                ingredients: [
-                    'Chicken', 'Yogurt', 'Garam Masala', 
-                    'Tomatoes', 'Onions', 'Ginger-Garlic Paste', 'Cilantro'
-                ],
-                cultural: {
-                    cuisine: 'Mughlai',
-                    dish: 'Chicken Curry',
-                    region: 'Northern India',
-                    context: 'A rich and creamy chicken curry with Mughlai influences. The yogurt marinade and aromatic spices create a complex, restaurant-quality flavor profile.'
-                }
-            }
-        ];
-        
-        return analyses[Math.floor(Math.random() * analyses.length)];
-    }
-    
-    function showResults(analysis, imageData) {
-        const demoLoading = document.getElementById('demoLoading');
-        const demoResults = document.getElementById('demoResults');
-        
-        if (demoLoading && demoResults) {
-            demoLoading.style.display = 'none';
-            demoResults.style.display = 'block';
-            
-            // Populate nutrition data
-            document.getElementById('calories').textContent = analysis.nutrition.calories + ' kcal';
-            document.getElementById('protein').textContent = analysis.nutrition.protein;
-            document.getElementById('carbs').textContent = analysis.nutrition.carbs;
-            document.getElementById('fat').textContent = analysis.nutrition.fat;
-            
-            // Populate ingredients
-            const ingredientsList = document.getElementById('ingredientsList');
-            ingredientsList.innerHTML = analysis.ingredients.map(ingredient => 
-                `<div class="ingredient-tag">${ingredient}</div>`
-            ).join('');
-            
-            // Populate cultural context
-            const culturalContext = document.getElementById('culturalContext');
-            culturalContext.innerHTML = `
-                <div class="cultural-info">
-                    <strong>${analysis.cultural.dish}</strong><br>
-                    <em>${analysis.cultural.cuisine} • ${analysis.cultural.region}</em><br><br>
-                    ${analysis.cultural.context}
-                </div>
-            `;
-            
-            // Smooth scroll to results
-            setTimeout(() => {
-                demoResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 500);
-        }
-    }
-    
-    function resetDemo() {
-        const demoUpload = document.getElementById('demoUpload');
-        const demoResults = document.getElementById('demoResults');
-        const demoLoading = document.getElementById('demoLoading');
-        const fileInput = document.getElementById('fileInput');
-        
-        if (demoUpload && demoResults && demoLoading) {
-            demoResults.style.display = 'none';
-            demoLoading.style.display = 'none';
-            demoUpload.style.display = 'block';
-            
-            if (fileInput) {
-                fileInput.value = '';
-            }
-            
-            state.demoActive = false;
-            state.currentAnalysis = null;
-            
-            trackEvent('demo_reset');
-        }
-    }
-    
-    // Make resetDemo globally available
-    window.resetDemo = resetDemo;
-    
-    // Sample analysis loader
-    function loadSampleAnalysis(type) {
-        if (state.demoActive) return;
-        
-        trackEvent('sample_analysis_clicked', { type: type });
-        
-        const sampleAnalyses = {
-            curry: {
-                nutrition: { calories: 380, protein: '25g', carbs: '18g', fat: '22g' },
-                ingredients: ['Chicken', 'Coconut Milk', 'Curry Leaves', 'Mustard Seeds', 'Chilies', 'Turmeric'],
-                cultural: {
-                    cuisine: 'Kerala',
-                    dish: 'Chicken Curry',
-                    region: 'South India',
-                    context: 'A traditional Kerala-style chicken curry with coconut milk base. The curry leaves and mustard seeds provide the authentic South Indian flavor profile.'
-                }
-            },
-            biryani: {
-                nutrition: { calories: 450, protein: '20g', carbs: '55g', fat: '16g' },
-                ingredients: ['Basmati Rice', 'Mutton/Chicken', 'Saffron', 'Biryani Masala', 'Fried Onions', 'Mint'],
-                cultural: {
-                    cuisine: 'Hyderabadi',
-                    dish: 'Chicken Biryani',
-                    region: 'Hyderabad',
-                    context: 'The crown jewel of Hyderabadi cuisine. This aromatic rice dish combines perfectly cooked meat with fragrant basmati rice, creating layers of flavor.'
-                }
-            },
-            dal: {
-                nutrition: { calories: 220, protein: '16g', carbs: '32g', fat: '6g' },
-                ingredients: ['Yellow Lentils', 'Turmeric', 'Cumin', 'Mustard Seeds', 'Curry Leaves', 'Chilies'],
-                cultural: {
-                    cuisine: 'Pan-Indian',
-                    dish: 'Dal Tadka',
-                    region: 'All India',
-                    context: 'A comforting lentil dish that is a staple across India. The tempering (tadka) of spices adds depth and aroma to this protein-rich meal.'
-                }
-            },
-            samosa: {
-                nutrition: { calories: 180, protein: '6g', carbs: '24g', fat: '8g' },
-                ingredients: ['Wheat Flour', 'Potatoes', 'Peas', 'Cumin Seeds', 'Coriander Seeds', 'Garam Masala'],
-                cultural: {
-                    cuisine: 'North Indian',
-                    dish: 'Aloo Samosa',
-                    region: 'North India',
-                    context: 'A beloved street food snack with spiced potato filling wrapped in crispy pastry. Perfect with mint chutney and tamarind sauce.'
-                }
-            }
-        };
-        
-        const analysis = sampleAnalyses[type];
-        if (analysis) {
-            showLoading();
-            setTimeout(() => {
-                showResults(analysis);
-                state.currentAnalysis = analysis;
-                state.demoActive = false;
-            }, 2500);
-        }
-    }
-    
-    // Make sample loader globally available
-    window.loadSampleAnalysis = loadSampleAnalysis;
-    
-    function showError(message) {
-        // Simple error display (you can enhance this)
-        alert(message);
-        trackEvent('demo_error', { message: message });
     }
     
     // Feature card interactions
@@ -523,7 +210,6 @@
         initMobileMenu();
         initNavbarScroll();
         initScrollAnimations();
-        initDemo();
         initFeatureCards();
         initTestimonials();
         initCTATracking();
@@ -542,22 +228,6 @@
         // Add CSS styles for dynamically created elements
         const style = document.createElement('style');
         style.textContent = `
-            .ingredient-tag {
-                display: inline-block;
-                background: var(--primary-orange);
-                color: white;
-                padding: 0.25rem 0.75rem;
-                margin: 0.25rem;
-                border-radius: 20px;
-                font-size: 0.875rem;
-                font-weight: 500;
-            }
-            
-            .cultural-info {
-                line-height: 1.6;
-                color: var(--neutral-800);
-            }
-            
             .nav-menu.active {
                 display: flex;
                 flex-direction: column;
@@ -606,13 +276,401 @@
         document.head.appendChild(style);
     });
     
+    // Recipe Analyzer Functions
+    window.analyzeRecipe = function() {
+        const recipeInput = document.getElementById('recipeInput');
+        const recipe = recipeInput.value.trim();
+        
+        if (!recipe) {
+            alert('Please enter a recipe to analyze!');
+            return;
+        }
+        
+        trackEvent('recipe_analysis_started', { 
+            recipe_length: recipe.length,
+            has_ingredients: recipe.toLowerCase().includes('ingredients'),
+            has_instructions: recipe.toLowerCase().includes('instructions')
+        });
+        
+        showAnalyzerLoading();
+        
+        // Simulate API call to Groq (in real implementation, this would call your backend)
+        setTimeout(() => {
+            const analysis = generateRecipeAnalysis(recipe);
+            showAnalyzerResults(analysis);
+        }, 3000);
+    };
+    
+    window.loadSampleRecipe = function(type) {
+        const recipes = {
+            biryani: `Chicken Biryani
+            
+Ingredients:
+- 2 cups basmati rice
+- 1 lb chicken, cut into pieces
+- 1 large onion, sliced
+- 2 tbsp ghee
+- 1 cup yogurt
+- 2 tsp garam masala
+- 1 tsp turmeric
+- Salt to taste
+- Saffron soaked in warm milk
+
+Instructions:
+1. Soak rice for 30 minutes
+2. Marinate chicken with yogurt and spices for 1 hour
+3. Fry onions until golden brown
+4. Cook chicken until tender
+5. Layer rice and chicken, cook for 45 minutes`,
+            
+            dal: `Yellow Dal Curry
+            
+Ingredients:
+- 1 cup yellow lentils (moong dal)
+- 2 cups water
+- 1 onion, chopped
+- 2 tomatoes, chopped
+- 2 cloves garlic
+- 1 inch ginger
+- 1 tsp turmeric
+- 1 tsp cumin seeds
+- 2 tbsp oil
+- Salt to taste
+- Cilantro for garnish
+
+Instructions:
+1. Wash and boil lentils with turmeric
+2. Heat oil, add cumin seeds
+3. Add onions, cook until soft
+4. Add garlic, ginger, tomatoes
+5. Mix with cooked dal
+6. Simmer for 15 minutes`,
+            
+            curry: `Chicken Curry
+            
+Ingredients:
+- 1.5 lbs chicken, cut into pieces
+- 2 onions, sliced
+- 3 tomatoes, chopped
+- 1 can coconut milk
+- 2 tbsp curry powder
+- 1 tbsp garam masala
+- 1 tsp turmeric
+- 2 tbsp vegetable oil
+- 4 cloves garlic, minced
+- 1 inch ginger, minced
+- Salt and pepper to taste
+- Fresh cilantro
+
+Instructions:
+1. Heat oil in large pot
+2. Brown chicken pieces, remove and set aside
+3. Sauté onions until golden
+4. Add garlic, ginger, and spices
+5. Add tomatoes and coconut milk
+6. Return chicken to pot, simmer 25 minutes
+7. Garnish with cilantro`
+        };
+        
+        const recipeInput = document.getElementById('recipeInput');
+        recipeInput.value = recipes[type] || '';
+        
+        trackEvent('sample_recipe_loaded', { type: type });
+        
+        // Auto-scroll to recipe input
+        recipeInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+    
+    window.clearAnalysis = function() {
+        const resultsSection = document.getElementById('analyzerResults');
+        const inputSection = document.querySelector('.demo-input-section');
+        const recipeInput = document.getElementById('recipeInput');
+        
+        resultsSection.style.display = 'none';
+        inputSection.style.display = 'block';
+        recipeInput.value = '';
+        
+        trackEvent('analysis_cleared');
+    };
+    
+    window.showTab = function(tabName) {
+        // Hide all tab contents
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        // Remove active class from all tab buttons
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Show selected tab content
+        const selectedTab = document.getElementById(tabName + '-tab');
+        if (selectedTab) {
+            selectedTab.classList.add('active');
+        }
+        
+        // Mark selected tab button as active
+        const selectedBtn = document.querySelector(`[onclick="showTab('${tabName}')"]`);
+        if (selectedBtn) {
+            selectedBtn.classList.add('active');
+        }
+        
+        trackEvent('analysis_tab_viewed', { tab: tabName });
+    };
+    
+    function showAnalyzerLoading() {
+        const inputSection = document.querySelector('.demo-input-section');
+        const resultsSection = document.getElementById('analyzerResults');
+        const loadingSection = document.getElementById('analyzerLoading');
+        
+        inputSection.style.display = 'none';
+        resultsSection.style.display = 'none';
+        loadingSection.style.display = 'block';
+        
+        // Animated loading steps
+        const steps = [
+            'Breaking down ingredients...',
+            'Calculating nutritional values...',
+            'Analyzing health impact...',
+            'Generating modifications...',
+            'Preparing cost analysis...',
+            'Finalizing results...'
+        ];
+        
+        let stepIndex = 0;
+        const stepElement = document.getElementById('loadingSteps');
+        
+        const stepInterval = setInterval(() => {
+            if (stepElement && stepIndex < steps.length) {
+                stepElement.textContent = steps[stepIndex];
+                stepIndex++;
+            } else {
+                clearInterval(stepInterval);
+            }
+        }, 500);
+    }
+    
+    function showAnalyzerResults(analysis) {
+        const loadingSection = document.getElementById('analyzerLoading');
+        const resultsSection = document.getElementById('analyzerResults');
+        
+        loadingSection.style.display = 'none';
+        resultsSection.style.display = 'block';
+        
+        // Populate nutrition facts
+        document.getElementById('nutritionFacts').innerHTML = `
+            <div class="nutrition-item">
+                <span>Calories:</span>
+                <span>${analysis.nutrition.calories} kcal</span>
+            </div>
+            <div class="nutrition-item">
+                <span>Protein:</span>
+                <span>${analysis.nutrition.protein}g</span>
+            </div>
+            <div class="nutrition-item">
+                <span>Carbs:</span>
+                <span>${analysis.nutrition.carbs}g</span>
+            </div>
+            <div class="nutrition-item">
+                <span>Fat:</span>
+                <span>${analysis.nutrition.fat}g</span>
+            </div>
+            <div class="nutrition-item">
+                <span>Fiber:</span>
+                <span>${analysis.nutrition.fiber}g</span>
+            </div>
+        `;
+        
+        // Populate macro breakdown
+        document.getElementById('macroBreakdown').innerHTML = `
+            <div class="macro-chart">
+                <div class="macro-item">
+                    <span class="macro-label">Protein</span>
+                    <div class="macro-bar">
+                        <div class="macro-fill" style="width: ${analysis.macros.protein}%; background-color: #FF6B35;"></div>
+                    </div>
+                    <span>${analysis.macros.protein}%</span>
+                </div>
+                <div class="macro-item">
+                    <span class="macro-label">Carbs</span>
+                    <div class="macro-bar">
+                        <div class="macro-fill" style="width: ${analysis.macros.carbs}%; background-color: #F7931E;"></div>
+                    </div>
+                    <span>${analysis.macros.carbs}%</span>
+                </div>
+                <div class="macro-item">
+                    <span class="macro-label">Fat</span>
+                    <div class="macro-bar">
+                        <div class="macro-fill" style="width: ${analysis.macros.fat}%; background-color: #FFD23F;"></div>
+                    </div>
+                    <span>${analysis.macros.fat}%</span>
+                </div>
+            </div>
+        `;
+        
+        // Populate health impact
+        document.getElementById('healthImpact').innerHTML = `
+            <div class="health-conditions">
+                ${analysis.health.conditions.map(condition => `
+                    <div class="condition-item">
+                        <span class="condition-icon">${condition.safe ? '✅' : '⚠️'}</span>
+                        <div>
+                            <strong>${condition.name}</strong>
+                            <p>${condition.note}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        // Populate dietary warnings
+        document.getElementById('dietaryWarnings').innerHTML = `
+            <div class="warnings-list">
+                ${analysis.health.warnings.map(warning => `
+                    <div class="warning-item">
+                        <span class="warning-icon">⚠️</span>
+                        <span>${warning}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        // Populate modifications
+        document.getElementById('modifications').innerHTML = `
+            <div class="mod-list">
+                ${analysis.modifications.map(mod => `
+                    <div class="modification-item">
+                        <h5>${mod.category}</h5>
+                        <p>${mod.suggestion}</p>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        // Populate cost analysis
+        document.getElementById('costAnalysis').innerHTML = `
+            <div class="cost-items">
+                <div class="cost-item">
+                    <span>Total Cost:</span>
+                    <span class="cost-value">$${analysis.budget.total}</span>
+                </div>
+                <div class="cost-item">
+                    <span>Cost Per Serving:</span>
+                    <span class="cost-value">$${analysis.budget.perServing}</span>
+                </div>
+                <div class="cost-item">
+                    <span>Budget Category:</span>
+                    <span class="budget-category ${analysis.budget.category.toLowerCase()}">${analysis.budget.category}</span>
+                </div>
+            </div>
+        `;
+        
+        // Populate shopping list
+        document.getElementById('shoppingList').innerHTML = `
+            <div class="shopping-items">
+                ${analysis.budget.ingredients.map(item => `
+                    <div class="shopping-item">
+                        <span>${item.name}</span>
+                        <span class="item-cost">$${item.cost}</span>
+                    </div>
+                `).join('')}
+            </div>
+            <div class="delivery-note">
+                <p>🚚 Available for delivery in 25-30 minutes</p>
+            </div>
+        `;
+        
+        // Smooth scroll to results
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        trackEvent('recipe_analysis_completed', {
+            calories: analysis.nutrition.calories,
+            health_safe: analysis.health.conditions.filter(c => c.safe).length,
+            total_cost: analysis.budget.total
+        });
+    }
+    
+    function generateRecipeAnalysis(recipe) {
+        // Mock analysis generation - in real app, this would call Groq API
+        const analyses = [
+            {
+                nutrition: { calories: 420, protein: 25, carbs: 45, fat: 18, fiber: 8 },
+                macros: { protein: 24, carbs: 43, fat: 33 },
+                health: {
+                    conditions: [
+                        { name: 'PCOS', safe: false, note: 'High carb content may spike insulin' },
+                        { name: 'Diabetes', safe: false, note: 'Monitor portion size due to rice content' },
+                        { name: 'High Blood Pressure', safe: true, note: 'Low sodium, heart-healthy spices' }
+                    ],
+                    warnings: [
+                        'High glycemic index from white rice',
+                        'Contains dairy (yogurt) - may cause inflammation',
+                        'High calorie density - watch portion sizes'
+                    ]
+                },
+                modifications: [
+                    { category: 'PCOS-Friendly', suggestion: 'Replace white rice with cauliflower rice, add more vegetables' },
+                    { category: 'Diabetes-Friendly', suggestion: 'Use brown rice, reduce portion size, add fiber-rich vegetables' },
+                    { category: 'Heart-Healthy', suggestion: 'Reduce ghee, use lean chicken breast, add turmeric' }
+                ],
+                budget: {
+                    total: 18.50,
+                    perServing: 4.63,
+                    category: 'Moderate',
+                    ingredients: [
+                        { name: 'Basmati Rice (2 cups)', cost: 3.50 },
+                        { name: 'Chicken (1 lb)', cost: 6.99 },
+                        { name: 'Yogurt', cost: 2.49 },
+                        { name: 'Spices & Aromatics', cost: 5.52 }
+                    ]
+                }
+            },
+            {
+                nutrition: { calories: 280, protein: 18, carbs: 35, fat: 8, fiber: 12 },
+                macros: { protein: 26, carbs: 50, fat: 24 },
+                health: {
+                    conditions: [
+                        { name: 'PCOS', safe: true, note: 'High fiber and protein help stabilize blood sugar' },
+                        { name: 'Diabetes', safe: true, note: 'Low glycemic index, good protein content' },
+                        { name: 'High Blood Pressure', safe: true, note: 'Low sodium, potassium-rich lentils' }
+                    ],
+                    warnings: [
+                        'May cause bloating in some people due to fiber content'
+                    ]
+                },
+                modifications: [
+                    { category: 'PCOS-Friendly', suggestion: 'Perfect as is! Add more turmeric for anti-inflammatory benefits' },
+                    { category: 'Weight Loss', suggestion: 'Add vegetables like spinach or bottle gourd for volume' },
+                    { category: 'Protein Boost', suggestion: 'Serve with a side of Greek yogurt or paneer' }
+                ],
+                budget: {
+                    total: 8.75,
+                    perServing: 2.19,
+                    category: 'Budget',
+                    ingredients: [
+                        { name: 'Yellow Lentils (1 cup)', cost: 1.99 },
+                        { name: 'Vegetables & Aromatics', cost: 4.26 },
+                        { name: 'Spices & Oil', cost: 2.50 }
+                    ]
+                }
+            }
+        ];
+        
+        return analyses[Math.floor(Math.random() * analyses.length)];
+    }
+    
     // Export state for debugging (development only)
     if (typeof window !== 'undefined') {
         window.NutrichefAI = {
             state: state,
             trackEvent: trackEvent,
-            resetDemo: resetDemo,
-            loadSampleAnalysis: loadSampleAnalysis
+            scrollToFeatures: scrollToFeatures,
+            scrollToDemo: scrollToDemo,
+            analyzeRecipe: analyzeRecipe,
+            loadSampleRecipe: loadSampleRecipe
         };
     }
     
