@@ -1594,6 +1594,13 @@ p {
     .hero-content {
         order: 2;
         padding: 0 0.5rem;
+        z-index: 10;
+        position: relative;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        padding: 1.5rem 1rem;
+        margin: 0 0.5rem;
+        backdrop-filter: blur(10px);
     }
     
     .hero-visual {
@@ -1685,20 +1692,44 @@ p {
     }
     
     /* Typography Mobile */
+    h1, h2, h3, h4, h5, h6 {
+        position: relative;
+        z-index: 5;
+        color: var(--dark-grey) !important;
+        font-weight: 600 !important;
+    }
+    
     h1 { 
         font-size: 2rem; 
         line-height: 1.2;
         margin-bottom: 1rem;
+        text-shadow: 0 2px 4px rgba(255, 255, 255, 0.9);
     }
     h2 { 
         font-size: 1.6rem; 
         line-height: 1.3;
         margin-bottom: 0.75rem;
+        text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
     }
     h3 { 
         font-size: 1.3rem; 
         line-height: 1.3;
         margin-bottom: 0.5rem;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    }
+    
+    /* Override for white text sections */
+    .solution-section h1,
+    .solution-section h2,
+    .solution-section h3,
+    .final-cta h1,
+    .final-cta h2,
+    .final-cta h3,
+    .mid-email-section h1,
+    .mid-email-section h2,
+    .mid-email-section h3 {
+        color: var(--white) !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
     }
     
     /* Section Spacing */
@@ -1709,15 +1740,22 @@ p {
     .section-header {
         margin-bottom: 2rem;
         padding: 0 0.5rem;
+        position: relative;
+        z-index: 5;
     }
     
     .section-title {
         font-size: 1.8rem;
         margin-bottom: 0.5rem;
+        color: var(--dark-grey) !important;
+        font-weight: 700;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
     }
     
     .section-subtitle {
         font-size: 1rem;
+        color: var(--text-color) !important;
+        font-weight: 500;
     }
     
     /* Grid Layouts Mobile */
@@ -1741,6 +1779,24 @@ p {
     .feature-card {
         padding: 1.5rem 1rem;
         margin: 0;
+        position: relative;
+        z-index: 3;
+    }
+    
+    .problem-card h3,
+    .solution-card h3,
+    .benefit-card h3,
+    .feature-card h3 {
+        color: var(--dark-grey) !important;
+        font-weight: 600 !important;
+        font-size: 1.2rem !important;
+        margin-bottom: 0.75rem !important;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    }
+    
+    .solution-card h3 {
+        color: var(--white) !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     }
     
     .problem-icon,
@@ -1760,6 +1816,16 @@ p {
     .step {
         text-align: center;
         padding: 1rem;
+        position: relative;
+        z-index: 3;
+    }
+    
+    .step-content h3 {
+        color: var(--dark-grey) !important;
+        font-weight: 600 !important;
+        font-size: 1.25rem !important;
+        margin-bottom: 0.75rem !important;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
     }
     
     .step-number {
@@ -1860,12 +1926,28 @@ p {
     /* Animation Elements Mobile */
     .floating-spice {
         font-size: 1.3rem;
-        opacity: 0.4;
+        opacity: 0.3;
+        z-index: 1;
     }
     
     .floating-element {
         font-size: 1rem;
         opacity: 0.2;
+        z-index: 1;
+    }
+    
+    /* Ensure content always appears above animations */
+    .container,
+    .hero-content,
+    .section-header,
+    .problem-card,
+    .solution-card,
+    .benefit-card,
+    .feature-card,
+    .step,
+    .faq-container {
+        position: relative;
+        z-index: 5;
     }
     
     /* Button Improvements */
@@ -1943,11 +2025,34 @@ p {
     
     /* Typography adjustments */
     .section-title {
-        font-size: 1.5rem;
+        font-size: 1.5rem !important;
+        color: var(--dark-grey) !important;
+        font-weight: 700 !important;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    h1 {
+        font-size: 1.75rem !important;
+        text-shadow: 0 2px 4px rgba(255, 255, 255, 0.9) !important;
     }
     
     h2 {
-        font-size: 1.4rem;
+        font-size: 1.4rem !important;
+        text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    h3 {
+        font-size: 1.2rem !important;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    /* Ensure all headings in cards are visible */
+    .problem-card h3,
+    .solution-card h3,
+    .benefit-card h3,
+    .feature-card h3 {
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
     }
     
     /* Form improvements */
