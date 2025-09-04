@@ -3,35 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NutriChef AI - Uber for Grocery Delivery + AI Health Cooking</title>
-    <meta name="description" content="Get groceries delivered like Uber + AI-powered meal planning for PCOS, diabetes, and blood pressure. Save recipes, track nutrition, and budget your meals.">
-    <meta name="keywords" content="grocery delivery, meal planning, PCOS recipes, diabetes food, AI nutrition, South Asian health cooking, food budgeting">
+    <title>Optimeal AI - Eat Smarter. Spend Less. Live Healthier.</title>
+    <meta name="description" content="AI-powered meal planning + grocery price comparison for UK households. Save money, eat healthier, plan smarter with Optimeal AI.">
+    <meta name="keywords" content="UK meal planning, grocery budgeting, AI food planning, UK grocery prices, meal prep, healthy eating UK">
     
     <!-- Open Graph for social sharing -->
-    <meta property="og:title" content="NutriChef AI - Uber for Grocery Delivery + AI Health Cooking">
-    <meta property="og:description" content="Get groceries delivered + AI meal planning for PCOS, diabetes & blood pressure. Your health-focused cooking companion.">
+    <meta property="og:title" content="Optimeal AI - Optimal meals for your health and your wallet — powered by AI.">
+    <meta property="og:description" content="AI-powered meal planning + grocery price comparison for UK households. Save money, eat healthier, plan smarter.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://your-username.github.io/homeland_meals">
+    <meta property="og:url" content="https://tamoghna12.github.io/homeland_meals/">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/x-icon" href="favicon.svg">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="landing.css">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
     
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR-ANALYTICS-ID"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLACEHOLDER-ID"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-YOUR-ANALYTICS-ID');
+        gtag('config', 'G-PLACEHOLDER-ID');
         
         // Custom event tracking function
         function trackEvent(eventName, parameters = {}) {
@@ -45,16 +44,20 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-brand">
-                <span class="brand-icon">🤖</span>
-                <span class="brand-text">NutriChef AI</span>
+                <div class="logo-container">
+                    <div class="logo-plate">
+                        <div class="logo-circuit"></div>
+                    </div>
+                </div>
+                <span class="brand-text">Optimeal AI</span>
             </div>
             <div class="nav-menu">
                 <a href="#features" class="nav-link">Features</a>
-                <a href="#demo" class="nav-link">Recipe Analyzer</a>
-                <a href="#stats" class="nav-link">Stats</a>
-                <button class="cta-button nav-cta" onclick="trackEvent('nav_cta_clicked'); alert('App launching soon! Join our waitlist.')">Get Started</button>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#benefits" class="nav-link">Benefits</a>
+                <button class="cta-button nav-cta" onclick="scrollToSignup(); trackEvent('nav_cta_click');">Join Waitlist</button>
             </div>
-            <div class="mobile-menu-toggle">
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -63,335 +66,386 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-background">
+    <section class="hero" id="hero">
+        <div class="hero-animated-bg">
             <div class="floating-spice spice-1">🌶️</div>
             <div class="floating-spice spice-2">🧄</div>
             <div class="floating-spice spice-3">🧅</div>
             <div class="floating-spice spice-4">🌿</div>
             <div class="floating-spice spice-5">🍅</div>
             <div class="floating-spice spice-6">🫛</div>
+            <div class="floating-spice spice-7">🥕</div>
+            <div class="floating-spice spice-8">🥦</div>
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
         </div>
-        
         <div class="hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="gradient-text">Uber for Groceries</span> 
-                    + AI Health Cooking
-                </h1>
+                <h1 class="hero-title">Eat Smarter. Spend Less. Live Healthier.</h1>
                 <p class="hero-subtitle">
-                    Get groceries delivered instantly + AI-powered meal planning for PCOS, diabetes, and blood pressure. 
-                    Your complete health-focused cooking companion.
+                    AI-powered meal planning + grocery price comparison for UK households.
                 </p>
-                
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">30min</span>
-                        <span class="stat-label">Avg Delivery Time</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">5000+</span>
-                        <span class="stat-label">Health Recipes</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">85%</span>
-                        <span class="stat-label">Health Improvement</span>
-                    </div>
-                </div>
-                
-                <div class="hero-ctas">
-                    <button class="cta-button primary" onclick="showEmailSignup('get_started')">
-                        🛒 Join Waitlist - Get Early Access
-                    </button>
-                    <button class="cta-button secondary" onclick="scrollToDemo()">
-                        📝 Try Recipe Analyzer
+                <div class="hero-cta">
+                    <button class="cta-button primary" onclick="scrollToSignup(); trackEvent('cta_click_hero');">
+                        Join the Waitlist
                     </button>
                 </div>
-                
                 <div class="hero-trust">
-                    <p>🚚 Free delivery on first order • 🏥 Health-focused recipes • 💰 Budget-friendly meal plans</p>
+                    <p>✓ Free to join • ✓ Early access benefits • ✓ UK-focused pricing</p>
                 </div>
             </div>
-            
             <div class="hero-visual">
-                <div class="phone-mockup">
-                    <div class="phone-screen">
-                        <div class="app-interface">
-                            <div class="chat-bubble ai">
-                                🤖 I've created a PCOS-friendly meal plan for this week. Would you like me to order the ingredients? Delivery in 25 minutes!
-                            </div>
-                            <div class="chat-bubble user">
-                                Yes! Add my diabetes-friendly snacks too
-                            </div>
-                            <div class="typing-indicator">
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="app-mockup">
+                    <img src="https://picsum.photos/400/600?random=1" alt="Optimeal AI app mockup showing meal planning interface">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Recipe Analyzer Demo Section -->
-    <section id="demo" class="demo-section">
+    <!-- Problem Statement -->
+    <section class="problem-section" id="problem">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">🍽️ AI Recipe Analyzer</h2>
-                <p class="section-subtitle">
-                    Paste any recipe and get instant health analysis, nutritional breakdown, and modifications for your health conditions
-                </p>
+                <h2 class="section-title">Sound Familiar?</h2>
             </div>
-            
-            <div class="demo-container">
-                <div class="demo-input-section">
-                    <div class="recipe-input-zone">
-                        <h3>📝 Paste Your Recipe Here</h3>
-                        <textarea 
-                            id="recipeInput" 
-                            placeholder="Paste any recipe... for example:
-
-Chicken Biryani
-Ingredients: 2 cups basmati rice, 1 lb chicken, 1 onion, 2 tbsp ghee, spices...
-Instructions: 1. Soak rice for 30 mins, 2. Marinate chicken with yogurt..."
-                            rows="8"
-                        ></textarea>
-                        <button class="analyze-button" onclick="analyzeRecipe()">
-                            🧠 Analyze Recipe with AI
-                        </button>
-                    </div>
-                    
-                    <div class="sample-recipes">
-                        <p class="examples-header">Try these sample recipes:</p>
-                        <div class="sample-buttons">
-                            <button class="sample-btn" onclick="loadSampleRecipe('biryani')">🍚 Biryani</button>
-                            <button class="sample-btn" onclick="loadSampleRecipe('dal')">🥄 Dal Curry</button>
-                            <button class="sample-btn" onclick="loadSampleRecipe('curry')">🍛 Chicken Curry</button>
-                        </div>
-                    </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">🤔</div>
+                    <h3>Struggling to plan healthy meals?</h3>
+                    <p>Spending hours wondering what to cook, only to default to the same few recipes or takeaway.</p>
                 </div>
-                
-                <div class="demo-results-section" id="analyzerResults" style="display: none;">
-                    <div class="results-header">
-                        <h3>🎯 AI Analysis Results</h3>
-                        <button class="clear-btn" onclick="clearAnalysis()">Clear & Try Another</button>
-                    </div>
-                    
-                    <div class="analysis-tabs">
-                        <button class="tab-btn active" onclick="showTab('nutrition')">📊 Nutrition</button>
-                        <button class="tab-btn" onclick="showTab('health')">🏥 Health Impact</button>
-                        <button class="tab-btn" onclick="showTab('modifications')">⚕️ Modifications</button>
-                        <button class="tab-btn" onclick="showTab('budget')">💰 Cost Analysis</button>
-                    </div>
-                    
-                    <div class="tab-content active" id="nutrition-tab">
-                        <div class="nutrition-grid">
-                            <div class="nutrition-card">
-                                <h4>Per Serving</h4>
-                                <div id="nutritionFacts">Loading...</div>
-                            </div>
-                            <div class="nutrition-card">
-                                <h4>Macros Breakdown</h4>
-                                <div id="macroBreakdown">Loading...</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="tab-content" id="health-tab">
-                        <div class="health-analysis">
-                            <div class="health-card">
-                                <h4>🩺 Health Conditions Impact</h4>
-                                <div id="healthImpact">Loading...</div>
-                            </div>
-                            <div class="health-card">
-                                <h4>⚠️ Dietary Warnings</h4>
-                                <div id="dietaryWarnings">Loading...</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="tab-content" id="modifications-tab">
-                        <div class="modifications-list">
-                            <h4>🔄 Suggested Modifications</h4>
-                            <div id="modifications">Loading...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="tab-content" id="budget-tab">
-                        <div class="budget-analysis">
-                            <div class="cost-breakdown">
-                                <h4>💳 Cost Breakdown</h4>
-                                <div id="costAnalysis">Loading...</div>
-                            </div>
-                            <div class="shopping-list">
-                                <h4>🛒 Shopping List</h4>
-                                <div id="shoppingList">Loading...</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="demo-cta">
-                        <p>🚀 Want to save this analysis and get personalized meal plans?</p>
-                        <button class="cta-button primary" onclick="showEmailSignup('recipe_analyzer')">
-                            💾 Save Analysis + Join Waitlist
-                        </button>
-                    </div>
+                <div class="problem-card">
+                    <div class="problem-icon">💸</div>
+                    <h3>Overspending on groceries without realising?</h3>
+                    <p>Your weekly shop keeps getting more expensive, but you're not sure where the money is going.</p>
                 </div>
-                
-                <div class="demo-loading" id="analyzerLoading" style="display: none;">
-                    <div class="loading-animation">
-                        <div class="analyzing-icon">🧠</div>
-                        <div class="loading-text">
-                            <h3>AI is analyzing your recipe...</h3>
-                            <p id="loadingSteps">Breaking down ingredients...</p>
-                        </div>
-                    </div>
+                <div class="problem-card">
+                    <div class="problem-icon">📱</div>
+                    <h3>Tired of juggling multiple apps?</h3>
+                    <p>Using different apps for recipes, budgeting, and shopping - none of them talk to each other.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features-section">
+    <!-- Solution Overview -->
+    <section class="solution-section" id="solution">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">🌟 Complete Health & Grocery Solution</h2>
-                <p class="section-subtitle">
-                    Grocery delivery + AI-powered meal planning for your health conditions and budget
-                </p>
+                <h2 class="section-title">One App. Four Solutions.</h2>
+                <p class="section-subtitle">Everything you need for smarter meal planning and grocery shopping</p>
             </div>
-            
+            <div class="solution-grid">
+                <div class="solution-card" data-feature="plan" onclick="trackEvent('feature_interest_plan')">
+                    <div class="solution-icon">📋</div>
+                    <h3>Plan</h3>
+                    <p>Personalised, health-aligned meal plans tailored to your preferences and dietary needs.</p>
+                </div>
+                <div class="solution-card" data-feature="save" onclick="trackEvent('feature_interest_save')">
+                    <div class="solution-icon">💰</div>
+                    <h3>Save</h3>
+                    <p>Weekly & monthly grocery budgeting with smart spending insights and alerts.</p>
+                </div>
+                <div class="solution-card" data-feature="compare" onclick="trackEvent('feature_interest_compare')">
+                    <div class="solution-icon">🔍</div>
+                    <h3>Compare</h3>
+                    <p>Real-time prices across Sainsbury's, Tesco, Asda, Lidl, and Aldi.</p>
+                </div>
+                <div class="solution-card" data-feature="optimise" onclick="trackEvent('feature_interest_optimise')">
+                    <div class="solution-icon">⚡</div>
+                    <h3>Optimise</h3>
+                    <p>Best store recommendations for your time, money, and location preferences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Features -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful Features</h2>
+                <p class="section-subtitle">Built for modern UK households</p>
+            </div>
             <div class="features-grid">
-                <div class="feature-card" data-feature="delivery">
-                    <div class="feature-icon">🚚</div>
-                    <h3>Uber-Style Grocery Delivery</h3>
-                    <p>Order fresh groceries and get them delivered in 30 minutes. Track your delivery driver in real-time.</p>
-                    <div class="feature-demo">
-                        <div class="demo-input">"I need vegetables for tonight's dinner"</div>
-                        <div class="demo-arrow">→</div>
-                        <div class="demo-output">"Driver arriving in 25 mins with your order"</div>
+                <div class="feature-card" data-feature="ai-planning" onclick="trackEvent('feature_card_ai_planning')">
+                    <div class="feature-image">
+                        <img src="https://picsum.photos/300/200?random=2" alt="AI meal planning interface">
                     </div>
-                </div>
-                
-                <div class="feature-card" data-feature="cookbook">
-                    <div class="feature-icon">📚</div>
-                    <h3>Personal Digital Cookbook</h3>
-                    <p>Save your favorite recipes, family secrets, and AI-generated meals. Access your cookbook anywhere, anytime.</p>
-                    <div class="feature-demo">
-                        <div class="demo-input">"Save this PCOS-friendly curry recipe"</div>
-                        <div class="demo-arrow">→</div>
-                        <div class="demo-output">"Saved to your Health Recipes collection"</div>
-                    </div>
-                </div>
-                
-                <div class="feature-card" data-feature="nutrition">
-                    <div class="feature-icon">📊</div>
-                    <h3>Advanced Nutrition Tracker</h3>
-                    <p>Track calories, macros, and micronutrients specifically for your health conditions. Get daily insights and progress reports.</p>
-                    <div class="feature-demo">
-                        <div class="demo-input">"Log my diabetes-friendly breakfast"</div>
-                        <div class="demo-arrow">→</div>
-                        <div class="demo-output">"Blood sugar impact: Low. Great choice!"</div>
-                    </div>
-                </div>
-                
-                <div class="feature-card" data-feature="planning">
-                    <div class="feature-icon">📅</div>
                     <h3>AI Meal Planning</h3>
-                    <p>Get personalized weekly meal plans based on your health conditions, preferences, and dietary restrictions.</p>
-                    <div class="feature-demo">
-                        <div class="demo-input">"Plan PCOS-friendly meals for next week"</div>
-                        <div class="demo-arrow">→</div>
-                        <div class="demo-output">"7-day anti-inflammatory plan ready!"</div>
-                    </div>
+                    <p>Smart weekly plans based on your health goals, preferences, and budget constraints.</p>
                 </div>
-                
-                <div class="feature-card" data-feature="budget">
-                    <div class="feature-icon">💰</div>
-                    <h3>Weekly Food Budgeting</h3>
-                    <p>Set weekly grocery budgets, track spending, and get alerts when you're approaching limits. Save money while eating healthy.</p>
-                    <div class="feature-demo">
-                        <div class="demo-input">"My weekly budget is $80"</div>
-                        <div class="demo-arrow">→</div>
-                        <div class="demo-output">"Current spending: $65. $15 remaining"</div>
+                <div class="feature-card" data-feature="budget-tracking" onclick="trackEvent('feature_card_budget_tracking')">
+                    <div class="feature-image">
+                        <img src="https://picsum.photos/300/200?random=3" alt="Budget tracking dashboard">
                     </div>
+                    <h3>Budget Tracking</h3>
+                    <p>Visual spending insights with weekly and monthly breakdowns across all major UK supermarkets.</p>
                 </div>
-                
-                <div class="feature-card" data-feature="health">
-                    <div class="feature-icon">🏥</div>
-                    <h3>Food as Medicine</h3>
-                    <p>Get personalized recipes for PCOS, diabetes, pre-diabetes, and high blood pressure. Turn your kitchen into a pharmacy.</p>
-                    <div class="feature-demo">
-                        <div class="demo-input">"I have high blood pressure"</div>
-                        <div class="demo-arrow">→</div>
-                        <div class="demo-output">"Here are 12 heart-healthy recipes for you"</div>
+                <div class="feature-card" data-feature="price-comparison" onclick="trackEvent('feature_card_price_comparison')">
+                    <div class="feature-image">
+                        <img src="https://picsum.photos/300/200?random=4" alt="Price comparison table">
                     </div>
+                    <h3>Price Comparison</h3>
+                    <p>Live price data from Tesco, Sainsbury's, Asda, Lidl, and Aldi to find the best deals.</p>
+                </div>
+                <div class="feature-card" data-feature="optimization" onclick="trackEvent('feature_card_optimization')">
+                    <div class="feature-image">
+                        <img src="https://picsum.photos/300/200?random=5" alt="Store optimization map">
+                    </div>
+                    <h3>Smart Optimization</h3>
+                    <p>Route planning and store recommendations based on your shopping list and location.</p>
+                </div>
+                <div class="feature-card" data-feature="rewards" onclick="trackEvent('feature_card_rewards')">
+                    <div class="feature-image">
+                        <img src="https://picsum.photos/300/200?random=6" alt="Rewards dashboard">
+                    </div>
+                    <h3>Rewards System</h3>
+                    <p>Earn points for smart shopping choices and unlock exclusive discounts and tips.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Statistics Section -->
-    <section id="stats" class="stats-section">
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">📊 Platform Statistics</h2>
-                <p class="section-subtitle">Real metrics from our health-focused grocery delivery platform</p>
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Get started in three simple steps</p>
             </div>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">🚚</div>
-                    <div class="stat-number">25min</div>
-                    <div class="stat-label">Average Delivery Time</div>
-                    <div class="stat-desc">Fresh groceries delivered faster than food delivery</div>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Tell us your goals</h3>
+                        <p>Set your budget, dietary preferences, and health objectives. We'll learn what you like.</p>
+                    </div>
                 </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">🍽️</div>
-                    <div class="stat-number">15K+</div>
-                    <div class="stat-label">Health-Focused Recipes</div>
-                    <div class="stat-desc">Recipes designed for specific health conditions</div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Get your plan</h3>
+                        <p>Receive personalized meal plans with shopping lists optimized for your local stores.</p>
+                    </div>
                 </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">🏥</div>
-                    <div class="stat-number">3000+</div>
-                    <div class="stat-label">Health Improvements</div>
-                    <div class="stat-desc">Users report improved health metrics</div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">💰</div>
-                    <div class="stat-number">$2.8M</div>
-                    <div class="stat-label">Grocery Orders</div>
-                    <div class="stat-desc">Total value of healthy groceries delivered</div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Save & stay on track</h3>
+                        <p>Track your spending, discover savings, and get rewarded for smart food choices.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Final CTA Section -->
-    <section class="final-cta">
+    <!-- Benefits & Outcomes -->
+    <section class="benefits-section" id="benefits">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Real Results</h2>
+                <p class="section-subtitle">See the impact on your wallet and wellbeing</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card" data-benefit="savings" onclick="trackEvent('benefit_interest_savings')">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Save up to £80/month</h3>
+                    <p>Smart shopping recommendations and price comparisons help you spend less on groceries.</p>
+                </div>
+                <div class="benefit-card" data-benefit="time" onclick="trackEvent('benefit_interest_time')">
+                    <div class="benefit-icon">⏱️</div>
+                    <h3>Reduce planning time by 75%</h3>
+                    <p>No more staring at empty fridges wondering what to cook. We've got you covered.</p>
+                </div>
+                <div class="benefit-card" data-benefit="health" onclick="trackEvent('benefit_interest_health')">
+                    <div class="benefit-icon">🏥</div>
+                    <h3>Eat healthier with personalized plans</h3>
+                    <p>Meal plans designed around your health conditions and nutritional goals.</p>
+                </div>
+                <div class="benefit-card" data-benefit="motivation" onclick="trackEvent('benefit_interest_motivation')">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Stay motivated with rewards</h3>
+                    <p>Gamified experience that makes healthy, budget-conscious eating fun and engaging.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mid-Page Email Collector -->
+    <section class="mid-email-section" id="mid-email">
+        <div class="animated-background">
+            <div class="floating-element element-1">🍅</div>
+            <div class="floating-element element-2">🥕</div>
+            <div class="floating-element element-3">🧄</div>
+            <div class="floating-element element-4">🌿</div>
+            <div class="floating-element element-5">🫛</div>
+            <div class="floating-element element-6">🌶️</div>
+            <div class="floating-element element-7">🥦</div>
+            <div class="floating-element element-8">🧅</div>
+            <div class="pulse-ring ring-1"></div>
+            <div class="pulse-ring ring-2"></div>
+            <div class="pulse-ring ring-3"></div>
+        </div>
+        <div class="container">
+            <div class="mid-email-content">
+                <div class="email-highlight">
+                    <div class="highlight-badge">✨ Special Offer</div>
+                    <h2>Join 2,500+ Smart Shoppers</h2>
+                    <p>Get early access + exclusive £20 grocery credit when we launch!</p>
+                </div>
+                
+                <form class="mid-signup-form" id="midSignupForm" onsubmit="handleMidFormSubmit(event)">
+                    <div class="form-row">
+                        <input type="email" id="midEmail" name="email" placeholder="Enter your email address" required>
+                        <button type="submit" class="cta-button primary">
+                            <span class="btn-text">Get Early Access</span>
+                            <span class="btn-icon">→</span>
+                        </button>
+                    </div>
+                    <div class="form-benefits">
+                        <span class="benefit-item">✓ Free early access</span>
+                        <span class="benefit-item">✓ £20 grocery credit</span>
+                        <span class="benefit-item">✓ No spam, unsubscribe anytime</span>
+                    </div>
+                </form>
+                
+                <div class="social-proof-mini">
+                    <div class="user-avatars">
+                        <div class="avatar">👩</div>
+                        <div class="avatar">👨</div>
+                        <div class="avatar">👵</div>
+                        <div class="avatar">👨‍🦱</div>
+                        <div class="avatar">👩‍🦳</div>
+                    </div>
+                    <p>Join Sarah, Mike, and 2,498 others already on the waitlist</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="social-proof" id="social-proof">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Built by Experts</h2>
+            </div>
+            <div class="founder-bio">
+                <div class="founder-content">
+                    <h3>Created by a PhD researcher in bioinformatics & AI product builder</h3>
+                    <p>Combining cutting-edge AI research with real-world understanding of UK household food challenges.</p>
+                </div>
+                <div class="credentials">
+                    <div class="credential-item">
+                        <span class="credential-icon">🎓</span>
+                        <span>PhD in Bioinformatics</span>
+                    </div>
+                    <div class="credential-item">
+                        <span class="credential-icon">🤖</span>
+                        <span>AI Product Specialist</span>
+                    </div>
+                    <div class="credential-item">
+                        <span class="credential-icon">🇬🇧</span>
+                        <span>UK Market Expert</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section" id="signup">
         <div class="container">
             <div class="cta-content">
-                <h2>Ready to Transform Your Cooking?</h2>
-                <p>Join thousands of home cooks who've discovered the joy of AI-powered South Asian cooking</p>
+                <h2>Ready to Transform Your Meal Planning?</h2>
+                <p>Join the waitlist and be among the first to experience smarter grocery shopping</p>
                 
-                <div class="cta-buttons">
-                    <button class="cta-button primary large" onclick="showEmailSignup('final_cta')">
-                        🚀 Join Waitlist - Get Notified
+                <form class="signup-form" id="signupForm" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="challenge" name="challenge" required>
+                            <option value="">What's your biggest food/grocery challenge?</option>
+                            <option value="meal-planning">Meal planning takes too long</option>
+                            <option value="budgeting">Staying within grocery budget</option>
+                            <option value="healthy-eating">Finding healthy meal ideas</option>
+                            <option value="price-comparison">Comparing prices across stores</option>
+                            <option value="food-waste">Reducing food waste</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="cta-button primary large">
+                        Join the Waitlist
                     </button>
-                    <button class="cta-button secondary large" onclick="scrollToFeatures()">
-                        🌟 View Features
-                    </button>
-                </div>
+                </form>
                 
-                <div class="cta-trust">
-                    <p>✅ Free to start • ✅ No credit card required • ✅ Cancel anytime</p>
+                <div class="signup-benefits">
+                    <p>✓ Free early access • ✓ Exclusive launch discounts • ✓ Priority customer support</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item" data-faq="pricing">
+                    <div class="faq-question" onclick="toggleFAQ('pricing')">
+                        <span>How much will Optimeal AI cost?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We're still finalizing our pricing structure. Waitlist members will receive significant early-bird discounts and may access certain features for free during our beta period.</p>
+                    </div>
+                </div>
+                <div class="faq-item" data-faq="stores">
+                    <div class="faq-question" onclick="toggleFAQ('stores')">
+                        <span>Which UK supermarkets do you support?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We'll launch with support for the UK's major supermarkets: Tesco, Sainsbury's, Asda, Lidl, and Aldi. More stores will be added based on user demand.</p>
+                    </div>
+                </div>
+                <div class="faq-item" data-faq="dietary">
+                    <div class="faq-question" onclick="toggleFAQ('dietary')">
+                        <span>Can it handle special dietary requirements?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! Our AI can create meal plans for various dietary needs including vegetarian, vegan, gluten-free, keto, and specific health conditions like diabetes or heart disease.</p>
+                    </div>
+                </div>
+                <div class="faq-item" data-faq="launch">
+                    <div class="faq-question" onclick="toggleFAQ('launch')">
+                        <span>When will Optimeal AI be available?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We're aiming for a beta launch in early 2024. Waitlist members will be the first to know when we're ready and will get early access.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="final-cta-content">
+                <h2>Be one of the first 500 to get early access</h2>
+                <p>Limited spots available for our exclusive beta program</p>
+                <button class="cta-button primary large" onclick="scrollToSignup(); trackEvent('cta_click_final');">
+                    Secure Your Spot Now
+                </button>
             </div>
         </div>
     </section>
@@ -401,111 +455,49 @@ Instructions: 1. Soak rice for 30 mins, 2. Marinate chicken with yogurt..."
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <div class="brand">
-                        <span class="brand-icon">🤖</span>
-                        <span class="brand-text">NutriChef AI</span>
+                    <div class="nav-brand">
+                        <div class="logo-container">
+                            <div class="logo-plate">
+                                <div class="logo-circuit"></div>
+                            </div>
+                        </div>
+                        <span class="brand-text">Optimeal AI</span>
                     </div>
-                    <p>Your AI cooking assistant for authentic South Asian cuisine</p>
+                    <p>AI-powered meal planning for UK households</p>
                 </div>
-                
                 <div class="footer-links">
-                    <div class="footer-section">
-                        <h4>Product</h4>
-                        <a href="#features">Features</a>
-                        <a href="#stats">Stats</a>
-                        <a href="#pricing">Pricing</a>
-                        <a href="#api">API</a>
-                    </div>
-                    
-                    <div class="footer-section">
-                        <h4>Company</h4>
-                        <a href="#about">About Us</a>
-                        <a href="#blog">Blog</a>
-                        <a href="#careers">Careers</a>
-                        <a href="#contact">Contact</a>
-                    </div>
-                    
-                    <div class="footer-section">
-                        <h4>Resources</h4>
-                        <a href="#docs">Documentation</a>
-                        <a href="#support">Support</a>
-                        <a href="#community">Community</a>
-                        <a href="#changelog">Changelog</a>
-                    </div>
-                    
-                    <div class="footer-section">
-                        <h4>Legal</h4>
-                        <a href="#privacy">Privacy Policy</a>
-                        <a href="#terms">Terms of Service</a>
-                        <a href="#cookies">Cookies</a>
-                    </div>
+                    <a href="#privacy" onclick="trackEvent('footer_click', {link: 'privacy'})">Privacy Policy</a>
+                    <a href="#terms" onclick="trackEvent('footer_click', {link: 'terms'})">Terms of Service</a>
+                    <a href="#contact" onclick="trackEvent('footer_click', {link: 'contact'})">Contact</a>
                 </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2024 NutriChef AI. Made with ❤️ for the South Asian diaspora.</p>
-                <div class="social-links">
+                <div class="footer-social">
                     <a href="#" onclick="trackEvent('social_click', {platform: 'twitter'})">🐦</a>
                     <a href="#" onclick="trackEvent('social_click', {platform: 'instagram'})">📸</a>
-                    <a href="#" onclick="trackEvent('social_click', {platform: 'github'})">👨‍💻</a>
+                    <a href="#" onclick="trackEvent('social_click', {platform: 'linkedin'})">💼</a>
                 </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Optimeal AI. Made with ❤️ for UK households.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Email Signup Modal -->
-    <div id="emailModal" class="email-modal" style="display: none;">
-        <div class="email-modal-content">
-            <div class="email-modal-header">
-                <h3>🚀 Join the NutriChef AI Waitlist</h3>
-                <button class="email-modal-close" onclick="hideEmailSignup()">&times;</button>
+    <!-- Success Modal -->
+    <div class="modal" id="successModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🎉 Welcome to the Waitlist!</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
-            
-            <div class="email-modal-body">
-                <p>Get early access to NutriChef AI and be the first to know when we launch!</p>
-                
-                <form id="emailSignupForm" class="email-signup-form">
-                    <div class="form-group">
-                        <label for="userEmail">Email Address *</label>
-                        <input type="email" id="userEmail" name="email" required 
-                               placeholder="your@email.com" class="email-input">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="userName">First Name (Optional)</label>
-                        <input type="text" id="userName" name="name" 
-                               placeholder="Your first name" class="email-input">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="healthUpdates" name="healthUpdates">
-                            <span class="checkmark"></span>
-                            Send me health tips and recipe updates
-                        </label>
-                    </div>
-                    
-                    <button type="submit" class="email-submit-btn">
-                        <span class="btn-text">🎉 Join Waitlist</span>
-                        <span class="btn-loading" style="display: none;">⏳ Joining...</span>
-                    </button>
-                    
-                    <p class="email-disclaimer">
-                        We'll never spam you. Unsubscribe anytime with one click.
-                    </p>
-                </form>
-                
-                <div id="emailSuccessMessage" class="email-success" style="display: none;">
-                    <div class="success-icon">✅</div>
-                    <h4>Welcome to the Waitlist!</h4>
-                    <p>We'll notify you as soon as NutriChef AI is ready. Check your email for a confirmation!</p>
-                    <button class="cta-button secondary" onclick="hideEmailSignup()">Continue Exploring</button>
-                </div>
+            <div class="modal-body">
+                <p>Thank you for joining our waitlist. You'll be among the first to know when Optimeal AI is ready!</p>
+                <p>We'll send you updates about our progress and early access opportunities.</p>
+                <button class="cta-button secondary" onclick="closeModal()">Continue Exploring</button>
             </div>
         </div>
     </div>
 
     <!-- JavaScript -->
-    <script src="landing.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
