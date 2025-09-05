@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://yourusername.github.io/homeland_meals",
+  "homepage": "https://tamoghna12.github.io/Optimeal_AI",
   "dependencies": {
     "axios": "^1.8.4",
     "cra-template": "1.2.0",

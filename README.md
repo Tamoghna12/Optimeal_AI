@@ -426,7 +426,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact & Support
 
-- **Website**: [Optimeal AI Landing Page](https://tamoghna12.github.io/homeland_meals/)
+- **Website**: [Optimeal AI Landing Page](https://tamoghna12.github.io/Optimeal_AI/)
 - **Email**: support@optimeal.ai (placeholder)  
 - **Issues**: Create an issue in this repository
 
@@ -439,4 +439,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Ready to transform your meal planning?** [Join our waitlist](https://tamoghna12.github.io/homeland_meals/) to be among the first 500 users to get early access!
+**Ready to transform your meal planning?** [Join our waitlist](https://tamoghna12.github.io/Optimeal_AI/) to be among the first 500 users to get early access!
