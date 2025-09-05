@@ -1,17 +1,67 @@
-# Nutrichef AI
+# Optimeal AI 🍽️
 
-**Your AI cooking assistant for South Asian cuisine**
+**Eat Smarter. Spend Less. Live Healthier.**
 
-A full-stack nutrition and recipe application that helps you cook authentic South Asian dishes using ingredients from your local grocery store. Perfect for busy students and professionals who want a taste of home!
+AI-powered meal planning + grocery price comparison for UK households. Save money, eat healthier, and plan smarter with intelligent meal optimization tailored for the UK market.
 
-## Features
+![Optimeal AI Banner](https://via.placeholder.com/800x400/4CAF50/FFFFFF?text=Optimeal+AI+-+Smart+Meal+Planning)
 
-🍛 **AI Co-pilot Chat** - Get personalized cooking advice and recipe suggestions  
-📸 **Food Analysis** - Upload food images for instant nutritional analysis  
-📱 **Recipe Converter** - Transform traditional recipes into quick, modern versions  
-🥘 **Ingredient Substitutions** - Find Western grocery alternatives for South Asian ingredients  
-📊 **Nutrition Tracking** - Track daily calories, macros, and fitness goals  
-💰 **Meal Cost Estimation** - Plan budget-friendly meals with pricing data
+## 🌟 About
+
+Optimeal AI revolutionizes how UK households approach meal planning and grocery shopping. By combining artificial intelligence with real-time price data from major UK supermarkets, we help families eat healthier while saving money and time.
+
+### The Problem We Solve
+
+- **Meal Planning Struggles**: Difficulty creating healthy, varied meal plans
+- **Budget Overruns**: Overspending on groceries without realizing it  
+- **App Juggling**: Managing multiple apps for recipes, budgeting, and shopping
+- **Price Confusion**: Not knowing where to shop for the best deals
+
+### Our Solution
+
+**Optimeal AI** provides an all-in-one platform that:
+- Creates personalized, health-aligned meal plans
+- Tracks weekly & monthly grocery budgets
+- Compares prices across Sainsbury's, Tesco, Asda, Lidl, and Aldi
+- Optimizes store selection for maximum time and money savings
+
+## 🚀 Key Features
+
+### 🤖 AI Meal Planning
+- Personalized meal plans based on dietary preferences and health goals
+- Adaptable to dietary restrictions (vegan, gluten-free, keto, etc.)
+- Family-friendly options with portion scaling
+
+### 💰 Smart Budget Tracking  
+- Weekly and monthly grocery budget monitoring
+- Spending insights and trend analysis
+- Cost-per-meal breakdowns
+
+### 🛒 Price Comparison Engine
+- Real-time prices from all major UK supermarkets
+- Automated deal detection and alerts
+- Brand and generic alternative suggestions
+
+### 📍 Store Optimization
+- Route planning for multi-store shopping
+- Time vs. savings trade-off calculations
+- Local store inventory awareness
+
+### 🎯 Rewards & Motivation
+- Achievement badges for budget goals
+- Healthy eating streaks  
+- Community challenges
+
+### 🍛 AI Co-pilot Chat
+- Get personalized cooking advice and recipe suggestions
+- Interactive chat assistant for cooking questions
+- Step-by-step cooking guidance for recipes
+
+### 📸 Additional Features
+- Food image analysis for nutritional insights
+- Recipe conversion (traditional to quick versions)
+- Western grocery substitutions for specialty ingredients
+- Daily nutrition and fitness tracking
 
 ## Quick Start
 
@@ -35,9 +85,11 @@ Create `.env` files in both directories:
 
 **Backend** (`backend/.env`):
 ```env
-MONGODB_URL=mongodb://localhost:27017/homeland_meals
-GROQ_API_KEY=your_groq_api_key_here
-CORS_ORIGINS=["http://localhost:3000"]
+MONGO_URL="mongodb://localhost:27017"
+DB_NAME="optimeal_db"
+CORS_ORIGINS="*"
+GROQ_API_KEY="your_groq_api_key_here"
+EMERGENT_LLM_KEY="your_api_key"
 ```
 
 **Frontend** (`frontend/.env`):
@@ -82,9 +134,20 @@ yarn start
 
 ### 6. Access Application
 
-- **Frontend**: http://localhost:3000
+- **Landing Page**: Open `index.html` directly in browser or serve locally
+- **Frontend App**: http://localhost:3000  
 - **Backend API**: http://localhost:8000
 - **API Documentation**: http://localhost:8000/docs
+
+### 7. Landing Page (Marketing Site)
+
+The main landing page (`index.html`) showcases Optimeal AI features with:
+- **Mobile-first responsive design** with animated backgrounds
+- **Interactive phone mockup** demonstrating AI chat functionality
+- **Waitlist signup forms** with analytics tracking
+- **10 comprehensive sections**: Hero, Problems, Solutions, Features, How It Works, Benefits, Social Proof, FAQ, and CTAs
+- **Google Analytics 4 integration** for user behavior tracking
+- **UK-focused branding** with local supermarket mentions
 
 ## API Key Setup
 
@@ -326,4 +389,54 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Made with ❤️ for the South Asian diaspora**
+## 🎯 Target Audience
+
+### Primary Users
+- **UK Families** looking to optimize their grocery spending
+- **Health-conscious individuals** wanting better meal planning  
+- **Budget-conscious households** seeking to reduce food waste
+- **Busy professionals** needing efficient meal preparation
+
+### Use Cases
+- Weekly meal planning and grocery budgeting
+- Comparing prices across multiple UK supermarkets
+- Finding healthy recipes that fit dietary restrictions
+- Optimizing shopping routes and store selection
+- Tracking nutritional goals and spending patterns
+
+## 🔮 Roadmap
+
+### Phase 1: MVP (Current)
+- ✅ Landing page with waitlist signup
+- ✅ Basic AI chat functionality  
+- ✅ Recipe conversion system
+- ✅ Price comparison framework
+
+### Phase 2: Core Features
+- [ ] User authentication and profiles
+- [ ] Real-time price data integration
+- [ ] Advanced meal planning algorithms
+- [ ] Mobile app development
+
+### Phase 3: Advanced Features
+- [ ] Social sharing and community features
+- [ ] Integration with grocery delivery services
+- [ ] Advanced analytics and insights
+- [ ] Voice assistant integration
+
+## 📞 Contact & Support
+
+- **Website**: [Optimeal AI Landing Page](https://tamoghna12.github.io/homeland_meals/)
+- **Email**: support@optimeal.ai (placeholder)  
+- **Issues**: Create an issue in this repository
+
+## 🙏 Acknowledgments
+
+- Created by a PhD researcher in bioinformatics & AI product builder
+- Powered by Groq's Llama-3.1-8b-instant model
+- Designed for the UK market with local supermarket integration
+- Built with modern web technologies for optimal performance
+
+---
+
+**Ready to transform your meal planning?** [Join our waitlist](https://tamoghna12.github.io/homeland_meals/) to be among the first 500 users to get early access!

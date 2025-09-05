@@ -30,10 +30,28 @@ next-env.d.ts
 dist/
 dist
 
-# Environment files (comprehensive coverage)
+# Environment files (comprehensive coverage) - CRITICAL SECURITY
+.env
+.env.*
+*.env
+backend/.env
+backend/*.env
+backend/.env.*
+frontend/.env
+frontend/*.env
+frontend/.env.*
 
+# API keys and credentials - NEVER COMMIT THESE
 *token.json*
 *credentials.json*
+*.key
+*.pem
+*.p12
+secrets/
+config/secrets/
+*api_key*
+*secret*
+.secret
 
 # Logs and debug files
 npm-debug.log*

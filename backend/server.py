@@ -1175,13 +1175,90 @@ async def get_cooking_guidance(request: CookingGuidanceRequest):
         logging.error(f"Error in cooking guidance endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to get cooking guidance: {str(e)}")
 
+def format_recipe_for_chat(recipe_data: dict) -> str:
+    """Format recipe conversion data for user-friendly chat display"""
+    try:
+        formatted = f"""**🍽️ Recipe Conversion Complete!**
+
+**Quick Version**
+{recipe_data.get('quick_version', 'Quick version not available')}
+
+**⏱️ Time Breakdown**
+• Prep Time: {recipe_data.get('prep_time_minutes', 0)} minutes
+• Cook Time: {recipe_data.get('cook_time_minutes', 0)} minutes  
+• Total Time: {recipe_data.get('total_time_minutes', 0)} minutes
+• ⚡ Time Saved: {recipe_data.get('time_saved_minutes', 0)} minutes
+
+**📝 Quick Instructions**"""
+
+        # Add quick instructions
+        quick_instructions = recipe_data.get('quick_instructions', [])
+        if quick_instructions:
+            for i, instruction in enumerate(quick_instructions, 1):
+                formatted += f"\n{i}. {instruction}"
+        else:
+            formatted += "\nQuick instructions not available"
+
+        # Add ingredients if available
+        ingredients = recipe_data.get('ingredients', [])
+        if ingredients:
+            formatted += f"\n\n**🛒 Key Ingredients**"
+            for ingredient in ingredients[:5]:  # Show first 5 ingredients
+                formatted += f"\n• {ingredient}"
+            if len(ingredients) > 5:
+                formatted += f"\n• ...and {len(ingredients) - 5} more"
+
+        # Add nutritional info
+        nutrition = recipe_data.get('nutritional_info', {})
+        if nutrition:
+            formatted += f"\n\n**📊 Nutrition (per serving)**"
+            formatted += f"\n• Calories: {nutrition.get('calories', 0):.0f}"
+            formatted += f"\n• Protein: {nutrition.get('protein', 0):.0f}g"
+            formatted += f"\n• Carbs: {nutrition.get('carbs', 0):.0f}g"
+            formatted += f"\n• Fat: {nutrition.get('fat', 0):.0f}g"
+
+        # Add tips if available
+        tips = recipe_data.get('tips', '')
+        if tips:
+            formatted += f"\n\n**💡 Pro Tip**\n{tips}"
+
+        # Add tags
+        tags = recipe_data.get('tags', [])
+        if tags:
+            formatted += f"\n\n**🏷️ Tags:** {', '.join(tags)}"
+
+        formatted += f"\n\n**Difficulty:** {recipe_data.get('difficulty_level', 'medium').title()}"
+
+        return formatted
+
+    except Exception as e:
+        logging.error(f"Error formatting recipe for chat: {str(e)}")
+        return "Recipe conversion completed, but formatting failed. Please try asking me to convert another recipe!"
+
 @api_router.post("/copilot/chat")
 async def copilot_chat(request: CopilotQuery):
     """General co-pilot chat for cooking questions and advice"""
     try:
-        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        api_key = os.environ.get('GROQ_API_KEY')
         if not api_key:
             raise HTTPException(status_code=500, detail="LLM API key not configured")
+
+        # Check if the query contains JSON data (from recipe conversion)
+        query_lower = request.query.lower()
+        if ('quick_version' in request.query and 'prep_time_minutes' in request.query and 
+            'nutritional_info' in request.query):
+            # This looks like raw recipe conversion JSON - format it nicely
+            try:
+                recipe_data = json.loads(request.query)
+                formatted_response = format_recipe_for_chat(recipe_data)
+                return {
+                    "success": True,
+                    "response": formatted_response,
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+            except json.JSONDecodeError:
+                # If it's not valid JSON, fall back to regular chat
+                pass
         
         chat = LlmChat(
             api_key=api_key,
@@ -1242,6 +1319,21 @@ Keep responses structured, scannable, and immediately useful. Avoid long explana
     except Exception as e:
         logging.error(f"Error in copilot chat: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to get response: {str(e)}")
+
+@api_router.post("/copilot/format-recipe")
+async def format_recipe_conversion(request: dict):
+    """Format raw recipe conversion data into user-friendly chat format"""
+    try:
+        formatted_response = format_recipe_for_chat(request)
+        return {
+            "success": True,
+            "response": formatted_response,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+        
+    except Exception as e:
+        logging.error(f"Error formatting recipe conversion: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to format recipe: {str(e)}")
 
 # Include the router in the main app
 app.include_router(api_router)
